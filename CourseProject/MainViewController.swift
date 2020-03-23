@@ -71,6 +71,24 @@ class MainViewController: UIViewController {
         return userProfile
     }()
     
+    let camera: UIButton = {
+        let camera = UIButton()
+        camera.setBackgroundImage(UIImage(named: "camera"), for: .normal)
+        camera.translatesAutoresizingMaskIntoConstraints = false
+        camera.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        camera.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        return camera
+    }()
+    
+    let search: UIButton = {
+        let search = UIButton()
+        search.setBackgroundImage(UIImage(named: "search"), for: .normal)
+        search.translatesAutoresizingMaskIntoConstraints = false
+        search.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        search.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        return search
+    }()
+    
     var colorCenterConstraint = NSLayoutConstraint()
     var imagesCenterConstraint = NSLayoutConstraint()
     var colorCircleCenterConstraint = NSLayoutConstraint()
@@ -83,6 +101,8 @@ class MainViewController: UIViewController {
         view.addSubview(images)
         view.addSubview(colorCircle)
         view.addSubview(userProfile)
+        view.addSubview(camera)
+        view.addSubview(search)
         appLogo.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         appLogo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         colorCenterConstraint = color.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -96,7 +116,10 @@ class MainViewController: UIViewController {
         colorCircle.topAnchor.constraint(equalTo: images.bottomAnchor, constant: 20).isActive = true
         userProfile.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
         userProfile.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
-        
+        camera.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        camera.topAnchor.constraint(equalTo: colorCircle.bottomAnchor, constant: 30).isActive = true
+        search.centerYAnchor.constraint(equalTo: camera.centerYAnchor).isActive = true
+        search.leadingAnchor.constraint(equalTo: camera.trailingAnchor, constant: 40).isActive = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
