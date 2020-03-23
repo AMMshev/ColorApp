@@ -5,7 +5,7 @@
 //  Created by Артем Манышев on 22.03.2020.
 //  Copyright © 2020 Артем Манышев. All rights reserved.
 //
-
+//swiftlint:disable all
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
