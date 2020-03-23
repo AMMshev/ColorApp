@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let backgroundColorArray: [UIColor] =
             [UIColor(red: 24, green: 119, blue: 242, alpha: 1),
@@ -120,6 +120,22 @@ class MainViewController: UIViewController {
         camera.topAnchor.constraint(equalTo: colorCircle.bottomAnchor, constant: 30).isActive = true
         search.centerYAnchor.constraint(equalTo: camera.centerYAnchor).isActive = true
         search.leadingAnchor.constraint(equalTo: camera.trailingAnchor, constant: 40).isActive = true
+        camera.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
+    }
+    
+    @objc func openCamera() {
+        let cameraPicker = UIImagePickerController()
+        cameraPicker.delegate = self
+        cameraPicker.sourceType = .camera
+        self.present(cameraPicker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
