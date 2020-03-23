@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MainViewController: UIViewController {
     
     let backgroundColorArray: [UIColor] =
             [UIColor(red: 24, green: 119, blue: 242, alpha: 1),
@@ -121,17 +121,7 @@ class MainViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         search.centerYAnchor.constraint(equalTo: camera.centerYAnchor).isActive = true
         search.leadingAnchor.constraint(equalTo: camera.trailingAnchor, constant: 40).isActive = true
         camera.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
-    }
-    
-    @objc func openCamera() {
-        let cameraPicker = UIImagePickerController()
-        cameraPicker.delegate = self
-        cameraPicker.sourceType = .camera
-        self.present(cameraPicker, animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
+        images.addTarget(self, action: #selector(openGalery), for: .touchUpInside)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -160,5 +150,26 @@ extension UIColor {
             0...255 ~= blue  &&
             0...1 ~= alpha, "input range is out of range")
         self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha))
+    }
+}
+
+extension UIViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @objc func openCamera() {
+        let cameraPicker = UIImagePickerController()
+        cameraPicker.delegate = self
+        cameraPicker.sourceType = .camera
+        self.present(cameraPicker, animated: true, completion: nil)
+    }
+    
+    @objc func openGalery() {
+        let galeryPicker = UIImagePickerController()
+        galeryPicker.delegate = self
+        galeryPicker.sourceType = .photoLibrary
+        self.present(galeryPicker, animated: true, completion: nil)
+    }
+    
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
     }
 }
