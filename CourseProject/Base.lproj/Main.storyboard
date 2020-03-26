@@ -1,26 +1,206 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OXs-j2-BPg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Main View Controller-->
-        <scene sceneID="rLl-dE-xEa">
+        <!--View Controller-->
+        <scene sceneID="OOA-1r-tfd">
             <objects>
-                <viewController id="OXs-j2-BPg" customClass="MainViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="uex-CN-hUd">
+                <viewController storyboardIdentifier="loginScreen" modalPresentationStyle="fullScreen" id="QxD-Hk-vYM" customClass="ViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Qk-rf-uOd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="e4B-Ob-StZ"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="PuH-8O-486">
+                                <rect key="frame" x="20" y="375.5" width="374" height="145"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y3n-eM-ioN">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="H9O-xC-JBR"/>
+                                        </constraints>
+                                        <state key="normal" title="register">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="registerButtonTapped:" destination="QxD-Hk-vYM" eventType="touchUpInside" id="3Q2-tS-y17"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uUi-2O-3TU">
+                                        <rect key="frame" x="0.0" y="95" width="374" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Bfv-WD-00G"/>
+                                        </constraints>
+                                        <state key="normal" title="login">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginButtonTapped:" destination="QxD-Hk-vYM" eventType="touchUpInside" id="ZmF-Jm-Zcv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="PuH-8O-486" firstAttribute="leading" secondItem="ShI-Hn-h1V" secondAttribute="leading" constant="20" id="HhL-yB-iCg"/>
+                            <constraint firstItem="ShI-Hn-h1V" firstAttribute="trailing" secondItem="PuH-8O-486" secondAttribute="trailing" constant="20" id="Kh3-p8-RVb"/>
+                            <constraint firstItem="PuH-8O-486" firstAttribute="centerY" secondItem="4Qk-rf-uOd" secondAttribute="centerY" id="sFa-pZ-QF7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ShI-Hn-h1V"/>
                     </view>
+                    <navigationItem key="navigationItem" id="sMn-xz-7rH"/>
+                    <connections>
+                        <outlet property="loginButton" destination="uUi-2O-3TU" id="L0G-5C-HFT"/>
+                        <outlet property="registerButton" destination="y3n-eM-ioN" id="g3H-go-vum"/>
+                        <segue destination="omT-HW-fj7" kind="show" identifier="registerScreen" id="7wY-QY-wKt"/>
+                        <segue destination="1fm-tf-gw9" kind="show" identifier="loginScreen" id="WHK-ky-u0T"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iEo-zj-fFO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fLf-hM-Pon" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-544" y="-486"/>
+            <point key="canvasLocation" x="-558" y="11"/>
+        </scene>
+        <!--Login Register View Controller-->
+        <scene sceneID="qxj-78-GX8">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="1fm-tf-gw9" customClass="LoginRegisterViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lfP-CA-PIs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfU-H9-3qa">
+                                <rect key="frame" x="20" y="423" width="374" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="bfD-g7-Hdt"/>
+                                </constraints>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="performLogin:" destination="1fm-tf-gw9" eventType="touchUpInside" id="fJL-GO-orf"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="w6V-xn-YZG">
+                                <rect key="frame" x="30" y="503" width="207" height="31"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="remember me on this device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVM-is-7DX">
+                                        <rect key="frame" x="0.0" y="0.0" width="149" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1jy-eU-5Zh">
+                                        <rect key="frame" x="158" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="remberOnThisDeviceSwitched:" destination="1fm-tf-gw9" eventType="valueChanged" id="5mb-sp-ltz"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="kfU-H9-3qa" firstAttribute="leading" secondItem="WkQ-Bo-UYk" secondAttribute="leading" constant="20" id="ER8-nr-Cyv"/>
+                            <constraint firstItem="w6V-xn-YZG" firstAttribute="top" secondItem="kfU-H9-3qa" secondAttribute="bottom" constant="30" id="SXC-b1-0pI"/>
+                            <constraint firstItem="w6V-xn-YZG" firstAttribute="leading" secondItem="WkQ-Bo-UYk" secondAttribute="leading" constant="30" id="o09-ql-FHp"/>
+                            <constraint firstItem="kfU-H9-3qa" firstAttribute="centerY" secondItem="lfP-CA-PIs" secondAttribute="centerY" id="rkj-sE-7UO"/>
+                            <constraint firstItem="WkQ-Bo-UYk" firstAttribute="trailing" secondItem="kfU-H9-3qa" secondAttribute="trailing" constant="20" id="vk6-UD-8bs"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="WkQ-Bo-UYk"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="oJa-X3-OHu"/>
+                    <connections>
+                        <outlet property="performButton" destination="kfU-H9-3qa" id="NrM-au-HhO"/>
+                        <outlet property="switcher" destination="1jy-eU-5Zh" id="aG1-p4-9Sk"/>
+                        <segue destination="Kij-aX-wWW" kind="show" identifier="mainScreen" id="hTY-bM-AW8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6t0-e8-ryc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="611.59420289855075" y="577.90178571428567"/>
+        </scene>
+        <!--Login Register View Controller-->
+        <scene sceneID="q4G-8a-hbc">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="omT-HW-fj7" customClass="LoginRegisterViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jn9-8U-cVe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xEr-O8-XYx">
+                                <rect key="frame" x="20" y="423" width="374" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Wet-nC-v8O"/>
+                                </constraints>
+                                <state key="normal" title="Register">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="performLogin:" destination="omT-HW-fj7" eventType="touchUpInside" id="70n-Mu-YQC"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="0Gw-J4-ymp">
+                                <rect key="frame" x="20" y="503" width="207" height="31"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="remember me on this device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USm-N6-GbB">
+                                        <rect key="frame" x="0.0" y="0.0" width="149" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qU5-I8-ODm">
+                                        <rect key="frame" x="158" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="remberOnThisDeviceSwitched:" destination="omT-HW-fj7" eventType="valueChanged" id="lT5-gr-hNe"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="0Gw-J4-ymp" firstAttribute="leading" secondItem="4w8-WX-yuo" secondAttribute="leading" constant="20" id="1Sy-r4-RHo"/>
+                            <constraint firstItem="0Gw-J4-ymp" firstAttribute="top" secondItem="xEr-O8-XYx" secondAttribute="bottom" constant="30" id="HsL-is-lZp"/>
+                            <constraint firstItem="xEr-O8-XYx" firstAttribute="leading" secondItem="4w8-WX-yuo" secondAttribute="leading" constant="20" id="RKp-WY-xiT"/>
+                            <constraint firstItem="xEr-O8-XYx" firstAttribute="centerY" secondItem="Jn9-8U-cVe" secondAttribute="centerY" id="XJU-t2-mXj"/>
+                            <constraint firstItem="4w8-WX-yuo" firstAttribute="trailing" secondItem="xEr-O8-XYx" secondAttribute="trailing" constant="20" id="oq7-cg-8DA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4w8-WX-yuo"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="f1z-hZ-VIF"/>
+                    <connections>
+                        <outlet property="performButton" destination="xEr-O8-XYx" id="SbF-ES-t3O"/>
+                        <outlet property="switcher" destination="qU5-I8-ODm" id="IEm-eT-cah"/>
+                        <segue destination="Kij-aX-wWW" kind="show" identifier="mainScreen" id="p7W-18-JkW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YMx-Cg-Cuw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="611.59420289855075" y="-510.26785714285711"/>
+        </scene>
+        <!--Main View Controller-->
+        <scene sceneID="TR9-lB-l3I">
+            <objects>
+                <viewController storyboardIdentifier="mainScreen" modalPresentationStyle="fullScreen" id="Kij-aX-wWW" customClass="MainViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pDn-nl-k6L">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="adO-Yu-mXc"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="9VM-4V-Nhg"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Ms-Vj-fbe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1816" y="11"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="p7W-18-JkW"/>
+    </inferredMetricsTieBreakers>
 </document>

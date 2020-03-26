@@ -4,12 +4,12 @@
 //
 //  Created by Артем Манышев on 23.03.2020.
 //  Copyright © 2020 Артем Манышев. All rights reserved.
-
+//swiftlint:disable force_cast
 import UIKit
 
 class MainViewController: UIViewController {
     
-    let backgroundColorArray: [UIColor] =
+    static let backgroundColorArray: [UIColor] =
             [UIColor(red: 24, green: 119, blue: 242, alpha: 1),
             UIColor(red: 29, green: 161, blue: 242, alpha: 1),
             UIColor(red: 255, green: 0, blue: 0, alpha: 1),
@@ -20,7 +20,7 @@ class MainViewController: UIViewController {
             UIColor(red: 251, green: 188, blue: 5, alpha: 1),
             UIColor(red: 18, green: 140, blue: 126, alpha: 1),
             UIColor(red: 24, green: 69, blue: 0, alpha: 1)]
-    let backgroundColorNumber: Int = {
+    static let backgroundColorNumber: Int = {
         let number = Int(arc4random_uniform(9))
         return number
     }()
@@ -95,7 +95,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = backgroundColorArray[backgroundColorNumber]
+        view.backgroundColor = MainViewController.backgroundColorArray[MainViewController.backgroundColorNumber]
         view.addSubview(appLogo)
         view.addSubview(color)
         view.addSubview(images)
@@ -122,6 +122,8 @@ class MainViewController: UIViewController {
         search.leadingAnchor.constraint(equalTo: camera.trailingAnchor, constant: 40).isActive = true
         camera.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
         images.addTarget(self, action: #selector(openGalery), for: .touchUpInside)
+        
+        print(UserDefaults.standard.object(forKey: LoginRegisterViewController.defaultsKey) as! Bool)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -152,6 +154,8 @@ extension UIColor {
         self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha))
     }
 }
+
+// MARK: - UIImagePickerController
 
 extension UIViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
