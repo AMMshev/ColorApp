@@ -13,7 +13,6 @@ class LoginRegisterViewController: UIViewController {
     static let defaultsKey = "isRememberChoosen"
     
     @IBOutlet weak var switcher: UISwitch!
-    
     @IBOutlet weak var performButton: UIButton!
     
     override func viewDidLoad() {
