@@ -4,7 +4,6 @@
 //
 //  Created by Артем Манышев on 23.03.2020.
 //  Copyright © 2020 Артем Манышев. All rights reserved.
-//swiftlint:disable force_cast
 import UIKit
 
 class MainViewController: UIViewController {
@@ -122,8 +121,6 @@ class MainViewController: UIViewController {
         search.leadingAnchor.constraint(equalTo: camera.trailingAnchor, constant: 40).isActive = true
         camera.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
         images.addTarget(self, action: #selector(openGalery), for: .touchUpInside)
-        
-        print(UserDefaults.standard.object(forKey: LoginRegisterViewController.defaultsKey) as! Bool)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -173,7 +170,8 @@ extension UIViewController: UIImagePickerControllerDelegate, UINavigationControl
         self.present(galeryPicker, animated: true, completion: nil)
     }
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController,
+                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
     }
 }
