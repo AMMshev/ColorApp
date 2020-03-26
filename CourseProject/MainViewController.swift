@@ -166,7 +166,7 @@ extension UIViewController: UIImagePickerControllerDelegate, UINavigationControl
         self.present(galeryPicker, animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
     
