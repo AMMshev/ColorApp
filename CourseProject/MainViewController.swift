@@ -123,10 +123,6 @@ class MainViewController: UIViewController {
         images.addTarget(self, action: #selector(openGalery), for: .touchUpInside)
     }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         colorCenterConstraint.isActive = false
@@ -168,6 +164,10 @@ extension UIViewController: UIImagePickerControllerDelegate, UINavigationControl
         galeryPicker.delegate = self
         galeryPicker.sourceType = .photoLibrary
         self.present(galeryPicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
     public func imagePickerController(_ picker: UIImagePickerController,
