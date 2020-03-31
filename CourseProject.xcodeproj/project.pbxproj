@@ -12,6 +12,8 @@
 		1C2B8D072427C82700883C00 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C2B8D052427C82700883C00 /* Main.storyboard */; };
 		1C2B8D092427C82800883C00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C2B8D082427C82800883C00 /* Assets.xcassets */; };
 		1C2B8D0C2427C82800883C00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C2B8D0A2427C82800883C00 /* LaunchScreen.storyboard */; };
+		1C34D4AD2432687C00020CB8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C34D4AC2432687C00020CB8 /* NetworkManager.swift */; };
+		1C6D60EE242D3BF200D46923 /* ThreeColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */; };
 		1C7A64722428FD5100D8E749 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A64712428FD5100D8E749 /* MainViewController.swift */; };
 		1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FB146242D0A2F00A42CBD /* ViewController.swift */; };
 		1C9FB14B242D0A8300A42CBD /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */; };
@@ -25,6 +27,8 @@
 		1C2B8D082427C82800883C00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1C2B8D0B2427C82800883C00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C2B8D0D2427C82800883C00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C34D4AC2432687C00020CB8 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeColorsViewController.swift; sourceTree = "<group>"; };
 		1C7A64712428FD5100D8E749 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1C9FB146242D0A2F00A42CBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 				1C2B8CFF2427C82700883C00 /* AppDelegate.swift */,
 				1C2B8D012427C82700883C00 /* SceneDelegate.swift */,
 				1C2B8D052427C82700883C00 /* Main.storyboard */,
+				1C34D4AC2432687C00020CB8 /* NetworkManager.swift */,
+				1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */,
 				1C9FB146242D0A2F00A42CBD /* ViewController.swift */,
 				1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */,
 				1C7A64712428FD5100D8E749 /* MainViewController.swift */,
@@ -203,7 +209,9 @@
 				1C9FB14B242D0A8300A42CBD /* LoginRegisterViewController.swift in Sources */,
 				1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */,
 				1C2B8D002427C82700883C00 /* AppDelegate.swift in Sources */,
+				1C34D4AD2432687C00020CB8 /* NetworkManager.swift in Sources */,
 				1C2B8D022427C82700883C00 /* SceneDelegate.swift in Sources */,
+				1C6D60EE242D3BF200D46923 /* ThreeColorsViewController.swift in Sources */,
 				1C7A64722428FD5100D8E749 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

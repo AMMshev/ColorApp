@@ -8,6 +8,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    var imageFromPicker: UIImage?
     static let backgroundColorArray: [UIColor] =
             [UIColor(red: 24, green: 119, blue: 242, alpha: 1),
             UIColor(red: 29, green: 161, blue: 242, alpha: 1),
@@ -23,7 +24,6 @@ class MainViewController: UIViewController {
         let number = Int(arc4random_uniform(9))
         return number
     }()
-    
     let appLogo: UIImageView = {
         let appLogo = UIImageView()
         guard let appLogoImage = UIImage(named: "logo2") else {fatalError("No such logo image")}
@@ -33,7 +33,6 @@ class MainViewController: UIViewController {
         appLogo.heightAnchor.constraint(equalToConstant: 100).isActive = true
         return appLogo
     }()
-    
     let color: UIButton = {
         let color = UIButton()
         color.setTitle("Colors", for: .normal)
@@ -42,7 +41,6 @@ class MainViewController: UIViewController {
         color.translatesAutoresizingMaskIntoConstraints = false
         return color
     }()
-    
     let images: UIButton = {
         let images = UIButton()
         images.setTitle("Images", for: .normal)
@@ -51,7 +49,6 @@ class MainViewController: UIViewController {
         images.translatesAutoresizingMaskIntoConstraints = false
         return images
     }()
-    
     let colorCircle: UIButton = {
         let colorCircle = UIButton()
         colorCircle.setTitle("Color circle", for: .normal)
@@ -60,7 +57,6 @@ class MainViewController: UIViewController {
         colorCircle.translatesAutoresizingMaskIntoConstraints = false
         return colorCircle
     }()
-    
     let userProfile: UIButton = {
         let userProfile = UIButton()
         userProfile.setBackgroundImage(UIImage(named: "userProfile"), for: .normal)
@@ -69,7 +65,6 @@ class MainViewController: UIViewController {
         userProfile.widthAnchor.constraint(equalToConstant: 30).isActive = true
         return userProfile
     }()
-    
     let camera: UIButton = {
         let camera = UIButton()
         camera.setBackgroundImage(UIImage(named: "camera"), for: .normal)
@@ -78,7 +73,6 @@ class MainViewController: UIViewController {
         camera.widthAnchor.constraint(equalToConstant: 30).isActive = true
         return camera
     }()
-    
     let search: UIButton = {
         let search = UIButton()
         search.setBackgroundImage(UIImage(named: "search"), for: .normal)
@@ -87,7 +81,6 @@ class MainViewController: UIViewController {
         search.widthAnchor.constraint(equalToConstant: 30).isActive = true
         return search
     }()
-    
     var colorCenterConstraint = NSLayoutConstraint()
     var imagesCenterConstraint = NSLayoutConstraint()
     var colorCircleCenterConstraint = NSLayoutConstraint()
@@ -120,7 +113,7 @@ class MainViewController: UIViewController {
         search.centerYAnchor.constraint(equalTo: camera.centerYAnchor).isActive = true
         search.leadingAnchor.constraint(equalTo: camera.trailingAnchor, constant: 40).isActive = true
         camera.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
-        images.addTarget(self, action: #selector(openGalery), for: .touchUpInside)
+        images.addTarget(self, action: #selector(openPhotoLibrary), for: .touchUpInside)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -147,10 +140,9 @@ extension UIColor {
         self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha))
     }
 }
-
 // MARK: - UIImagePickerController
 
-extension UIViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @objc func openCamera() {
         let cameraPicker = UIImagePickerController()
@@ -159,19 +151,22 @@ extension UIViewController: UIImagePickerControllerDelegate, UINavigationControl
         self.present(cameraPicker, animated: true, completion: nil)
     }
     
-    @objc func openGalery() {
+    @objc func openPhotoLibrary() {
         let galeryPicker = UIImagePickerController()
         galeryPicker.delegate = self
         galeryPicker.sourceType = .photoLibrary
         self.present(galeryPicker, animated: true, completion: nil)
     }
     
-    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
     
-    public func imagePickerController(_ picker: UIImagePickerController,
-                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
+        ThreeColorsViewController.image = imageFromCamera
+        picker.dismiss(animated: true, completion: {
+            self.performSegue(withIdentifier: "threeColors", sender: nil)
+        })
     }
 }
