@@ -10,19 +10,21 @@ import UIKit
 
 class ThreeColorsViewController: UIViewController {
     
-    @IBOutlet weak var sourceImage: UIImageView!
+    @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var mainColor: UIView!
     @IBOutlet weak var secondaryColor: UIView!
     @IBOutlet weak var additionalColor: UIView!
     
-    static var image = UIImage()
+    var sourceImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sourceImage.image = ThreeColorsViewController.image
-        Networking.shared.uploadData(image: ThreeColorsViewController.image, completion: { imageLink in
-            print(imageLink as Any)
-            Networking.shared.getData(imageLink: imageLink ?? "", completion: { data in
+        guard let sourceImage = sourceImage else { return }
+        sourceImageView.image = sourceImage
+        Networking.shared.uploadData(image: sourceImage, completion: { imageLink in
+            guard let imageLink = imageLink else { return }
+            print(imageLink)
+            Networking.shared.getData(imageLink: imageLink, completion: { data in
                 do {
                     let json = try JSONDecoder().decode(JSONAnswer.self, from: data )
                     var rForRGB: [Int] = []
@@ -32,17 +34,17 @@ class ThreeColorsViewController: UIViewController {
                     json.result.colors.image_colors.forEach({gForRGB.append($0.g)})
                     json.result.colors.image_colors.forEach({bForRGB.append($0.b)})
                     DispatchQueue.main.sync {
-                        self.mainColor.backgroundColor = UIColor(red: CGFloat(rForRGB[0]) / 255,
-                                                                 green: CGFloat(gForRGB[0]) / 255,
-                                                                 blue: CGFloat(bForRGB[0]) / 255,
+                        self.mainColor.backgroundColor = UIColor(red: rForRGB[0],
+                                                                 green: gForRGB[0],
+                                                                 blue: bForRGB[0],
                                                                  alpha: 1)
-                        self.secondaryColor.backgroundColor = UIColor(red: CGFloat(rForRGB[1]) / 255,
-                                                                      green: CGFloat(gForRGB[1]) / 255,
-                                                                      blue: CGFloat(bForRGB[1]) / 255,
+                        self.secondaryColor.backgroundColor = UIColor(red: rForRGB[1],
+                                                                      green: gForRGB[1],
+                                                                      blue: bForRGB[1],
                                                                       alpha: 1)
-                        self.additionalColor.backgroundColor = UIColor(red: CGFloat(rForRGB[2]) / 255,
-                                                                       green: CGFloat(gForRGB[2]) / 255,
-                                                                       blue: CGFloat(bForRGB[2]) / 255,
+                        self.additionalColor.backgroundColor = UIColor(red: rForRGB[2],
+                                                                       green: gForRGB[2],
+                                                                       blue: bForRGB[2],
                                                                        alpha: 1)
                         self.mainColor.setNeedsDisplay()
                         self.secondaryColor.setNeedsDisplay()

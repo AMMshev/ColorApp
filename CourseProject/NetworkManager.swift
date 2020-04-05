@@ -61,12 +61,8 @@ class Networking {
     func getData(imageLink: String, completion: @escaping (Data) -> Void) {
         
         let config = URLSessionConfiguration.default
-        let userPasswordString = "acc_59f2c109ea9bdb2:6126d07e93f08a0dcdf2b8c76287c57c"
-        guard let userPasswordData = userPasswordString.data(using: String.Encoding.utf8) else {return}
-        let base64EncodedCredential = userPasswordData.base64EncodedString(options: .init(rawValue: 0))
-        let authString = "Basic \(String(describing: base64EncodedCredential))"
-        config.httpAdditionalHeaders = ["Authorization": authString]
-        
+        let authorisationString = "Basic YWNjXzU5ZjJjMTA5ZWE5YmRiMjo2MTI2ZDA3ZTkzZjA4YTBkY2RmMmI4Yzc2Mjg3YzU3Yw=="
+        config.httpAdditionalHeaders = ["Authorization": authorisationString]
         let session = URLSession(configuration: config)
         guard let url = URL(string: "https://api.imagga.com/v2/colors?image_url=\(imageLink)") else {return}
         session.dataTask(with: url) { (data, response, error) in

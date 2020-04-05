@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,14 +11,14 @@
             <objects>
                 <viewController storyboardIdentifier="loginScreen" modalPresentationStyle="fullScreen" id="QxD-Hk-vYM" customClass="ViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4Qk-rf-uOd">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="PuH-8O-486">
-                                <rect key="frame" x="20" y="375.5" width="374" height="145"/>
+                                <rect key="frame" x="20" y="227.5" width="560" height="145"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y3n-eM-ioN">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="H9O-xC-JBR"/>
                                         </constraints>
@@ -31,7 +30,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uUi-2O-3TU">
-                                        <rect key="frame" x="0.0" y="95" width="374" height="50"/>
+                                        <rect key="frame" x="0.0" y="95" width="560" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Bfv-WD-00G"/>
                                         </constraints>
@@ -70,11 +69,11 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="1fm-tf-gw9" customClass="LoginRegisterViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lfP-CA-PIs">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfU-H9-3qa">
-                                <rect key="frame" x="20" y="423" width="374" height="50"/>
+                                <rect key="frame" x="20" y="275" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="bfD-g7-Hdt"/>
                                 </constraints>
@@ -86,7 +85,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="w6V-xn-YZG">
-                                <rect key="frame" x="30" y="503" width="207" height="31"/>
+                                <rect key="frame" x="30" y="355" width="207" height="31"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="remember me on this device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVM-is-7DX">
                                         <rect key="frame" x="0.0" y="0.0" width="149" height="31"/>
@@ -129,11 +128,11 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="omT-HW-fj7" customClass="LoginRegisterViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jn9-8U-cVe">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xEr-O8-XYx">
-                                <rect key="frame" x="20" y="423" width="374" height="50"/>
+                                <rect key="frame" x="20" y="275" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Wet-nC-v8O"/>
                                 </constraints>
@@ -145,7 +144,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="0Gw-J4-ymp">
-                                <rect key="frame" x="20" y="503" width="207" height="31"/>
+                                <rect key="frame" x="20" y="355" width="207" height="31"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="remember me on this device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USm-N6-GbB">
                                         <rect key="frame" x="0.0" y="0.0" width="149" height="31"/>
@@ -188,7 +187,7 @@
             <objects>
                 <viewController storyboardIdentifier="mainScreen" modalPresentationStyle="fullScreen" id="Kij-aX-wWW" customClass="MainViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pDn-nl-k6L">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="adO-Yu-mXc"/>
@@ -207,18 +206,18 @@
             <objects>
                 <viewController id="NKj-cf-d8I" customClass="ThreeColorsViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="X98-qP-B34">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nXu-r4-T4d">
-                                <rect key="frame" x="87" y="50" width="240" height="240"/>
+                                <rect key="frame" x="180" y="50" width="240" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="KpW-i4-d8m"/>
                                     <constraint firstAttribute="width" constant="240" id="rGX-eB-vv3"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="VW6-AS-3X8">
-                                <rect key="frame" x="157" y="311" width="100" height="380"/>
+                                <rect key="frame" x="250" y="311" width="100" height="380"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vPt-dH-JCh">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -261,7 +260,7 @@
                         <outlet property="additionalColor" destination="iIA-8Q-HQ0" id="WTA-NZ-5Y2"/>
                         <outlet property="mainColor" destination="vPt-dH-JCh" id="EPr-Gs-2qK"/>
                         <outlet property="secondaryColor" destination="lDG-Q2-3rE" id="yL0-HC-fJu"/>
-                        <outlet property="sourceImage" destination="nXu-r4-T4d" id="Kki-i6-pJX"/>
+                        <outlet property="sourceImageView" destination="nXu-r4-T4d" id="Kki-i6-pJX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vwx-EU-EBZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

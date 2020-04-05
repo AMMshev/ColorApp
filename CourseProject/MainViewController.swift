@@ -8,7 +8,6 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    var imageFromPicker: UIImage?
     static let backgroundColorArray: [UIColor] =
             [UIColor(red: 24, green: 119, blue: 242, alpha: 1),
             UIColor(red: 29, green: 161, blue: 242, alpha: 1),
@@ -84,6 +83,8 @@ class MainViewController: UIViewController {
     var colorCenterConstraint = NSLayoutConstraint()
     var imagesCenterConstraint = NSLayoutConstraint()
     var colorCircleCenterConstraint = NSLayoutConstraint()
+    
+    var imageFromPicker: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,9 +165,15 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
-        ThreeColorsViewController.image = imageFromCamera
+        imageFromPicker = imageFromCamera
         picker.dismiss(animated: true, completion: {
             self.performSegue(withIdentifier: "threeColors", sender: nil)
         })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as? ThreeColorsViewController
+        guard let imageFromPicker = imageFromPicker else { return }
+        destinationVC?.sourceImage = imageFromPicker
     }
 }
