@@ -66,17 +66,17 @@
             </objects>
             <point key="canvasLocation" x="350.72463768115944" y="10.714285714285714"/>
         </scene>
-        <!--Color List View Controller-->
+        <!--Colors-->
         <scene sceneID="Rk4-2e-TPq">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="CX5-iO-rZ0" customClass="ColorListViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Colors" modalPresentationStyle="fullScreen" id="CX5-iO-rZ0" customClass="ColorListViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fWD-ea-2jQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="ZeU-uf-A3c"/>
                     </view>
-                    <navigationItem key="navigationItem" id="zZL-IO-XKh">
+                    <navigationItem key="navigationItem" title="Colors" id="zZL-IO-XKh">
                         <barButtonItem key="backBarButtonItem" title=" " id="DvT-6D-aJt"/>
                     </navigationItem>
                     <connections>

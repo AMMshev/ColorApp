@@ -68,6 +68,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		1C24B6B3245754BD00192AE2 /* ColorDetail */ = {
+			isa = PBXGroup;
+			children = (
+				1CEF99152457383800139BD7 /* DetailColorViewController.swift */,
+				1C9E1F7C24573D8100A133C5 /* DetailColorModel.swift */,
+			);
+			path = ColorDetail;
+			sourceTree = "<group>";
+		};
 		1C2B8CF32427C82700883C00 = {
 			isa = PBXGroup;
 			children = (
@@ -94,8 +103,7 @@
 				1C34D4AC2432687C00020CB8 /* NetworkManager.swift */,
 				1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */,
 				1C9B04152456F77B00104C74 /* ColorList */,
-				1CEF99152457383800139BD7 /* DetailColorViewController.swift */,
-				1C9E1F7C24573D8100A133C5 /* DetailColorModel.swift */,
+				1C24B6B3245754BD00192AE2 /* ColorDetail */,
 				1C9FB146242D0A2F00A42CBD /* ViewController.swift */,
 				1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */,
 				1C7A64712428FD5100D8E749 /* MainViewController.swift */,
