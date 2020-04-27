@@ -49,6 +49,9 @@ class DetailColorViewController: UIViewController {
         } else {
             HEXRGBLabel.textColor = .black
             HEXRGBValueLabel.textColor = .black
+            navigationController?.navigationBar.tintColor = .black
+            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            navigationController?.navigationBar.largeTitleTextAttributes = attributes
         }
         HEXRGBValueLabel.text = "\(color.hex)\n\(color.r), \(color.g), \(color.b)"
         infoStack.addArrangedSubview(HEXRGBLabel)

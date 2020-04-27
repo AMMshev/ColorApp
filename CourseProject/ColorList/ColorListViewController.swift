@@ -33,8 +33,8 @@ class ColorListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.tintColor = .black
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navigationController?.navigationBar.tintColor = UIColor(named: "Color")
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "Color")]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
     }
     
