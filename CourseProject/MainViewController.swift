@@ -38,6 +38,7 @@ class MainViewController: UIViewController {
         color.setTitleColor(.white, for: .normal)
         color.titleLabel?.font = color.titleLabel?.font.withSize(CGFloat(30))
         color.translatesAutoresizingMaskIntoConstraints = false
+        color.addTarget(self, action: #selector(openColorList), for: .touchUpInside)
         return color
     }()
     let images: UIButton = {
@@ -88,6 +89,8 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.isHidden = true
         view.backgroundColor = MainViewController.backgroundColorArray[MainViewController.backgroundColorNumber]
         view.addSubview(appLogo)
         view.addSubview(color)
@@ -129,6 +132,10 @@ class MainViewController: UIViewController {
             guard let self = self else {return}
             self.view.layoutIfNeeded()
         })
+    }
+    
+    @objc func openColorList() {
+        self.performSegue(withIdentifier: "showColorList", sender: nil)
     }
 }
 

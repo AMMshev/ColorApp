@@ -19,6 +19,7 @@ class ThreeColorsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = false
         guard let sourceImage = sourceImage else { return }
         sourceImageView.image = sourceImage
         Networking.shared.uploadData(image: sourceImage, completion: { imageLink in

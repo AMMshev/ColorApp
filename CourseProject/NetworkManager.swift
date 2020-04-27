@@ -91,10 +91,10 @@ struct JSONAnswer: Codable {
 }
 
 struct Result: Codable {
-    let colors: Colors
+    let colors: ColorsList
 }
 
-struct Colors: Codable {
+struct ColorsList: Codable {
     let background_colors: [ColorData]
     let foreground_colors: [ColorData]
     let image_colors: [ColorData]
