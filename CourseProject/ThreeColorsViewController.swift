@@ -14,18 +14,24 @@ class ThreeColorsViewController: UIViewController {
     @IBOutlet weak var mainColor: UIView!
     @IBOutlet weak var secondaryColor: UIView!
     @IBOutlet weak var additionalColor: UIView!
+    @IBOutlet weak var mainColorNameLabel: UILabel!
+    @IBOutlet weak var secondaryColorName: UILabel!
+    @IBOutlet weak var additionalColorName: UILabel!
     
+    var allColors: [ColorList] = []
     var sourceImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
+        guard let colors = ColorsFromFileData.shared.takeColorsFromFile() else { return }
+        allColors = colors
         guard let sourceImage = sourceImage else { return }
         sourceImageView.image = sourceImage
         Networking.shared.uploadData(image: sourceImage, completion: { imageLink in
             guard let imageLink = imageLink else { return }
-            print(imageLink)
-            Networking.shared.getData(imageLink: imageLink, completion: { data in
+            Networking.shared.getData(imageLink: imageLink, completion: { [weak self] data in
+                guard let self = self else { return }
                 do {
                     let json = try JSONDecoder().decode(JSONAnswer.self, from: data )
                     var rForRGB: [Int] = []
@@ -50,6 +56,10 @@ class ThreeColorsViewController: UIViewController {
                         self.mainColor.setNeedsDisplay()
                         self.secondaryColor.setNeedsDisplay()
                         self.additionalColor.setNeedsDisplay()
+                        
+                        self.mainColorNameLabel.text = self.searchColorName(rForRGB[0], gForRGB[0], bForRGB[0])
+                        self.secondaryColorName.text = self.searchColorName(rForRGB[1], gForRGB[1], bForRGB[1])
+                        self.additionalColorName.text = self.searchColorName(rForRGB[2], gForRGB[2], bForRGB[2])
                     }
                 } catch {
                     print("JSON error")
@@ -57,4 +67,13 @@ class ThreeColorsViewController: UIViewController {
             })
         })
     }
+    
+    private func searchColorName(_ rColor: Int, _ gColor: Int, _ bColor: Int) -> String? {
+        let colorFromList = allColors.filter({(
+            (rColor - 15)...(rColor + 15)).contains($0.rgb.r) &&
+            ((gColor - 15)...(gColor + 15)).contains($0.rgb.g) &&
+            ((bColor - 15)...(bColor + 15)).contains($0.rgb.b)})
+        return colorFromList.first?.name
+    }
+    
 }

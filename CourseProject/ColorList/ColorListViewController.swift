@@ -26,7 +26,8 @@ class ColorListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        takeColorsFromFile()
+        guard let colorsFromFile = ColorsFromFileData.shared.takeColorsFromFile() else { return }
+        colors = colorsFromFile
         setupTableView()
         setupSearchController()
     }
@@ -36,16 +37,6 @@ class ColorListViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor(named: "Color")
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "Color")]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
-    }
-    
-    private func takeColorsFromFile() {
-        guard let url = Bundle.main.url(forResource: "colorList", withExtension: "txt") else { return }
-        do {
-            let txtFile = try String(contentsOf: url)
-            guard let data = txtFile.data(using: .utf8) else { return }
-            colors = try JSONDecoder().decode(ColorsSource.self, from: data).colors
-            colors.sort(by: {$0.hex < $1.hex})
-        } catch {}
     }
     
     private func setupTableView() {
