@@ -58,8 +58,8 @@ class ThreeColorsViewController: UIViewController {
                         self.additionalColor.setNeedsDisplay()
                         
                         self.mainColorNameLabel.text = self.searchColorName(rForRGB[0], gForRGB[0], bForRGB[0])
-                        self.secondaryColorName.text = self.searchColorName(rForRGB[1], gForRGB[1], bForRGB[1])
-                        self.additionalColorName.text = self.searchColorName(rForRGB[2], gForRGB[2], bForRGB[2])
+//                        self.secondaryColorName.text = self.searchColorName(rForRGB[1], gForRGB[1], bForRGB[1])
+//                        self.additionalColorName.text = self.searchColorName(rForRGB[2], gForRGB[2], bForRGB[2])
                     }
                 } catch {
                     print("JSON error")
@@ -69,11 +69,15 @@ class ThreeColorsViewController: UIViewController {
     }
     
     private func searchColorName(_ rColor: Int, _ gColor: Int, _ bColor: Int) -> String? {
-        let colorFromList = allColors.filter({(
-            (rColor - 15)...(rColor + 15)).contains($0.rgb.r) &&
-            ((gColor - 15)...(gColor + 15)).contains($0.rgb.g) &&
-            ((bColor - 15)...(bColor + 15)).contains($0.rgb.b)})
+        var colorFromList: [ColorList] = []
+        var error: Int = 0
+        while colorFromList.isEmpty {
+        colorFromList = allColors.filter({(
+            (rColor - error)...(rColor + error)).contains($0.rgb.r) &&
+            ((gColor - error)...(gColor + error)).contains($0.rgb.g) &&
+            ((bColor - error)...(bColor + error)).contains($0.rgb.b)})
+            error += 1
+        }
         return colorFromList.first?.name
     }
-    
 }
