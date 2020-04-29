@@ -32,8 +32,8 @@ class ColorListViewController: UIViewController {
         setupSearchController()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.tintColor = UIColor(named: "Color")
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "Color")]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
@@ -82,9 +82,9 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? TableViewCell else { fatalError() }
         let cellData = isFiltering ? filteredColors[indexPath.row] : colors[indexPath.row]
         cell.colorName.text = cellData.name
-        if  cellData.rgb.r < 128 &&
-            cellData.rgb.r < 128 &&
-            cellData.rgb.r < 128 {
+        if  cellData.rgb.r < 125 &&
+            cellData.rgb.r < 125 &&
+            cellData.rgb.r < 125 {
             cell.colorName.textColor = .white
         } else {
             cell.colorName.textColor = .black

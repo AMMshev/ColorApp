@@ -38,9 +38,9 @@ class DetailColorViewController: UIViewController {
         infoStack.alignment = .center
         infoStack.axis = .horizontal
         infoStack.distribution = .equalCentering
-        if  color.r < 128 &&
-            color.r < 128 &&
-            color.r < 128 {
+        if  color.r < 125 &&
+            color.r < 125 &&
+            color.r < 125 {
             HEXRGBLabel.textColor = .white
             HEXRGBValueLabel.textColor = .white
             navigationController?.navigationBar.tintColor = .white

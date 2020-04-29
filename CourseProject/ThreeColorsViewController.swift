@@ -40,16 +40,26 @@ class ThreeColorsViewController: UIViewController {
                 guard let self = self else { return }
                 do {
                     let json = try JSONDecoder().decode(JSONAnswer.self, from: data )
-                    var rForRGB: [Int] = []
-                    var bForRGB: [Int] = []
-                    var gForRGB: [Int] = []
-                    json.result.colors.image_colors.forEach({rForRGB.append($0.r)})
-                    json.result.colors.image_colors.forEach({gForRGB.append($0.g)})
-                    json.result.colors.image_colors.forEach({bForRGB.append($0.b)})
-                    DispatchQueue.main.sync {
-                        self.setColor(self.mainColor, self.mainColorNameLabel, self.mainTapGesture, rForRGB[0], gForRGB[0], bForRGB[0])
-                        self.setColor(self.secondaryColor, self.secondaryColorName, self.secondaryTapGesture, rForRGB[1], gForRGB[1], bForRGB[1])
-                        self.setColor(self.additionalColor, self.additionalColorName, self.additionalTapGesture, rForRGB[2], gForRGB[2], bForRGB[2])
+                    let RGBColors = json.result.colors.image_colors
+                    DispatchQueue.main.async {
+                        self.setColor(self.mainColor,
+                                      self.mainColorNameLabel,
+                                      self.mainTapGesture,
+                                      RGBColors[0].r,
+                                      RGBColors[0].g,
+                                      RGBColors[0].b)
+                        self.setColor(self.secondaryColor,
+                                      self.secondaryColorName,
+                                      self.secondaryTapGesture,
+                                      RGBColors[1].r,
+                                      RGBColors[1].g,
+                                      RGBColors[1].b)
+                        self.setColor(self.additionalColor,
+                                      self.additionalColorName,
+                                      self.additionalTapGesture,
+                                      RGBColors[2].r,
+                                      RGBColors[2].g,
+                                      RGBColors[2].b)
                         self.colorsStack.arrangedSubviews.forEach({$0.isUserInteractionEnabled = true})
                     }
                 } catch {
@@ -72,8 +82,8 @@ class ThreeColorsViewController: UIViewController {
         colorView.addGestureRecognizer(tapGesture)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.tintColor = UIColor(named: "Color")
     }
     
