@@ -42,24 +42,30 @@ class ThreeColorsViewController: UIViewController {
                     let json = try JSONDecoder().decode(JSONAnswer.self, from: data )
                     let RGBColors = json.result.colors.image_colors
                     DispatchQueue.main.async {
-                        self.setColor(self.mainColor,
-                                      self.mainColorNameLabel,
-                                      self.mainTapGesture,
-                                      RGBColors[0].r,
-                                      RGBColors[0].g,
-                                      RGBColors[0].b)
-                        self.setColor(self.secondaryColor,
-                                      self.secondaryColorName,
-                                      self.secondaryTapGesture,
-                                      RGBColors[1].r,
-                                      RGBColors[1].g,
-                                      RGBColors[1].b)
-                        self.setColor(self.additionalColor,
-                                      self.additionalColorName,
-                                      self.additionalTapGesture,
-                                      RGBColors[2].r,
-                                      RGBColors[2].g,
-                                      RGBColors[2].b)
+                        if RGBColors.count >= 1 {
+                            self.setColor(self.mainColor,
+                                          self.mainColorNameLabel,
+                                          self.mainTapGesture,
+                                          RGBColors[0].r,
+                                          RGBColors[0].g,
+                                          RGBColors[0].b)
+                        }
+                        if RGBColors.count >= 2 {
+                            self.setColor(self.secondaryColor,
+                                          self.secondaryColorName,
+                                          self.secondaryTapGesture,
+                                          RGBColors[1].r,
+                                          RGBColors[1].g,
+                                          RGBColors[1].b)
+                        }
+                        if RGBColors.count >= 3 {
+                            self.setColor(self.additionalColor,
+                                          self.additionalColorName,
+                                          self.additionalTapGesture,
+                                          RGBColors[2].r,
+                                          RGBColors[2].g,
+                                          RGBColors[2].b)
+                        }
                         self.colorsStack.arrangedSubviews.forEach({$0.isUserInteractionEnabled = true})
                     }
                 } catch {

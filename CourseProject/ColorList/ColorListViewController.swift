@@ -70,7 +70,7 @@ class ColorListViewController: UIViewController {
     }
 }
 
-// MARK: UITableViewDelegate, UITableViewDataSouce
+// MARK: -UITableViewDelegate, UITableViewDataSouce
 
 extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -107,7 +107,7 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: UISearchResultsUpdating
+// MARK: -UISearchResultsUpdating
 
 extension ColorListViewController: UISearchResultsUpdating {
     

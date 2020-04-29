@@ -34,10 +34,8 @@ class DetailColorViewController: UIViewController {
         infoStack.translatesAutoresizingMaskIntoConstraints = false
         infoStack.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         infoStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        infoStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        infoStack.alignment = .center
+        infoStack.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         infoStack.axis = .horizontal
-        infoStack.distribution = .equalCentering
         if  color.r < 125 &&
             color.r < 125 &&
             color.r < 125 {
