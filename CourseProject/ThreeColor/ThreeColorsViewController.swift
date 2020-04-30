@@ -19,8 +19,7 @@ class ThreeColorsViewController: UIViewController {
     @IBOutlet weak var additionalColorName: UILabel!
     @IBOutlet weak var colorsStack: UIStackView!
     
-    private var allColors: [ColorList] = []
-    private var recognizedColor: [ColorModel] = []
+    private var colorsOnPage: [ColorModel] = []
     private var colorNumber = 0
     var sourceImage: UIImage?
     let mainTapGesture = UITapGestureRecognizer()
@@ -30,8 +29,6 @@ class ThreeColorsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        guard let colors = ColorsFromFileData.shared.takeColorsFromFile() else { return }
-        allColors = colors
         guard let sourceImage = sourceImage else { return }
         sourceImageView.image = sourceImage
         Networking.shared.uploadData(image: sourceImage, completion: { imageLink in
@@ -82,15 +79,21 @@ class ThreeColorsViewController: UIViewController {
                           _ gParameter: Int,
                           _ bParameter: Int) {
         colorView.backgroundColor = UIColor(red: rParameter, green: gParameter, blue: bParameter, alpha: 1)
+        colorView.layer.cornerRadius = colorView.bounds.height / 2
         colorView.setNeedsDisplay()
-        colorNameLabel.text = searchColorName(rParameter, gParameter, bParameter)
+        print(rParameter)
+        print(gParameter)
+        print(bParameter)
+        guard let colorModel = ColorsFromFileData.shared.makeModelOfColor(rParameter, gParameter, bParameter) else { return }
+        colorNameLabel.text = colorModel.name
+        colorsOnPage.append(colorModel)
         tapGesture.addTarget(self, action: #selector(colorTapped(sender:)))
         colorView.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.tintColor = UIColor(named: "Color")
+        navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
     }
     
     @objc func colorTapped(sender: UITapGestureRecognizer) {
@@ -111,28 +114,7 @@ class ThreeColorsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailScreen" {
             let destinationVC = segue.destination as? DetailColorViewController
-            destinationVC?.color = recognizedColor[colorNumber]
+            destinationVC?.color = colorsOnPage[colorNumber]
         }
-    }
-    
-    private func searchColorName(_ rColor: Int, _ gColor: Int, _ bColor: Int) -> String? {
-        var colorFromList: [ColorList] = []
-        var error: Int = 0
-        while colorFromList.isEmpty {
-            colorFromList = allColors.filter({(
-                (rColor - error)...(rColor + error)).contains($0.rgb.r) &&
-                ((gColor - error)...(gColor + error)).contains($0.rgb.g) &&
-                ((bColor - error)...(bColor + error)).contains($0.rgb.b)})
-            error += 1
-        }
-        if colorFromList.first != nil {
-            let model = ColorModel(name: colorFromList.first!.name,
-                                   r: colorFromList.first!.rgb.r,
-                                   g: colorFromList.first!.rgb.g,
-                                   b: colorFromList.first!.rgb.b,
-                                   hex: colorFromList.first!.hex)
-            recognizedColor.append(model)
-        }
-        return colorFromList.first?.name
     }
 }

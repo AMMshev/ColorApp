@@ -288,11 +288,33 @@
                     <connections>
                         <segue destination="NKj-cf-d8I" kind="show" identifier="threeColors" id="GTh-Ye-l5I"/>
                         <segue destination="CX5-iO-rZ0" kind="show" identifier="showColorList" id="w92-n9-oxz"/>
+                        <segue destination="eHp-sG-OUL" kind="show" identifier="showColorCircle" id="w7b-r9-pIB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ms-Vj-fbe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3560.8695652173915" y="10.714285714285714"/>
+        </scene>
+        <!--Color Circle View Controller-->
+        <scene sceneID="ZuQ-3a-vBe">
+            <objects>
+                <viewController id="eHp-sG-OUL" customClass="ColorCircleViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hCu-zm-YcF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="hit-eM-A4x"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Jx3-YA-eY7">
+                        <barButtonItem key="backBarButtonItem" title=" " id="J0m-MS-nnw"/>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="hbA-Az-zUD" kind="show" identifier="showColorDetail" id="HCA-Yw-MgY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WvN-0Z-QfB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4618.840579710145" y="-796.20535714285711"/>
         </scene>
         <!--Three Colors View Controller-->
         <scene sceneID="y8Z-U4-J0s">
@@ -439,6 +461,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="pVa-S7-GB9"/>
+        <segue reference="HCA-Yw-MgY"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -9,56 +9,55 @@ import UIKit
 class MainViewController: UIViewController {
     
     static let backgroundColorArray: [UIColor] =
-            [UIColor(red: 24, green: 119, blue: 242, alpha: 1),
-            UIColor(red: 29, green: 161, blue: 242, alpha: 1),
-            UIColor(red: 255, green: 0, blue: 0, alpha: 1),
-            UIColor(red: 195, green: 42, blue: 163, alpha: 1),
-            UIColor(red: 189, green: 8, blue: 28, alpha: 1),
-            UIColor(red: 0, green: 119, blue: 181, alpha: 1),
-            UIColor(red: 52, green: 168, blue: 83, alpha: 1),
-            UIColor(red: 251, green: 188, blue: 5, alpha: 1),
-            UIColor(red: 18, green: 140, blue: 126, alpha: 1),
-            UIColor(red: 24, green: 69, blue: 0, alpha: 1)]
+        [UIColor(red: 24, green: 119, blue: 242, alpha: 1),
+         UIColor(red: 29, green: 161, blue: 242, alpha: 1),
+         UIColor(red: 255, green: 0, blue: 0, alpha: 1),
+         UIColor(red: 195, green: 42, blue: 163, alpha: 1),
+         UIColor(red: 189, green: 8, blue: 28, alpha: 1),
+         UIColor(red: 0, green: 119, blue: 181, alpha: 1),
+         UIColor(red: 52, green: 168, blue: 83, alpha: 1),
+         UIColor(red: 251, green: 188, blue: 5, alpha: 1),
+         UIColor(red: 18, green: 140, blue: 126, alpha: 1),
+         UIColor(red: 24, green: 69, blue: 0, alpha: 1)]
     static let backgroundColorNumber: Int = {
         let number = Int(arc4random_uniform(9))
         return number
     }()
-    let appLogo: UIImageView = {
+    private let appLogo: UIImageView = {
         let appLogo = UIImageView()
         guard let appLogoImage = UIImage(named: "logo2") else {fatalError("No such logo image")}
         appLogo.image = appLogoImage
         appLogo.translatesAutoresizingMaskIntoConstraints = false
-        appLogo.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        appLogo.heightAnchor.constraint(equalToConstant: 100).isActive = true
         return appLogo
     }()
-    let color: UIButton = {
+    private let color: UIButton = {
         let color = UIButton()
         color.setTitle("Colors", for: .normal)
-        color.setTitleColor(.white, for: .normal)
+        color.setTitleColor(UIColor(named: "Color"), for: .normal)
         color.titleLabel?.font = color.titleLabel?.font.withSize(CGFloat(30))
         color.translatesAutoresizingMaskIntoConstraints = false
         color.addTarget(self, action: #selector(showColorList), for: .touchUpInside)
         return color
     }()
-    let images: UIButton = {
+    private let images: UIButton = {
         let images = UIButton()
         images.setTitle("Images", for: .normal)
-        images.setTitleColor(.white, for: .normal)
+        images.setTitleColor(UIColor(named: "Color"), for: .normal)
         images.titleLabel?.font = images.titleLabel?.font.withSize(CGFloat(30))
         images.translatesAutoresizingMaskIntoConstraints = false
         images.addTarget(self, action: #selector(openPhotoLibrary), for: .touchUpInside)
         return images
     }()
-    let colorCircle: UIButton = {
+    private let colorCircle: UIButton = {
         let colorCircle = UIButton()
         colorCircle.setTitle("Color circle", for: .normal)
-        colorCircle.setTitleColor(.white, for: .normal)
+        colorCircle.setTitleColor(UIColor(named: "Color"), for: .normal)
         colorCircle.titleLabel?.font = colorCircle.titleLabel?.font.withSize(CGFloat(30))
         colorCircle.translatesAutoresizingMaskIntoConstraints = false
+        colorCircle.addTarget(self, action: #selector(showColorCircle), for: .touchUpInside)
         return colorCircle
     }()
-    let userProfile: UIButton = {
+    private let userProfile: UIButton = {
         let userProfile = UIButton()
         userProfile.setBackgroundImage(UIImage(named: "userProfile"), for: .normal)
         userProfile.translatesAutoresizingMaskIntoConstraints = false
@@ -66,24 +65,21 @@ class MainViewController: UIViewController {
         userProfile.widthAnchor.constraint(equalToConstant: 30).isActive = true
         return userProfile
     }()
-    let camera: UIButton = {
+    private let camera: UIButton = {
         let camera = UIButton()
         camera.setBackgroundImage(UIImage(named: "camera"), for: .normal)
         camera.translatesAutoresizingMaskIntoConstraints = false
-        camera.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        camera.widthAnchor.constraint(equalToConstant: 30).isActive = true
         camera.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
         return camera
     }()
-    var colorCenterConstraint = NSLayoutConstraint()
-    var imagesCenterConstraint = NSLayoutConstraint()
-    var colorCircleCenterConstraint = NSLayoutConstraint()
+    private var colorCenterConstraint = NSLayoutConstraint()
+    private var imagesCenterConstraint = NSLayoutConstraint()
+    private var colorCircleCenterConstraint = NSLayoutConstraint()
     
-    var imageFromPicker: UIImage?
+    private var imageFromPicker: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationController?.navigationBar.isHidden = true
         setupViews()
     }
@@ -129,6 +125,10 @@ class MainViewController: UIViewController {
     
     @objc func showColorList() {
         self.performSegue(withIdentifier: "showColorList", sender: nil)
+    }
+    
+    @objc func showColorCircle() {
+        self.performSegue(withIdentifier: "showColorCircle", sender: nil)
     }
 }
 

@@ -34,8 +34,8 @@ class ColorListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.tintColor = UIColor(named: "Color")
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "Color")]
+        navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "navBarColor")]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
     }
     
@@ -70,7 +70,7 @@ class ColorListViewController: UIViewController {
     }
 }
 
-// MARK: -UITableViewDelegate, UITableViewDataSouce
+// MARK: - UITableViewDelegate, UITableViewDataSouce
 
 extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -107,7 +107,7 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: -UISearchResultsUpdating
+// MARK: - UISearchResultsUpdating
 
 extension ColorListViewController: UISearchResultsUpdating {
     

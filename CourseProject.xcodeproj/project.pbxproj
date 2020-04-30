@@ -16,6 +16,8 @@
 		1C34D4AD2432687C00020CB8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C34D4AC2432687C00020CB8 /* NetworkManager.swift */; };
 		1C6D60EE242D3BF200D46923 /* ThreeColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */; };
 		1C7A64722428FD5100D8E749 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A64712428FD5100D8E749 /* MainViewController.swift */; };
+		1C7C0786245B49010040B914 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C0785245B49010040B914 /* Extensions.swift */; };
+		1C944F94245A34A6007CA471 /* ColorCircleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C944F93245A34A6007CA471 /* ColorCircleViewController.swift */; };
 		1C9B04122456F74300104C74 /* ColorListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B04112456F74300104C74 /* ColorListViewController.swift */; };
 		1C9B04142456F77300104C74 /* colorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B04132456F77300104C74 /* colorData.swift */; };
 		1C9E1F7D24573D8100A133C5 /* DetailColorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E1F7C24573D8100A133C5 /* DetailColorModel.swift */; };
@@ -37,6 +39,8 @@
 		1C34D4AC2432687C00020CB8 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeColorsViewController.swift; sourceTree = "<group>"; };
 		1C7A64712428FD5100D8E749 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		1C7C0785245B49010040B914 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		1C944F93245A34A6007CA471 /* ColorCircleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleViewController.swift; sourceTree = "<group>"; };
 		1C9B04112456F74300104C74 /* ColorListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorListViewController.swift; sourceTree = "<group>"; };
 		1C9B04132456F77300104C74 /* colorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colorData.swift; sourceTree = "<group>"; };
 		1C9E1F7C24573D8100A133C5 /* DetailColorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailColorModel.swift; sourceTree = "<group>"; };
@@ -97,21 +101,63 @@
 		1C2B8CFE2427C82700883C00 /* CourseProject */ = {
 			isa = PBXGroup;
 			children = (
-				1C2B8CFF2427C82700883C00 /* AppDelegate.swift */,
-				1C2B8D012427C82700883C00 /* SceneDelegate.swift */,
+				1C2B8D0D2427C82800883C00 /* Info.plist */,
+				1C2B8D082427C82800883C00 /* Assets.xcassets */,
 				1C2B8D052427C82700883C00 /* Main.storyboard */,
-				1C34D4AC2432687C00020CB8 /* NetworkManager.swift */,
-				1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */,
+				1C2B8D0A2427C82800883C00 /* LaunchScreen.storyboard */,
+				1C7C0788245B49760040B914 /* Components */,
+				1C944F95245A34AF007CA471 /* ColorCyrcle */,
+				1C944F96245A34C5007CA471 /* ThreeColor */,
 				1C9B04152456F77B00104C74 /* ColorList */,
 				1C24B6B3245754BD00192AE2 /* ColorDetail */,
-				1C9FB146242D0A2F00A42CBD /* ViewController.swift */,
-				1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */,
-				1C7A64712428FD5100D8E749 /* MainViewController.swift */,
-				1C2B8D082427C82800883C00 /* Assets.xcassets */,
-				1C2B8D0A2427C82800883C00 /* LaunchScreen.storyboard */,
-				1C2B8D0D2427C82800883C00 /* Info.plist */,
+				1C944F98245A34EC007CA471 /* Registration */,
+				1C7C0787245B495A0040B914 /* Main screen */,
 			);
 			path = CourseProject;
+			sourceTree = "<group>";
+		};
+		1C7C0787245B495A0040B914 /* Main screen */ = {
+			isa = PBXGroup;
+			children = (
+				1C7A64712428FD5100D8E749 /* MainViewController.swift */,
+			);
+			path = "Main screen";
+			sourceTree = "<group>";
+		};
+		1C7C0788245B49760040B914 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1C2B8CFF2427C82700883C00 /* AppDelegate.swift */,
+				1C2B8D012427C82700883C00 /* SceneDelegate.swift */,
+				1C7C0785245B49010040B914 /* Extensions.swift */,
+				1C34D4AC2432687C00020CB8 /* NetworkManager.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		1C944F95245A34AF007CA471 /* ColorCyrcle */ = {
+			isa = PBXGroup;
+			children = (
+				1C944F93245A34A6007CA471 /* ColorCircleViewController.swift */,
+			);
+			path = ColorCyrcle;
+			sourceTree = "<group>";
+		};
+		1C944F96245A34C5007CA471 /* ThreeColor */ = {
+			isa = PBXGroup;
+			children = (
+				1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */,
+			);
+			path = ThreeColor;
+			sourceTree = "<group>";
+		};
+		1C944F98245A34EC007CA471 /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */,
+				1C9FB146242D0A2F00A42CBD /* ViewController.swift */,
+			);
+			path = Registration;
 			sourceTree = "<group>";
 		};
 		1C9B04152456F77B00104C74 /* ColorList */ = {
@@ -242,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C9FB14B242D0A8300A42CBD /* LoginRegisterViewController.swift in Sources */,
+				1C944F94245A34A6007CA471 /* ColorCircleViewController.swift in Sources */,
 				1C9B04142456F77300104C74 /* colorData.swift in Sources */,
 				1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */,
 				1C9B04122456F74300104C74 /* ColorListViewController.swift in Sources */,
@@ -253,6 +300,7 @@
 				1C2B8D022427C82700883C00 /* SceneDelegate.swift in Sources */,
 				1C6D60EE242D3BF200D46923 /* ThreeColorsViewController.swift in Sources */,
 				1C7A64722428FD5100D8E749 /* MainViewController.swift in Sources */,
+				1C7C0786245B49010040B914 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,29 @@ class ColorsFromFileData {
         } catch {}
         return colorList
     }
+    
+    func makeModelOfColor(_ rColor: Int, _ gColor: Int, _ bColor: Int) -> ColorModel? {
+        guard let allColors = ColorsFromFileData.shared.takeColorsFromFile() else { return nil }
+        var recognizedColor: [ColorModel] = []
+        var colorFromList: [ColorList] = []
+        var error: Int = 0
+        while colorFromList.isEmpty {
+            colorFromList = allColors.filter({(
+                (rColor - error)...(rColor + error)).contains($0.rgb.r) &&
+                ((gColor - error)...(gColor + error)).contains($0.rgb.g) &&
+                ((bColor - error)...(bColor + error)).contains($0.rgb.b)})
+            error += 1
+        }
+        if colorFromList.first != nil {
+            let model = ColorModel(name: colorFromList.first!.name,
+                                   r: colorFromList.first!.rgb.r,
+                                   g: colorFromList.first!.rgb.g,
+                                   b: colorFromList.first!.rgb.b,
+                                   hex: colorFromList.first!.hex)
+            recognizedColor.append(model)
+        }
+        return recognizedColor.first
+    }
 }
 
 struct ColorsSource: Codable {

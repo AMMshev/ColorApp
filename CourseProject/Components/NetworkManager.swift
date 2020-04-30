@@ -14,11 +14,9 @@ class Networking {
     let ClientID = "97fb096aa24f64d"
     
     func getBase64Image(image: UIImage) -> String {
-        
         let imageData = image.jpegData(compressionQuality: 0.0)
         guard let base64Image = imageData?.base64EncodedString(options: .lineLength64Characters) else { return "" }
         return base64Image
-        
         }
     
     func uploadData(image: UIImage, completion: @escaping (String?) -> Void) {
