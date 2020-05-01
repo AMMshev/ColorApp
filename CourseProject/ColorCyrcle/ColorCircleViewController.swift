@@ -11,26 +11,51 @@ import UIKit
 class ColorCircleViewController: UIViewController {
     
     let tapGesture = UITapGestureRecognizer()
-    let colorCircleView: ChoosingColorImageView = {
-        let colorCircleView = ChoosingColorImageView()
+    var chosenColor: ColorModel = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
+    let colorCircleView: UIImageView = {
+        let colorCircleView = UIImageView()
         colorCircleView.translatesAutoresizingMaskIntoConstraints = false
         colorCircleView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         colorCircleView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
-        colorCircleView.image = UIImage(named: "colorCircle")?.resizedImage(for:
-            CGSize(width: UIScreen.main.bounds.width,
-                   height: UIScreen.main.bounds.width))
+        colorCircleView.image = UIImage(named: "colorCircle")
         return colorCircleView
+    }()
+    
+    let loopView: UIImageView = {
+        let loopView = UIImageView()
+        loopView.isUserInteractionEnabled = true
+        loopView.image = UIImage(named: "loop")
+        loopView.layer.shadowColor = UIColor.gray.cgColor
+        loopView.layer.shadowOffset = CGSize(width: 2, height: 3)
+        loopView.layer.shadowOpacity = 0.5
+        return loopView
+    }()
+    
+    let loopColorView: UIView = {
+        let loopColorView = UIView()
+        loopColorView.translatesAutoresizingMaskIntoConstraints = false
+        loopColorView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        loopColorView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        loopColorView.layer.cornerRadius = 30
+        loopColorView.isUserInteractionEnabled = true
+        return loopColorView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.addSubview(colorCircleView)
-        colorCircleView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+        colorCircleView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         colorCircleView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         colorCircleView.isUserInteractionEnabled = true
+        view.addSubview(loopView)
+        loopView.addSubview(loopColorView)
+        loopColorView.centerYAnchor.constraint(equalTo: loopView.centerYAnchor, constant: -16).isActive = true
+        loopColorView.centerXAnchor.constraint(equalTo: loopView.centerXAnchor).isActive = true
+        colorCircleView.bringSubviewToFront(loopView)
+        loopView.bringSubviewToFront(loopColorView)
         tapGesture.addTarget(self, action: #selector(chosenColorTapped))
-        colorCircleView.chosingColorView.addGestureRecognizer(tapGesture)
+        loopColorView.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,78 +63,27 @@ class ColorCircleViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
     }
     
-    @objc func chosenColorTapped() {
-        colorCircleView.chosingColorImageView.isHidden = true
-        self.performSegue(withIdentifier: "showColorDetail", sender: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as? DetailColorViewController
-        destinationVC?.color = colorCircleView.chosenColor
-    }
-}
-
-class ChoosingColorImageView: UIImageView {
-    
-    var chosingColorView: UIView = {
-        let chosingColorView = UIView()
-        chosingColorView.translatesAutoresizingMaskIntoConstraints = false
-        chosingColorView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        chosingColorView.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        chosingColorView.layer.cornerRadius = 30
-        chosingColorView.isUserInteractionEnabled = true
-        return chosingColorView
-    }()
-    
-    var chosingColorImageView: UIImageView = {
-        let chosingColorImageView = UIImageView()
-        chosingColorImageView.isUserInteractionEnabled = true
-        chosingColorImageView.image = UIImage(named: "loop")
-        chosingColorImageView.layer.shadowColor = UIColor.gray.cgColor
-        chosingColorImageView.layer.shadowOffset = CGSize(width: 2, height: 3)
-        chosingColorImageView.layer.shadowOpacity = 0.5
-        return chosingColorImageView
-    }()
-    var chosenColor: ColorModel = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        guard let originalTouch = touches.first?.location(in: self) else { return }
-        chosingColorImageView.isHidden = false
-        self.bringSubviewToFront(chosingColorImageView)
-        chosingColorImageView.bringSubviewToFront(chosingColorView)
-        chosingColorImageView.frame = CGRect(x: originalTouch.x - 39,
-                                             y: originalTouch.y - 110,
-                                             width: 78,
-                                             height: 110)
-        chosingColorImageView.addSubview(chosingColorView)
-        chosingColorView.centerYAnchor.constraint(equalTo: chosingColorImageView.centerYAnchor, constant: -16).isActive = true
-        chosingColorView.centerXAnchor.constraint(equalTo: chosingColorImageView.centerXAnchor).isActive = true
-        chosingColorView.backgroundColor = self.image?.getPixelColor(pos: originalTouch)
-        self.addSubview(chosingColorImageView)
+        guard let firstLocation = touches.first?.location(in: self.view) else { return }
+        guard let colorLocation = touches.first?.location(in: colorCircleView) else { return }
+        loopView.isHidden = false
+        loopView.frame = CGRect(x: firstLocation.x - 39, y: firstLocation.y - 110, width: 78, height: 110)
+        loopColorView.backgroundColor = colorCircleView.getPixelColorAtPoint(point: colorLocation)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
-        guard let destinationLocation = touches.first?.location(in: self) else { return }
-        if destinationLocation.x / UIScreen.main.bounds.width < 1 &&
-            destinationLocation.y / UIScreen.main.bounds.width < 1 &&
-            destinationLocation.x / UIScreen.main.bounds.width > 0 &&
-            destinationLocation.y / UIScreen.main.bounds.width > 0 {
-            chosingColorImageView.frame = CGRect(x: destinationLocation.x - 39,
-                                                 y: destinationLocation.y - 110,
-                                                 width: 78,
-                                                 height: 110)
-            chosingColorView.backgroundColor = self.image?.getPixelColor(pos: destinationLocation) ?? UIColor.white
-        } else {
-            chosingColorImageView.isHidden = true
-        }
+        guard let destinationLocation = touches.first?.location(in: self.view) else { return }
+        guard let colorLocation = touches.first?.location(in: colorCircleView) else { return }
+        loopView.frame = CGRect(x: destinationLocation.x - 39, y: destinationLocation.y - 110, width: 78, height: 110)
+        loopColorView.backgroundColor = colorCircleView.getPixelColorAtPoint(point: colorLocation)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        guard let lastLocation = touches.first?.location(in: self),
-            let color = self.image?.getPixelColor(pos: lastLocation).cgColor.components else { return }
+        guard let lastColorLocation = touches.first?.location(in: colorCircleView),
+            let color = colorCircleView.getPixelColorAtPoint(point: lastColorLocation).cgColor.components else { return }
         chosenColor = ColorsFromFileData.shared.makeModelOfColor(Int(color[0] * 255),
                                                                  Int(color[1] * 255),
                                                                  Int(color[2] * 255)) ?? ColorModel(name: "",
@@ -117,5 +91,15 @@ class ChoosingColorImageView: UIImageView {
                                                                                                     g: 0,
                                                                                                     b: 0,
                                                                                                     hex: "")
+    }
+    
+    @objc func chosenColorTapped() {
+        loopView.isHidden = true
+        self.performSegue(withIdentifier: "showColorDetail", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as? DetailColorViewController
+        destinationVC?.color = chosenColor
     }
 }
