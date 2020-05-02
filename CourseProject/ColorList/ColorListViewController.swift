@@ -42,12 +42,8 @@ class ColorListViewController: UIViewController {
     private func setupTableView() {
         tableView = UITableView(frame: .zero)
         guard let tableView = tableView else { return }
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        setConstraintsOn(view: tableView, parantView: view,
+                         topConstant: 0, leadingConstant: 0, bottomConstant: 0, trailingConstant: 0)
         tableView.register(TableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.delegate = self
         tableView.dataSource = self

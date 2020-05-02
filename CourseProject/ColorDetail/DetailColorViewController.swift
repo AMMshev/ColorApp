@@ -30,11 +30,8 @@ class DetailColorViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.title = color.name
         view.backgroundColor = UIColor(red: color.r, green: color.g, blue: color.b, alpha: 1)
-        view.addSubview(infoStack)
-        infoStack.translatesAutoresizingMaskIntoConstraints = false
-        infoStack.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        infoStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        infoStack.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        setConstraintsOn(view: infoStack, parantView: view,
+                         leadingConstant: 20, trailingConstant: 20, centeringyConstant: 0)
         infoStack.axis = .horizontal
         if  color.r < 125 &&
             color.r < 125 &&

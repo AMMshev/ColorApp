@@ -11,9 +11,10 @@ import UIKit
 class ColorCircleViewController: UIViewController {
     
     private let tapGesture = UITapGestureRecognizer()
-    private let backgroundGradientLayer = CAGradientLayer()
-    private var chosenColor: ColorModel = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-    private let backgroundColorCircleView = UIView()
+    private var tintGradientLayer = CAGradientLayer()
+    private var colorCircleGradientLayer = CAGradientLayer()
+    private var chosenColor: ColorModel = ColorModel(name: "Green", r: 0, g: 255, b: 0, hex: "#00ff00")
+    private let tintColorCircleView = UIView()
     private let colorCircleView: UIView = {
         let colorCircleView = UIView()
         colorCircleView.isUserInteractionEnabled = true
@@ -21,7 +22,6 @@ class ColorCircleViewController: UIViewController {
     }()
     private let loupeView: UIImageView = {
         let loupeView = UIImageView()
-        loupeView.isUserInteractionEnabled = true
         loupeView.image = UIImage(named: "loop")
         loupeView.layer.shadowColor = UIColor.gray.cgColor
         loupeView.layer.shadowOffset = CGSize(width: 2, height: 3)
@@ -34,49 +34,123 @@ class ColorCircleViewController: UIViewController {
         loopColorView.isUserInteractionEnabled = true
         return loopColorView
     }()
+    private let backView: UIView = {
+        let backView = UIView()
+        backView.layer.cornerRadius = 20
+        backView.layer.shadowColor = UIColor.gray.cgColor
+        backView.layer.shadowOpacity = 1
+        backView.layer.shadowRadius = 10
+        backView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        backView.backgroundColor = .white
+        return backView
+    }()
+    private let chosenColorView: UIView = {
+        let chosenColorView = UIView()
+        chosenColorView.layer.cornerRadius = 25
+        return chosenColorView
+    }()
+    private let colorHexNumberTextField: UITextField = {
+        let colorHexNumberTextField = UITextField()
+        colorHexNumberTextField.borderStyle = .roundedRect
+        colorHexNumberTextField.textAlignment = .center
+        return colorHexNumberTextField
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
-        setConstraintsOn(view: backgroundColorCircleView,
-                         parantView: view,
-                         height: UIScreen.main.bounds.width,
-                         width: UIScreen.main.bounds.width,
-                         needCentering: true)
-        
-        setConstraintsOn(view: colorCircleView,
-                         parantView: backgroundColorCircleView,
-                         height: UIScreen.main.bounds.width - 30,
-                         width: UIScreen.main.bounds.width - 30,
-                         needCentering: true)
-        
-        view.addSubview(loupeView)
-        setConstraintsOn(view: loupeColorView,
-                         parantView: loupeView,
-                         height: 60,
-                         width: 60, needCentering: true,
-                         yConstant: -16)
-        loupeColorView.addGestureRecognizer(tapGesture)
-        tapGesture.addTarget(self, action: #selector(chosenColorTapped))
-        colorCircleView.makeConicGradientBackground()
-        backgroundGradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-        backgroundGradientLayer.cornerRadius = backgroundGradientLayer.frame.height / 2
-        backgroundColorCircleView.layer.insertSublayer(backgroundGradientLayer, at: 0)
+        setViews()
     }
     
-    private func setConstraintsOn(view: UIView,
-                                  parantView: UIView,
-                                  height: CGFloat,
-                                  width: CGFloat,
-                                  needCentering: Bool, xConstant: CGFloat? = 0, yConstant: CGFloat? = 0) {
-        parantView.addSubview(view)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: height).isActive = true
-        view.widthAnchor.constraint(equalToConstant: width).isActive = true
-        if needCentering {
-            view.centerXAnchor.constraint(equalTo: parantView.centerXAnchor, constant: xConstant ?? 0).isActive = true
-            view.centerYAnchor.constraint(equalTo: parantView.centerYAnchor, constant: yConstant ?? 0).isActive = true
+    private func setViews() {
+        setViewsConstraints()
+        navigationController?.navigationBar.isHidden = false
+        view.backgroundColor = UIColor(red: chosenColor.r, green: chosenColor.g, blue: chosenColor.b,
+                                       alpha: 1)
+        chosenColorView.backgroundColor = UIColor(red: chosenColor.r,
+                                                  green: chosenColor.g, blue: chosenColor.b, alpha: 1)
+        colorHexNumberTextField.text = chosenColor.hex
+        chosenColorView.addGestureRecognizer(tapGesture)
+        tapGesture.addTarget(self, action: #selector(chosenColorTapped))
+        tintGradientLayer = makeGradientLayerWith(width: UIScreen.main.bounds.width * 0.8,
+                                                  height: UIScreen.main.bounds.width * 0.8,
+                                                  colors: [UIColor.black.cgColor,
+                                                           UIColor(red: chosenColor.r,
+                                                                   green: chosenColor.g,
+                                                                   blue: chosenColor.b,
+                                                                   alpha: 1).cgColor, UIColor.white.cgColor],
+                                                  cornerRadius: UIScreen.main.bounds.width * 0.4)
+        tintColorCircleView.layer.insertSublayer(tintGradientLayer, at: 0)
+        colorCircleGradientLayer = makeGradientLayerWith(width: UIScreen.main.bounds.width * 0.8 - 30,
+                                                         height: UIScreen.main.bounds.width * 0.8 - 30,
+                                                         colors: [UIColor.red.cgColor,
+                                                                  UIColor.orange.cgColor,
+                                                                  UIColor.yellow.cgColor,
+                                                                  UIColor.green.cgColor,
+                                                                  UIColor.cyan.cgColor,
+                                                                  UIColor.blue.cgColor,
+                                                                  UIColor.purple.cgColor,
+                                                                  UIColor.systemPink.cgColor],
+                                                         gradientType: .conic,
+                                                         cornerRadius: (UIScreen.main.bounds.width * 0.4 - 15),
+                                                         borderWidth: 10, borderColor: UIColor.white.cgColor)
+        colorCircleView.layer.insertSublayer(colorCircleGradientLayer, at: 0)
+    }
+    
+    private func setViewsConstraints() {
+        setConstraintsOn(view: backView, parantView: view,
+                         height: UIScreen.main.bounds.height * 0.9, leadingConstant: 0, bottomConstant: 0,
+                         trailingConstant: 0)
+        setConstraintsOn(view: tintColorCircleView, parantView: backView,
+                         height: UIScreen.main.bounds.width * 0.8, width: UIScreen.main.bounds.width * 0.8,
+                         topConstant: 30, centeringxConstant: 0)
+        setConstraintsOn(view: colorCircleView,
+                         parantView: tintColorCircleView,
+                         height: UIScreen.main.bounds.width * 0.8 - 30,
+                         width: UIScreen.main.bounds.width * 0.8 - 30, centeringxConstant: 0,
+                         centeringyConstant: 0)
+        setConstraintsOn(view: chosenColorView, parantView: backView,
+                         height: 50, width: 50, leadingConstant: 30, centeringyConstant: 0)
+        setConstraintsOn(view: colorHexNumberTextField, parantView: backView, height: 50,
+        trailingConstant: -30, centeringyConstant: 0)
+        colorHexNumberTextField.leadingAnchor.constraint(equalTo: chosenColorView.trailingAnchor,
+        constant: 10).isActive = true
+        setConstraintsOn(view: loupeView, parantView: view, manualConstraints: false)
+        setConstraintsOn(view: loupeColorView, parantView: loupeView,
+                         height: 60, width: 60, centeringxConstant: 0, centeringyConstant: -16)
+        
+    }
+    
+    private func makeGradientLayerWith(width: CGFloat, height: CGFloat,
+                                       colors: [CGColor],
+                                       gradientType: CAGradientLayerType? = nil,
+                                       cornerRadius: CGFloat? = nil,
+                                       borderWidth: CGFloat? = nil, borderColor: CGColor? = nil) -> CAGradientLayer {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        if let gradientType = gradientType {
+            gradientLayer.type = gradientType
         }
+        if gradientType == .conic {
+            let colorsCount = colors.count
+            var locations: [NSNumber] = [0]
+            for location in 1...(colorsCount - 1) {
+                locations.append(NSNumber(value: Double(location) / (Double(colorsCount) - 1)))
+            }
+            gradientLayer.locations = locations
+            gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
+            gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        }
+        gradientLayer.colors = colors
+        if let cornerRadius = cornerRadius {
+            gradientLayer.cornerRadius = cornerRadius
+        }
+        if let borderWidth = borderWidth {
+            gradientLayer.borderWidth = borderWidth
+        }
+        if let borderColor = borderColor {
+            gradientLayer.borderColor = borderColor
+        }
+        return gradientLayer
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,7 +172,7 @@ class ColorCircleViewController: UIViewController {
                      isOnColorCircle: true)
             
         } else {
-            if !outOfColor(location: locationOnTintLine, view: backgroundColorCircleView, borderSize: 0) {
+            if !outOfColor(location: locationOnTintLine, view: tintColorCircleView, borderSize: 0) {
                 setloupe(mainLocation: locationOnMainView,
                          secondaryLocation: locationOnTintLine,
                          isOnColorCircle: false)
@@ -114,46 +188,14 @@ class ColorCircleViewController: UIViewController {
         loupeView.frame = CGRect(x: mainLocation.x - 39,
                                  y: mainLocation.y - 110,
                                  width: 78, height: 110)
-        let color = backgroundColorCircleView.getPixelColorAt(point: secondaryLocation)
+        let color = tintColorCircleView.getPixelColorAt(point: secondaryLocation)
         loupeColorView.backgroundColor = color
-        if isOnColorCircle { backgroundGradientLayer.colors = [UIColor.black.cgColor,
+        view.backgroundColor = color
+        chosenColorView.backgroundColor = color
+        colorHexNumberTextField.textColor = color
+        if isOnColorCircle { tintGradientLayer.colors = [UIColor.black.cgColor,
                                                                color.cgColor,
                                                                UIColor.white.cgColor] }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        guard let firstLocation = touches.first?.location(in: self.view),
-            let colorCircleLocation = touches.first?.location(in: colorCircleView),
-            let backgroundColorCircleLocation = touches.first?.location(in: backgroundColorCircleView) else { return }
-        selectColorOn(locationOnMainView: firstLocation,
-                      locationOnColorCircle: colorCircleLocation,
-                      locationOnTintLine: backgroundColorCircleLocation)
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
-        guard let destinationLocation = touches.first?.location(in: self.view),
-            let colorLocation = touches.first?.location(in: colorCircleView),
-            let backgroundColorCircleLocation = touches.first?.location(in: backgroundColorCircleView) else { return }
-        selectColorOn(locationOnMainView: destinationLocation,
-                      locationOnColorCircle: colorLocation,
-                      locationOnTintLine: backgroundColorCircleLocation)
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        guard let lastColorCircleLocation = touches.first?.location(in: colorCircleView),
-            let lastColorTintLocation = touches.first?.location(in: backgroundColorCircleView) else { return }
-        if !outOfColor(location: lastColorCircleLocation, view: colorCircleView, borderSize: 10) {
-            setFinal(fromView: colorCircleView, location: lastColorCircleLocation)
-        } else {
-            if !outOfColor(location: lastColorTintLocation, view: backgroundColorCircleView, borderSize: 0) {
-                setFinal(fromView: backgroundColorCircleView, location: lastColorTintLocation)
-            } else {
-                loupeView.isHidden = true
-            }
-        }
     }
     
     private func setFinal(fromView: UIView, location: CGPoint) {
@@ -163,10 +205,44 @@ class ColorCircleViewController: UIViewController {
                                                        Int(color[1] * 255),
                                                        Int(color[2] * 255))
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
+        colorHexNumberTextField.text = chosenColor.hex
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        guard let firstLocation = touches.first?.location(in: self.view),
+            let colorCircleLocation = touches.first?.location(in: colorCircleView),
+            let backgroundColorCircleLocation = touches.first?.location(in: tintColorCircleView) else { return }
+        selectColorOn(locationOnMainView: firstLocation,
+                      locationOnColorCircle: colorCircleLocation,
+                      locationOnTintLine: backgroundColorCircleLocation)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        guard let destinationLocation = touches.first?.location(in: self.view),
+            let colorLocation = touches.first?.location(in: colorCircleView),
+            let backgroundColorCircleLocation = touches.first?.location(in: tintColorCircleView) else { return }
+        selectColorOn(locationOnMainView: destinationLocation,
+                      locationOnColorCircle: colorLocation,
+                      locationOnTintLine: backgroundColorCircleLocation)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        loupeView.isHidden = true
+        guard let lastColorCircleLocation = touches.first?.location(in: colorCircleView),
+            let lastColorTintLocation = touches.first?.location(in: tintColorCircleView) else { return }
+        if !outOfColor(location: lastColorCircleLocation, view: colorCircleView, borderSize: 10) {
+            setFinal(fromView: colorCircleView, location: lastColorCircleLocation)
+        } else {
+            if !outOfColor(location: lastColorTintLocation, view: tintColorCircleView, borderSize: 0) {
+                setFinal(fromView: tintColorCircleView, location: lastColorTintLocation)
+            }
+        }
     }
     
     @objc private func chosenColorTapped() {
-        loupeView.isHidden = true
         self.performSegue(withIdentifier: "showColorDetail", sender: nil)
     }
     

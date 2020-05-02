@@ -27,7 +27,6 @@ class MainViewController: UIViewController {
         let appLogo = UIImageView()
         guard let appLogoImage = UIImage(named: "logo2") else {fatalError("No such logo image")}
         appLogo.image = appLogoImage
-        appLogo.translatesAutoresizingMaskIntoConstraints = false
         return appLogo
     }()
     private let color: UIButton = {
@@ -35,7 +34,6 @@ class MainViewController: UIViewController {
         color.setTitle("Colors", for: .normal)
         color.setTitleColor(UIColor(named: "Color"), for: .normal)
         color.titleLabel?.font = color.titleLabel?.font.withSize(CGFloat(30))
-        color.translatesAutoresizingMaskIntoConstraints = false
         color.addTarget(self, action: #selector(showColorList), for: .touchUpInside)
         return color
     }()
@@ -44,7 +42,6 @@ class MainViewController: UIViewController {
         images.setTitle("Images", for: .normal)
         images.setTitleColor(UIColor(named: "Color"), for: .normal)
         images.titleLabel?.font = images.titleLabel?.font.withSize(CGFloat(30))
-        images.translatesAutoresizingMaskIntoConstraints = false
         images.addTarget(self, action: #selector(openPhotoLibrary), for: .touchUpInside)
         return images
     }()
@@ -53,14 +50,12 @@ class MainViewController: UIViewController {
         colorCircle.setTitle("Color circle", for: .normal)
         colorCircle.setTitleColor(UIColor(named: "Color"), for: .normal)
         colorCircle.titleLabel?.font = colorCircle.titleLabel?.font.withSize(CGFloat(30))
-        colorCircle.translatesAutoresizingMaskIntoConstraints = false
         colorCircle.addTarget(self, action: #selector(showColorCircle), for: .touchUpInside)
         return colorCircle
     }()
     private let userProfile: UIButton = {
         let userProfile = UIButton()
         userProfile.setBackgroundImage(UIImage(named: "userProfile"), for: .normal)
-        userProfile.translatesAutoresizingMaskIntoConstraints = false
         userProfile.heightAnchor.constraint(equalToConstant: 30).isActive = true
         userProfile.widthAnchor.constraint(equalToConstant: 30).isActive = true
         return userProfile
@@ -68,7 +63,6 @@ class MainViewController: UIViewController {
     private let camera: UIButton = {
         let camera = UIButton()
         camera.setBackgroundImage(UIImage(named: "camera"), for: .normal)
-        camera.translatesAutoresizingMaskIntoConstraints = false
         camera.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
         return camera
     }()
@@ -86,14 +80,12 @@ class MainViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = MainViewController.backgroundColorArray[MainViewController.backgroundColorNumber]
-        view.addSubview(appLogo)
-        view.addSubview(color)
-        view.addSubview(images)
-        view.addSubview(colorCircle)
-        view.addSubview(userProfile)
-        view.addSubview(camera)
-        appLogo.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        appLogo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        setConstraintsOn(view: appLogo, parantView: view, leadingConstant: 20, centeringyConstant: 0)
+        setConstraintsOn(view: color, parantView: view)
+        setConstraintsOn(view: images, parantView: view)
+        setConstraintsOn(view: colorCircle, parantView: view)
+        setConstraintsOn(view: userProfile, parantView: view, topConstant: 80, trailingConstant: -50)
+        setConstraintsOn(view: camera, parantView: view, leadingConstant: 20)
         colorCenterConstraint = color.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         colorCenterConstraint.isActive = true
         color.topAnchor.constraint(equalTo: appLogo.bottomAnchor, constant: 50).isActive = true
@@ -103,9 +95,6 @@ class MainViewController: UIViewController {
         colorCircleCenterConstraint = colorCircle.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100)
         colorCircleCenterConstraint.isActive = true
         colorCircle.topAnchor.constraint(equalTo: images.bottomAnchor, constant: 20).isActive = true
-        userProfile.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
-        userProfile.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
-        camera.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         camera.topAnchor.constraint(equalTo: colorCircle.bottomAnchor, constant: 30).isActive = true
     }
     

@@ -81,9 +81,6 @@ class ThreeColorsViewController: UIViewController {
         colorView.backgroundColor = UIColor(red: rParameter, green: gParameter, blue: bParameter, alpha: 1)
         colorView.layer.cornerRadius = colorView.bounds.height / 2
         colorView.setNeedsDisplay()
-        print(rParameter)
-        print(gParameter)
-        print(bParameter)
         guard let colorModel = ColorsFromFileData.shared.makeModelOfColor(rParameter, gParameter, bParameter) else { return }
         colorNameLabel.text = colorModel.name
         colorsOnPage.append(colorModel)

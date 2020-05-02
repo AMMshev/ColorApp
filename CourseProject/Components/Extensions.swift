@@ -28,36 +28,55 @@ extension UIView {
             self.layer.render(in: context)
             
             color = UIColor(red: CGFloat(pixel[0])/255.0,
-                                green: CGFloat(pixel[1])/255.0,
-                                blue: CGFloat(pixel[2])/255.0,
-                                alpha: CGFloat(pixel[3])/255.0)
+                            green: CGFloat(pixel[1])/255.0,
+                            blue: CGFloat(pixel[2])/255.0,
+                            alpha: CGFloat(pixel[3])/255.0)
         }
         return color
     }
     
-    func makeConicGradientBackground() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 30, height: UIScreen.main.bounds.width - 30)
-        gradientLayer.colors = [UIColor.red.cgColor, UIColor.orange.cgColor, UIColor.yellow.cgColor, UIColor.green.cgColor, UIColor.cyan.cgColor, UIColor.blue.cgColor, UIColor.purple.cgColor, UIColor.systemPink.cgColor]
-        gradientLayer.cornerRadius = gradientLayer.frame.height / 2
-        gradientLayer.type = .conic
-        gradientLayer.locations = [0, 0.14, 0.29, 0.43, 0.57, 0.71, 0.85, 1]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.borderWidth = 10
-        gradientLayer.borderColor = UIColor.white.cgColor
-        layer.insertSublayer(gradientLayer, at: 0)
+}
+
+extension NSObject {
+    func setConstraintsOn(view: UIView,
+                          parantView: UIView,
+                          manualConstraints: Bool = true,
+                          height: CGFloat? = nil,
+                          width: CGFloat? = nil,
+                          topConstant: CGFloat? = nil,
+                          leadingConstant: CGFloat? = nil,
+                          bottomConstant: CGFloat? = nil,
+                          trailingConstant: CGFloat? = nil,
+                          centeringxConstant: CGFloat? = nil,
+                          centeringyConstant: CGFloat? = nil) {
+        parantView.addSubview(view)
+        if manualConstraints {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        if let height = height {
+            view.heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+        if let width = width {
+            view.widthAnchor.constraint(equalToConstant: width).isActive = true
+        }
+        if let topConstant = topConstant {
+            view.topAnchor.constraint(equalTo: parantView.topAnchor, constant: topConstant).isActive = true
+        }
+        if let bottomConstant = bottomConstant {
+            view.bottomAnchor.constraint(equalTo: parantView.bottomAnchor, constant: bottomConstant).isActive = true
+        }
+        if let centeringxConstant = centeringxConstant {
+            view.centerXAnchor.constraint(equalTo: parantView.centerXAnchor, constant: centeringxConstant).isActive = true
+        }
+        if let centeringyConstant = centeringyConstant {
+            view.centerYAnchor.constraint(equalTo: parantView.centerYAnchor, constant: centeringyConstant).isActive = true
+        }
+        if let leadingConstant = leadingConstant {
+            view.leadingAnchor.constraint(equalTo: parantView.leadingAnchor, constant: leadingConstant).isActive = true
+        }
+        if let trailingConstant = trailingConstant {
+            view.trailingAnchor.constraint(equalTo: parantView.trailingAnchor, constant: trailingConstant).isActive = true
+        }
     }
     
-    func makeConicGradient() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-        gradientLayer.colors = [UIColor.black.cgColor, UIColor.red.cgColor, UIColor.white.cgColor]
-        gradientLayer.cornerRadius = gradientLayer.frame.height / 2
-        gradientLayer.type = .axial
-//        gradientLayer.locations = [0, 0.33, 0.67, 1]
-//        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
-//        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        layer.insertSublayer(gradientLayer, at: 0)
-    }
 }
