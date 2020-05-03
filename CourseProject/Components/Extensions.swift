@@ -37,6 +37,32 @@ extension UIView {
     
 }
 
+extension UIColor {
+    convenience init(red: Int = 0, green: Int = 0, blue: Int = 0, alpha: Int = 1) {
+        precondition(0...255 ~= red   &&
+            0...255 ~= green &&
+            0...255 ~= blue  &&
+            0...1 ~= alpha, "input range is out of range")
+        self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha))
+    }
+    
+    func getHSB() -> (hue:Double, saturation:Double, brightness:Double, alpha:Double)? {
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        if self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
+            let iHue = Double(hue)
+            let iSaturation = Double(saturation)
+            let iBrightness = Double(brightness)
+            let iAlpha = Double(alpha)
+            return (iHue,iSaturation,iBrightness,iAlpha)
+        } else {
+            return nil
+        }
+    }
+}
+
 extension NSObject {
     func setConstraintsOn(view: UIView,
                           parantView: UIView,

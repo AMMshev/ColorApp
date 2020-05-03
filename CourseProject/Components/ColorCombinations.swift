@@ -19,53 +19,50 @@ class Combinations {
         self.originslColorBrightness = originslColorBrightness
     }
     
-    func mono() {
-    }
-    
-    func contrast(angleForNearColor: Double) -> [CombinationColor] {
-        let secondColor = CombinationColor(colorHue: originalColorHue + 0.5 + angleForNearColor, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        var combinationValues = [CombinationColor]()
-        combinationValues.append(secondColor)
-        return combinationValues
-    }
-    
-    func triad(angleBetweenTwoColors: Double) -> [CombinationColor] {
-        let secondColor = CombinationColor(colorHue: originalColorHue + (1.0 - angleBetweenTwoColors) / 2, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        let thirdColor = CombinationColor(colorHue: (secondColor.colorHue) + angleBetweenTwoColors, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        var combinationValues = [CombinationColor]()
-        combinationValues.append(secondColor)
-        combinationValues.append(thirdColor)
-        return combinationValues
-    }
-    
-    func tetrad(angleToCombinatedColor: Double) -> [CombinationColor] {
-        let secondColor = CombinationColor(colorHue: originalColorHue + 0.5, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        let thirdColor = CombinationColor(colorHue: originalColorHue + angleToCombinatedColor, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        let fourthColor = CombinationColor(colorHue: (thirdColor.colorHue) + 0.5, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        var combinationValues = [CombinationColor]()
-        combinationValues.append(secondColor)
-        combinationValues.append(thirdColor)
-        combinationValues.append(fourthColor)
-        return combinationValues
-    }
-    
-    func analog(angleToSecondColor: Double) -> [CombinationColor] {
-        let secondColor = CombinationColor(colorHue: (originalColorHue + angleToSecondColor), colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        let thirdColor = CombinationColor(colorHue: originalColorHue - angleToSecondColor + 1, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        var combinationValues = [CombinationColor]()
-        combinationValues.append(secondColor)
-        combinationValues.append(thirdColor)
-        return combinationValues
-    }
-    
-    func accentAnalog(angleToThirdColor: Double) -> [CombinationColor] {
-        let secondColor = CombinationColor(colorHue: originalColorHue + 0.5, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        let thirdColor = CombinationColor(colorHue: originalColorHue + angleToThirdColor, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        let fourthColor = CombinationColor(colorHue: originalColorHue - angleToThirdColor + 1, colorSaturation: originalColorSaturation, colorBrightness: originslColorBrightness)
-        var combinationValues = [CombinationColor]()
-        combinationValues.append(secondColor)
-        combinationValues.append(thirdColor)
-        combinationValues.append(fourthColor)
+    func combination(type: CombinationMethods) -> [CombinationColor] {
+        var secondColor: CombinationColor?
+        var thirdColor: CombinationColor?
+        var fourthColor: CombinationColor?
+        switch type {
+        case .analogous:
+            secondColor = CombinationColor(colorHue: originalColorHue + 1 / 8,
+                                           colorSaturation: originalColorSaturation,
+                                           colorBrightness: originslColorBrightness)
+            thirdColor = CombinationColor(colorHue: originalColorHue - 1 / 8 + 1,
+                                          colorSaturation: originalColorSaturation,
+                                          colorBrightness: originslColorBrightness)
+        case .complementary:
+            secondColor = CombinationColor(colorHue: originalColorHue + 0.5,
+                                           colorSaturation: originalColorSaturation,
+                                           colorBrightness: originslColorBrightness)
+        case .tetradic:
+            secondColor = CombinationColor(colorHue: originalColorHue + 0.5,
+                                           colorSaturation: originalColorSaturation,
+                                           colorBrightness: originslColorBrightness)
+            thirdColor = CombinationColor(colorHue: originalColorHue + 0.25,
+                                          colorSaturation: originalColorSaturation,
+                                          colorBrightness: originslColorBrightness)
+            fourthColor = CombinationColor(colorHue: originalColorHue + 0.75,
+                                           colorSaturation: originalColorSaturation,
+                                           colorBrightness: originslColorBrightness)
+        case .triadic:
+            secondColor = CombinationColor(colorHue: originalColorHue + 1 / 3,
+                                           colorSaturation: originalColorSaturation,
+                                           colorBrightness: originslColorBrightness)
+            thirdColor = CombinationColor(colorHue: originalColorHue + 2 / 3,
+                                          colorSaturation: originalColorSaturation,
+                                          colorBrightness: originslColorBrightness)
+        }
+        var combinationValues: [CombinationColor] = []
+        if let secondColor = secondColor {
+            combinationValues.append(secondColor)
+        }
+        if let thirdColor = thirdColor {
+            combinationValues.append(thirdColor)
+        }
+        if let fourthColor = fourthColor {
+            combinationValues.append(fourthColor)
+        }
         return combinationValues
     }
 }

@@ -14,10 +14,11 @@ class ColorCircleViewController: UIViewController {
     private var tintGradientLayer = CAGradientLayer()
     private var colorCircleGradientLayer = CAGradientLayer()
     private var chosenColor: ColorModel = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
+    private var colorOnTap = UIColor()
     private let tintColorCircleView = UIView()
+    private var combinationMethod: CombinationMethods?
     private let colorCircleView: UIView = {
         let colorCircleView = UIView()
-//        colorCircleView.isUserInteractionEnabled = true
         return colorCircleView
     }()
     private let loupeView: UIImageView = {
@@ -31,7 +32,6 @@ class ColorCircleViewController: UIViewController {
     private let loupeColorView: UIView = {
         let loopColorView = UIView()
         loopColorView.layer.cornerRadius = 30
-        loopColorView.isUserInteractionEnabled = true
         return loopColorView
     }()
     private let backView: UIView = {
@@ -41,7 +41,7 @@ class ColorCircleViewController: UIViewController {
         backView.layer.shadowOpacity = 1
         backView.layer.shadowRadius = 10
         backView.layer.shadowOffset = CGSize(width: 0, height: 5)
-        backView.backgroundColor = .white
+        backView.backgroundColor = UIColor(named: "Color")
         return backView
     }()
     private let chosenColorView: UIView = {
@@ -55,18 +55,62 @@ class ColorCircleViewController: UIViewController {
         colorHexNumberTextField.textAlignment = .center
         return colorHexNumberTextField
     }()
-    var gradientColors: [CGColor] = [UIColor.red.cgColor,
-                                     UIColor.orange.cgColor,
-                                     UIColor.yellow.cgColor,
-                                     UIColor.green.cgColor,
-                                     UIColor.cyan.cgColor,
-                                     UIColor.blue.cgColor,
-                                     UIColor.purple.cgColor,
-                                     UIColor.systemPink.cgColor]
+    private let firstColorView: UIView = {
+        let firstColorView = UIView()
+        firstColorView.translatesAutoresizingMaskIntoConstraints = false
+        firstColorView.isHidden = true
+        return firstColorView
+    }()
+    private let firstColorTapGesture = UITapGestureRecognizer()
+    private let secondColorView: UIView = {
+        let secondColorView = UIView()
+        secondColorView.translatesAutoresizingMaskIntoConstraints = false
+        secondColorView.isHidden = true
+        return secondColorView
+    }()
+    private let secondColorTapGesture = UITapGestureRecognizer()
+    private let thirdColorView: UIView = {
+        let thirdColorView = UIView()
+        thirdColorView.translatesAutoresizingMaskIntoConstraints = false
+        thirdColorView.isHidden = true
+        return thirdColorView
+    }()
+    private let thirdColorTapGesture = UITapGestureRecognizer()
+    private let fourthColorView: UIView = {
+        let fourthColorView = UIView()
+        fourthColorView.translatesAutoresizingMaskIntoConstraints = false
+        fourthColorView.isHidden = true
+        return fourthColorView
+    }()
+    private let fourthColorTapGesture = UITapGestureRecognizer()
+    private var combinationsStack = UIStackView(arrangedSubviews: [])
+    private let combinations = ["choose a combination", "complementary", "analogous", "triadic", "tetradic"]
+    private var combinationPicker = UIPickerView()
+    var gradientColors: [CGColor] = [UIColor.red.cgColor, UIColor.orange.cgColor, UIColor.yellow.cgColor,
+                                     UIColor.green.cgColor, UIColor.cyan.cgColor, UIColor.blue.cgColor,
+                                     UIColor.purple.cgColor, UIColor.systemPink.cgColor]
+    private var comboColors: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setViews()
+        firstColorTapGesture.addTarget(self, action: #selector(combinationColorTapped(sender:)))
+        firstColorView.addGestureRecognizer(firstColorTapGesture)
+        secondColorTapGesture.addTarget(self, action: #selector(combinationColorTapped(sender:)))
+        secondColorView.addGestureRecognizer(secondColorTapGesture)
+        thirdColorTapGesture.addTarget(self, action: #selector(combinationColorTapped(sender:)))
+        thirdColorView.addGestureRecognizer(thirdColorTapGesture)
+        fourthColorTapGesture.addTarget(self, action: #selector(combinationColorTapped(sender:)))
+        fourthColorView.addGestureRecognizer(fourthColorTapGesture)
+    }
+    
+    @objc func combinationColorTapped(sender: UITapGestureRecognizer) {
+        guard let colorParamenters = sender.view?.backgroundColor?.cgColor.components else { return }
+        chosenColor = ColorsFromFileData.shared.makeModelOfColor(Int(colorParamenters[0] * 255),
+                                                                 Int(colorParamenters[1] * 255),
+                                                                 Int(colorParamenters[2] * 255))
+        ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
+        performSegue(withIdentifier: "showColorDetail", sender: nil)
     }
     
     private func setViews() {
@@ -92,6 +136,16 @@ class ColorCircleViewController: UIViewController {
                                                          cornerRadius: (UIScreen.main.bounds.width * 0.4 - 15),
                                                          borderWidth: 10, borderColor: UIColor.white.cgColor)
         colorCircleView.layer.insertSublayer(colorCircleGradientLayer, at: 0)
+        combinationsStack.addArrangedSubview(firstColorView)
+        combinationsStack.addArrangedSubview(secondColorView)
+        combinationsStack.addArrangedSubview(thirdColorView)
+        combinationsStack.addArrangedSubview(fourthColorView)
+        combinationsStack.axis = .horizontal
+        combinationsStack.alignment = .fill
+        combinationsStack.distribution = .fillEqually
+        combinationsStack.spacing = 5
+        combinationPicker.delegate = self
+        combinationPicker.dataSource = self
     }
     
     private func setViewsConstraints() {
@@ -116,7 +170,10 @@ class ColorCircleViewController: UIViewController {
         setConstraintsOn(view: loupeView, parantView: view, manualConstraints: false)
         setConstraintsOn(view: loupeColorView, parantView: loupeView,
                          height: 60, width: 60, centeringxConstant: 0, centeringyConstant: -16)
-        
+        setConstraintsOn(view: combinationsStack, parantView: backView, height: 30, leadingConstant: 20, trailingConstant: -20)
+        combinationsStack.topAnchor.constraint(equalTo: chosenColorView.bottomAnchor, constant: 10).isActive = true
+        setConstraintsOn(view: combinationPicker, parantView: view, centeringxConstant: 0)
+        combinationPicker.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor).isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,13 +195,13 @@ class ColorCircleViewController: UIViewController {
                      isOnColorCircle: true)
             
         }
-            if !outOfColor(location: locationOnTintLine, view: tintColorCircleView, borderSize: 0) {
-                setloupe(mainLocation: locationOnMainView,
-                         secondaryLocation: locationOnTintLine,
-                         isOnColorCircle: false)
-            } else {
-                loupeView.isHidden = true
-            }
+        if !outOfColor(location: locationOnTintLine, view: tintColorCircleView, borderSize: 0) {
+            setloupe(mainLocation: locationOnMainView,
+                     secondaryLocation: locationOnTintLine,
+                     isOnColorCircle: false)
+        } else {
+            loupeView.isHidden = true
+        }
     }
     
     private func setloupe(mainLocation: CGPoint,
@@ -153,13 +210,13 @@ class ColorCircleViewController: UIViewController {
         loupeView.frame = CGRect(x: mainLocation.x - 39,
                                  y: mainLocation.y - 110,
                                  width: 78, height: 110)
-        let color = tintColorCircleView.getPixelColorAt(point: secondaryLocation)
-        loupeColorView.backgroundColor = color
-        view.backgroundColor = color
-        chosenColorView.backgroundColor = color
-        colorHexNumberTextField.textColor = color
+        colorOnTap = tintColorCircleView.getPixelColorAt(point: secondaryLocation)
+        loupeColorView.backgroundColor = colorOnTap
+        view.backgroundColor = colorOnTap
+        chosenColorView.backgroundColor = colorOnTap
+        colorHexNumberTextField.textColor = colorOnTap
         if isOnColorCircle { tintGradientLayer.colors = [UIColor.black.cgColor,
-                                                         color.cgColor,
+                                                         colorOnTap.cgColor,
                                                          UIColor.white.cgColor] }
     }
     
@@ -181,6 +238,7 @@ class ColorCircleViewController: UIViewController {
         selectColorOn(locationOnMainView: firstLocation,
                       locationOnColorCircle: colorCircleLocation,
                       locationOnTintLine: tintColorCircleLocation)
+        changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -191,11 +249,12 @@ class ColorCircleViewController: UIViewController {
         selectColorOn(locationOnMainView: destinationLocation,
                       locationOnColorCircle: colorLocation,
                       locationOnTintLine: tintColorCircleLocation)
+        changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-            self.loupeView.isHidden = true
+        self.loupeView.isHidden = true
         guard let lastColorCircleLocation = touches.first?.location(in: colorCircleView),
             let lastColorTintLocation = touches.first?.location(in: tintColorCircleView) else { return }
         if !outOfColor(location: lastColorCircleLocation, view: colorCircleView, borderSize: 10) {
@@ -217,4 +276,97 @@ class ColorCircleViewController: UIViewController {
             destinationVC?.color = chosenColor
         }
     }
+}
+
+extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        combinations.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        combinations[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch row {
+        case 1:
+            combinationMethod = .complementary
+        case 2:
+            combinationMethod = .analogous
+        case 3:
+            combinationMethod = .triadic
+        case 4:
+            combinationMethod = .tetradic
+        default:
+            combinationMethod = nil
+        }
+        changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
+    }
+    
+    func changeCombination(colors: [CombinationColor]) {
+        firstColorView.backgroundColor = colorOnTap
+        switch colors.count {
+        case 1:
+            secondColorView.backgroundColor = UIColor(hue: CGFloat(colors[0].colorHue),
+                                                      saturation: CGFloat(colors[0].colorSaturation),
+                                                      brightness: CGFloat(colors[0].colorBrightness),
+                                                      alpha: 1)
+            thirdColorView.isHidden = true
+            fourthColorView.isHidden = true
+        case 2:
+            secondColorView.backgroundColor = UIColor(hue: CGFloat(colors[0].colorHue),
+                                                      saturation: CGFloat(colors[0].colorSaturation),
+                                                      brightness: CGFloat(colors[0].colorBrightness),
+                                                      alpha: 1)
+            thirdColorView.backgroundColor = UIColor(hue: CGFloat(colors[1].colorHue),
+                                                     saturation: CGFloat(colors[1].colorSaturation),
+                                                     brightness: CGFloat(colors[1].colorBrightness),
+                                                     alpha: 1)
+            fourthColorView.isHidden = true
+        case 3:
+            secondColorView.backgroundColor = UIColor(hue: CGFloat(colors[0].colorHue),
+                                                      saturation: CGFloat(colors[0].colorSaturation),
+                                                      brightness: CGFloat(colors[0].colorBrightness),
+                                                      alpha: 1)
+            thirdColorView.backgroundColor = UIColor(hue: CGFloat(colors[1].colorHue),
+                                                     saturation: CGFloat(colors[1].colorSaturation),
+                                                     brightness: CGFloat(colors[1].colorBrightness),
+                                                     alpha: 1)
+            fourthColorView.backgroundColor = UIColor(hue: CGFloat(colors[2].colorHue),
+                                                      saturation: CGFloat(colors[2].colorSaturation),
+                                                      brightness: CGFloat(colors[2].colorBrightness),
+                                                      alpha: 1)
+        default:
+            combinationsStack.arrangedSubviews.forEach({$0.isHidden = true})
+        }
+    }
+    
+    func changeCombinationsColor(combinationMethod: CombinationMethods?, color: UIColor) {
+        guard let combinationMethod = combinationMethod,
+            let hsb = color.getHSB() else {
+                combinationsStack.arrangedSubviews.forEach({$0.isHidden = true})
+                return }
+        combinationsStack.arrangedSubviews.forEach({$0.isHidden = false})
+        let colorCombinations = Combinations(originalColorHue: hsb.hue,
+                                             originalColorSaturation: hsb.saturation,
+                                             originslColorBrightness: hsb.brightness)
+        switch combinationMethod {
+        case .complementary:
+            changeCombination(colors: colorCombinations.combination(type: .complementary))
+        case .triadic:
+            changeCombination(colors: colorCombinations.combination(type: .triadic))
+        case .tetradic:
+            changeCombination(colors: colorCombinations.combination(type: .tetradic))
+        case .analogous:
+            changeCombination(colors: colorCombinations.combination(type: .analogous))
+        }
+    }
+}
+
+enum CombinationMethods: String {
+    case complementary
+    case analogous
+    case triadic
+    case tetradic
 }

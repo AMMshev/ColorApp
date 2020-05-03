@@ -121,15 +121,6 @@ class MainViewController: UIViewController {
     }
 }
 
-extension UIColor {
-    convenience init(red: Int = 0, green: Int = 0, blue: Int = 0, alpha: Int = 1) {
-        precondition(0...255 ~= red   &&
-            0...255 ~= green &&
-            0...255 ~= blue  &&
-            0...1 ~= alpha, "input range is out of range")
-        self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha))
-    }
-}
 // MARK: - UIImagePickerController
 
 extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
