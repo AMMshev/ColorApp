@@ -31,8 +31,7 @@ class DetailColorViewController: UIViewController {
         navigationItem.title = color.name
         view.backgroundColor = UIColor(red: color.r, green: color.g, blue: color.b, alpha: 1)
         setConstraintsOn(view: infoStack, parantView: view,
-                         leadingConstant: 20, trailingConstant: 20, centeringyConstant: 0)
-        infoStack.axis = .horizontal
+                         leadingConstant: 20, trailingConstant: 0, centeringyConstant: 0)
         if  color.r < 125 &&
             color.r < 125 &&
             color.r < 125 {
@@ -51,5 +50,6 @@ class DetailColorViewController: UIViewController {
         HEXRGBValueLabel.text = "\(color.hex)\n\(color.r), \(color.g), \(color.b)"
         infoStack.addArrangedSubview(HEXRGBLabel)
         infoStack.addArrangedSubview(HEXRGBValueLabel)
+        infoStack.axis = .horizontal
     }
 }

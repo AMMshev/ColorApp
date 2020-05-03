@@ -13,7 +13,7 @@ class ColorCircleViewController: UIViewController {
     private let tapGesture = UITapGestureRecognizer()
     private var tintGradientLayer = CAGradientLayer()
     private var colorCircleGradientLayer = CAGradientLayer()
-    private var chosenColor: ColorModel = ColorModel(name: "Green", r: 0, g: 255, b: 0, hex: "#00ff00")
+    private var chosenColor: ColorModel = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
     private let tintColorCircleView = UIView()
     private let colorCircleView: UIView = {
         let colorCircleView = UIView()
@@ -55,6 +55,14 @@ class ColorCircleViewController: UIViewController {
         colorHexNumberTextField.textAlignment = .center
         return colorHexNumberTextField
     }()
+    var gradientColors: [CGColor] = [UIColor.red.cgColor,
+                                     UIColor.orange.cgColor,
+                                     UIColor.yellow.cgColor,
+                                     UIColor.green.cgColor,
+                                     UIColor.cyan.cgColor,
+                                     UIColor.blue.cgColor,
+                                     UIColor.purple.cgColor,
+                                     UIColor.systemPink.cgColor]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,11 +72,8 @@ class ColorCircleViewController: UIViewController {
     private func setViews() {
         setViewsConstraints()
         navigationController?.navigationBar.isHidden = false
-        view.backgroundColor = UIColor(red: chosenColor.r, green: chosenColor.g, blue: chosenColor.b,
-                                       alpha: 1)
         chosenColorView.backgroundColor = UIColor(red: chosenColor.r,
                                                   green: chosenColor.g, blue: chosenColor.b, alpha: 1)
-        colorHexNumberTextField.text = chosenColor.hex
         chosenColorView.addGestureRecognizer(tapGesture)
         tapGesture.addTarget(self, action: #selector(chosenColorTapped))
         tintGradientLayer = makeGradientLayerWith(width: UIScreen.main.bounds.width * 0.8,
@@ -82,14 +87,7 @@ class ColorCircleViewController: UIViewController {
         tintColorCircleView.layer.insertSublayer(tintGradientLayer, at: 0)
         colorCircleGradientLayer = makeGradientLayerWith(width: UIScreen.main.bounds.width * 0.8 - 30,
                                                          height: UIScreen.main.bounds.width * 0.8 - 30,
-                                                         colors: [UIColor.red.cgColor,
-                                                                  UIColor.orange.cgColor,
-                                                                  UIColor.yellow.cgColor,
-                                                                  UIColor.green.cgColor,
-                                                                  UIColor.cyan.cgColor,
-                                                                  UIColor.blue.cgColor,
-                                                                  UIColor.purple.cgColor,
-                                                                  UIColor.systemPink.cgColor],
+                                                         colors: gradientColors,
                                                          gradientType: .conic,
                                                          cornerRadius: (UIScreen.main.bounds.width * 0.4 - 15),
                                                          borderWidth: 10, borderColor: UIColor.white.cgColor)
@@ -111,46 +109,13 @@ class ColorCircleViewController: UIViewController {
         setConstraintsOn(view: chosenColorView, parantView: backView,
                          height: 50, width: 50, leadingConstant: 30, centeringyConstant: 0)
         setConstraintsOn(view: colorHexNumberTextField, parantView: backView, height: 50,
-        trailingConstant: -30, centeringyConstant: 0)
+                         trailingConstant: -30, centeringyConstant: 0)
         colorHexNumberTextField.leadingAnchor.constraint(equalTo: chosenColorView.trailingAnchor,
-        constant: 10).isActive = true
+                                                         constant: 10).isActive = true
         setConstraintsOn(view: loupeView, parantView: view, manualConstraints: false)
         setConstraintsOn(view: loupeColorView, parantView: loupeView,
                          height: 60, width: 60, centeringxConstant: 0, centeringyConstant: -16)
         
-    }
-    
-    private func makeGradientLayerWith(width: CGFloat, height: CGFloat,
-                                       colors: [CGColor],
-                                       gradientType: CAGradientLayerType? = nil,
-                                       cornerRadius: CGFloat? = nil,
-                                       borderWidth: CGFloat? = nil, borderColor: CGColor? = nil) -> CAGradientLayer {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        if let gradientType = gradientType {
-            gradientLayer.type = gradientType
-        }
-        if gradientType == .conic {
-            let colorsCount = colors.count
-            var locations: [NSNumber] = [0]
-            for location in 1...(colorsCount - 1) {
-                locations.append(NSNumber(value: Double(location) / (Double(colorsCount) - 1)))
-            }
-            gradientLayer.locations = locations
-            gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
-            gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        }
-        gradientLayer.colors = colors
-        if let cornerRadius = cornerRadius {
-            gradientLayer.cornerRadius = cornerRadius
-        }
-        if let borderWidth = borderWidth {
-            gradientLayer.borderWidth = borderWidth
-        }
-        if let borderColor = borderColor {
-            gradientLayer.borderColor = borderColor
-        }
-        return gradientLayer
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -194,8 +159,8 @@ class ColorCircleViewController: UIViewController {
         chosenColorView.backgroundColor = color
         colorHexNumberTextField.textColor = color
         if isOnColorCircle { tintGradientLayer.colors = [UIColor.black.cgColor,
-                                                               color.cgColor,
-                                                               UIColor.white.cgColor] }
+                                                         color.cgColor,
+                                                         UIColor.white.cgColor] }
     }
     
     private func setFinal(fromView: UIView, location: CGPoint) {

@@ -79,4 +79,36 @@ extension NSObject {
         }
     }
     
+    func makeGradientLayerWith(width: CGFloat, height: CGFloat,
+                                       colors: [CGColor],
+                                       gradientType: CAGradientLayerType? = nil,
+                                       cornerRadius: CGFloat? = nil,
+                                       borderWidth: CGFloat? = nil, borderColor: CGColor? = nil) -> CAGradientLayer {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        if let gradientType = gradientType {
+            gradientLayer.type = gradientType
+        }
+        if gradientType == .conic {
+            let colorsCount = colors.count
+            var locations: [NSNumber] = [0]
+            for location in 1...(colorsCount - 1) {
+                locations.append(NSNumber(value: Double(location) / (Double(colorsCount) - 1)))
+            }
+            gradientLayer.locations = locations
+            gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
+            gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        }
+        gradientLayer.colors = colors
+        if let cornerRadius = cornerRadius {
+            gradientLayer.cornerRadius = cornerRadius
+        }
+        if let borderWidth = borderWidth {
+            gradientLayer.borderWidth = borderWidth
+        }
+        if let borderColor = borderColor {
+            gradientLayer.borderColor = borderColor
+        }
+        return gradientLayer
+    }
 }
