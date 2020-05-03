@@ -51,7 +51,9 @@ class ColorCircleViewController: UIViewController {
     }()
     private let colorHexNumberTextField: UITextField = {
         let colorHexNumberTextField = UITextField()
-        colorHexNumberTextField.borderStyle = .roundedRect
+        colorHexNumberTextField.layer.borderWidth = 1
+        colorHexNumberTextField.layer.borderColor = UIColor.gray.cgColor
+        colorHexNumberTextField.layer.cornerRadius = 5
         colorHexNumberTextField.textAlignment = .center
         return colorHexNumberTextField
     }()
@@ -170,7 +172,7 @@ class ColorCircleViewController: UIViewController {
         setConstraintsOn(view: loupeView, parantView: view, manualConstraints: false)
         setConstraintsOn(view: loupeColorView, parantView: loupeView,
                          height: 60, width: 60, centeringxConstant: 0, centeringyConstant: -16)
-        setConstraintsOn(view: combinationsStack, parantView: backView, height: 30, leadingConstant: 20, trailingConstant: -20)
+        setConstraintsOn(view: combinationsStack, parantView: backView, height: 30, leadingConstant: 30, trailingConstant: -30)
         combinationsStack.topAnchor.constraint(equalTo: chosenColorView.bottomAnchor, constant: 10).isActive = true
         setConstraintsOn(view: combinationPicker, parantView: view, centeringxConstant: 0)
         combinationPicker.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor).isActive = true
@@ -267,10 +269,10 @@ class ColorCircleViewController: UIViewController {
     }
     
     @objc private func chosenColorTapped(sender: UITapGestureRecognizer) {
-        guard let colorParamenters = sender.view?.backgroundColor?.cgColor.components else { return }
-        chosenColor = ColorsFromFileData.shared.makeModelOfColor(Int(colorParamenters[0] * 255),
-                                                                 Int(colorParamenters[1] * 255),
-                                                                 Int(colorParamenters[2] * 255))
+        guard let colorParameters = sender.view?.backgroundColor?.cgColor.components else { return }
+        chosenColor = ColorsFromFileData.shared.makeModelOfColor(Int(colorParameters[0] * 255),
+                                                                 Int(colorParameters[1] * 255),
+                                                                 Int(colorParameters[2] * 255))
         ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
         self.performSegue(withIdentifier: "showColorDetail", sender: nil)
     }

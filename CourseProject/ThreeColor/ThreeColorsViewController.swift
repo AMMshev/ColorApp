@@ -33,9 +33,6 @@ class ThreeColorsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        setConstraintsOn(view: sourceImageView, parantView: view, height: UIScreen.main.bounds.width,
-                         width: UIScreen.main.bounds.width,
-                         topConstant: 0 - (navigationController?.navigationBar.bounds.height ?? 0))
         guard let sourceImage = sourceImage else { return }
         sourceImageView.image = sourceImage
         Networking.shared.uploadData(image: sourceImage, completion: { imageLink in
@@ -139,9 +136,11 @@ class ThreeColorsViewController: UIViewController {
     
     @objc private func colorTapped(sender: UITapGestureRecognizer) {
         guard let colorParameters = sender.view?.backgroundColor?.cgColor.components else { return }
-        choosenColor = ColorsFromFileData.shared.makeModelOfColor(Int(colorParameters[0]), Int(colorParameters[1]),
-                                                                  Int(colorParameters[2]))
+        let color = ColorsFromFileData.shared.makeModelOfColor(Int(colorParameters[0] * 255),
+                                                               Int(colorParameters[1] * 255),
+                                                               Int(colorParameters[2] * 255))
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
+        choosenColor = color
         self.performSegue(withIdentifier: "detailScreen", sender: nil)
     }
     @objc private func gradientTapped() {
