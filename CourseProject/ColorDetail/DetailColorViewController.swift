@@ -28,6 +28,7 @@ class DetailColorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.title = color.name
         view.backgroundColor = UIColor(red: color.r, green: color.g, blue: color.b, alpha: 1)
         setConstraintsOn(view: infoStack, parantView: view,

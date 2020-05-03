@@ -17,7 +17,7 @@ class ColorCircleViewController: UIViewController {
     private let tintColorCircleView = UIView()
     private let colorCircleView: UIView = {
         let colorCircleView = UIView()
-        colorCircleView.isUserInteractionEnabled = true
+//        colorCircleView.isUserInteractionEnabled = true
         return colorCircleView
     }()
     private let loupeView: UIImageView = {
@@ -107,9 +107,10 @@ class ColorCircleViewController: UIViewController {
                          width: UIScreen.main.bounds.width * 0.8 - 30, centeringxConstant: 0,
                          centeringyConstant: 0)
         setConstraintsOn(view: chosenColorView, parantView: backView,
-                         height: 50, width: 50, leadingConstant: 30, centeringyConstant: 0)
-        setConstraintsOn(view: colorHexNumberTextField, parantView: backView, height: 50,
-                         trailingConstant: -30, centeringyConstant: 0)
+                         height: 50, width: 50, leadingConstant: 30)
+        chosenColorView.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor, constant: 10).isActive = true
+        setConstraintsOn(view: colorHexNumberTextField, parantView: backView, height: 50, trailingConstant: -30)
+        colorHexNumberTextField.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor, constant: 10).isActive = true
         colorHexNumberTextField.leadingAnchor.constraint(equalTo: chosenColorView.trailingAnchor,
                                                          constant: 10).isActive = true
         setConstraintsOn(view: loupeView, parantView: view, manualConstraints: false)
@@ -136,7 +137,7 @@ class ColorCircleViewController: UIViewController {
                      secondaryLocation: locationOnColorCircle,
                      isOnColorCircle: true)
             
-        } else {
+        }
             if !outOfColor(location: locationOnTintLine, view: tintColorCircleView, borderSize: 0) {
                 setloupe(mainLocation: locationOnMainView,
                          secondaryLocation: locationOnTintLine,
@@ -144,7 +145,6 @@ class ColorCircleViewController: UIViewController {
             } else {
                 loupeView.isHidden = true
             }
-        }
     }
     
     private func setloupe(mainLocation: CGPoint,
@@ -177,25 +177,25 @@ class ColorCircleViewController: UIViewController {
         super.touchesBegan(touches, with: event)
         guard let firstLocation = touches.first?.location(in: self.view),
             let colorCircleLocation = touches.first?.location(in: colorCircleView),
-            let backgroundColorCircleLocation = touches.first?.location(in: tintColorCircleView) else { return }
+            let tintColorCircleLocation = touches.first?.location(in: tintColorCircleView) else { return }
         selectColorOn(locationOnMainView: firstLocation,
                       locationOnColorCircle: colorCircleLocation,
-                      locationOnTintLine: backgroundColorCircleLocation)
+                      locationOnTintLine: tintColorCircleLocation)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         guard let destinationLocation = touches.first?.location(in: self.view),
             let colorLocation = touches.first?.location(in: colorCircleView),
-            let backgroundColorCircleLocation = touches.first?.location(in: tintColorCircleView) else { return }
+            let tintColorCircleLocation = touches.first?.location(in: tintColorCircleView) else { return }
         selectColorOn(locationOnMainView: destinationLocation,
                       locationOnColorCircle: colorLocation,
-                      locationOnTintLine: backgroundColorCircleLocation)
+                      locationOnTintLine: tintColorCircleLocation)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        loupeView.isHidden = true
+            self.loupeView.isHidden = true
         guard let lastColorCircleLocation = touches.first?.location(in: colorCircleView),
             let lastColorTintLocation = touches.first?.location(in: tintColorCircleView) else { return }
         if !outOfColor(location: lastColorCircleLocation, view: colorCircleView, borderSize: 10) {

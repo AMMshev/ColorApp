@@ -88,14 +88,14 @@ class MainViewController: UIViewController {
         setConstraintsOn(view: camera, parantView: view, leadingConstant: 20)
         colorCenterConstraint = color.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         colorCenterConstraint.isActive = true
-        color.topAnchor.constraint(equalTo: appLogo.bottomAnchor, constant: 50).isActive = true
+        color.topAnchor.constraint(equalTo: appLogo.bottomAnchor, constant: 40).isActive = true
         imagesCenterConstraint = images.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 50)
         imagesCenterConstraint.isActive = true
-        images.topAnchor.constraint(equalTo: color.bottomAnchor, constant: 20).isActive = true
+        images.topAnchor.constraint(equalTo: color.bottomAnchor, constant: 10).isActive = true
         colorCircleCenterConstraint = colorCircle.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100)
         colorCircleCenterConstraint.isActive = true
-        colorCircle.topAnchor.constraint(equalTo: images.bottomAnchor, constant: 20).isActive = true
-        camera.topAnchor.constraint(equalTo: colorCircle.bottomAnchor, constant: 30).isActive = true
+        colorCircle.topAnchor.constraint(equalTo: images.bottomAnchor, constant: 10).isActive = true
+        camera.topAnchor.constraint(equalTo: colorCircle.bottomAnchor, constant: 20).isActive = true
     }
     
     override func viewDidAppear(_ animated: Bool) {

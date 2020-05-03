@@ -33,7 +33,9 @@ class ThreeColorsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        setConstraintsOn(view: sourceImageView, parantView: view, height: UIScreen.main.bounds.width, width: UIScreen.main.bounds.width, topConstant: 0 - (navigationController?.navigationBar.bounds.height)!)
+        setConstraintsOn(view: sourceImageView, parantView: view, height: UIScreen.main.bounds.width,
+                         width: UIScreen.main.bounds.width,
+                         topConstant: 0 - (navigationController?.navigationBar.bounds.height ?? 0))
         guard let sourceImage = sourceImage else { return }
         sourceImageView.image = sourceImage
         Networking.shared.uploadData(image: sourceImage, completion: { imageLink in
@@ -74,7 +76,6 @@ class ThreeColorsViewController: UIViewController {
                                       tapGesture: self.gradientTapGesture,
                                       gradientColors: self.gradientColors)
                         self.colorsStack.arrangedSubviews.forEach({$0.isUserInteractionEnabled = true})
-//                        self.colorsStack.setNeedsDisplay()
                     }
                 } catch {
                     print("JSON error")
