@@ -119,7 +119,7 @@ class ColorCircleViewController: UIViewController {
         chosenColorView.backgroundColor = UIColor(red: chosenColor.r,
                                                   green: chosenColor.g, blue: chosenColor.b, alpha: 1)
         chosenColorView.addGestureRecognizer(tapGesture)
-        tapGesture.addTarget(self, action: #selector(chosenColorTapped))
+        tapGesture.addTarget(self, action: #selector(chosenColorTapped(sender:)))
         tintGradientLayer = makeGradientLayerWith(width: UIScreen.main.bounds.width * 0.8,
                                                   height: UIScreen.main.bounds.width * 0.8,
                                                   colors: [UIColor.black.cgColor,
@@ -266,7 +266,12 @@ class ColorCircleViewController: UIViewController {
         }
     }
     
-    @objc private func chosenColorTapped() {
+    @objc private func chosenColorTapped(sender: UITapGestureRecognizer) {
+        guard let colorParamenters = sender.view?.backgroundColor?.cgColor.components else { return }
+        chosenColor = ColorsFromFileData.shared.makeModelOfColor(Int(colorParamenters[0] * 255),
+                                                                 Int(colorParamenters[1] * 255),
+                                                                 Int(colorParamenters[2] * 255))
+        ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
         self.performSegue(withIdentifier: "showColorDetail", sender: nil)
     }
     
@@ -345,8 +350,7 @@ extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     func changeCombinationsColor(combinationMethod: CombinationMethods?, color: UIColor) {
         guard let combinationMethod = combinationMethod,
             let hsb = color.getHSB() else {
-                combinationsStack.arrangedSubviews.forEach({$0.isHidden = true})
-                return }
+                combinationsStack.arrangedSubviews.forEach({$0.isHidden = true}); return }
         combinationsStack.arrangedSubviews.forEach({$0.isHidden = false})
         let colorCombinations = Combinations(originalColorHue: hsb.hue,
                                              originalColorSaturation: hsb.saturation,
