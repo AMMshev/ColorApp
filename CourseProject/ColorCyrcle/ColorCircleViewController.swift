@@ -63,28 +63,24 @@ class ColorCircleViewController: UIViewController {
         firstColorView.isHidden = true
         return firstColorView
     }()
-    private let firstColorTapGesture = UITapGestureRecognizer()
     private let secondColorView: UIView = {
         let secondColorView = UIView()
         secondColorView.translatesAutoresizingMaskIntoConstraints = false
         secondColorView.isHidden = true
         return secondColorView
     }()
-    private let secondColorTapGesture = UITapGestureRecognizer()
     private let thirdColorView: UIView = {
         let thirdColorView = UIView()
         thirdColorView.translatesAutoresizingMaskIntoConstraints = false
         thirdColorView.isHidden = true
         return thirdColorView
     }()
-    private let thirdColorTapGesture = UITapGestureRecognizer()
     private let fourthColorView: UIView = {
         let fourthColorView = UIView()
         fourthColorView.translatesAutoresizingMaskIntoConstraints = false
         fourthColorView.isHidden = true
         return fourthColorView
     }()
-    private let fourthColorTapGesture = UITapGestureRecognizer()
     private var combinationsStack = UIStackView(arrangedSubviews: [])
     private let combinations = ["choose a combination", "complementary", "analogous", "triadic", "tetradic"]
     private var combinationPicker = UIPickerView()
@@ -280,14 +276,15 @@ extension ColorCircleViewController {
 // MARK: - gestures methods
 extension ColorCircleViewController {
     private func setCombinationColorViewsGestures() {
-        setGestureFor(view: firstColorView, gesture: firstColorTapGesture)
-        setGestureFor(view: secondColorView, gesture: secondColorTapGesture)
-        setGestureFor(view: thirdColorView, gesture: thirdColorTapGesture)
-        setGestureFor(view: fourthColorView, gesture: fourthColorTapGesture)
+        setTapGestureFor(colorView: firstColorView)
+        setTapGestureFor(colorView: secondColorView)
+        setTapGestureFor(colorView: thirdColorView)
+        setTapGestureFor(colorView: fourthColorView)
     }
-    private func setGestureFor(view: UIView, gesture: UIGestureRecognizer) {
-        gesture.addTarget(self, action: #selector(combinationColorTapped(sender:)))
-        view.addGestureRecognizer(gesture)
+    private func setTapGestureFor(colorView: UIView) {
+        let gesture = UITapGestureRecognizer(target: self,
+                                              action: #selector(combinationColorTapped(sender:)))
+        colorView.addGestureRecognizer(gesture)
     }
     private func outOfColor(location: CGPoint, view: UIView, borderSize: CGFloat) -> Bool {
         return pow(location.x / (view.bounds.width - borderSize) - 0.5, 2) + pow(location.y / (view.bounds.width - borderSize) - 0.5, 2) > 0.25
