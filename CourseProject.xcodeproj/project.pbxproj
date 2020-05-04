@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C1249CF2460728000A74790 /* ColorCircleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1249CE2460728000A74790 /* ColorCircleExtensions.swift */; };
 		1C28333D245700F900C3A962 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C28333C245700F900C3A962 /* TableViewCell.swift */; };
 		1C2B8D002427C82700883C00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B8CFF2427C82700883C00 /* AppDelegate.swift */; };
 		1C2B8D022427C82700883C00 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B8D012427C82700883C00 /* SceneDelegate.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C1249CE2460728000A74790 /* ColorCircleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleExtensions.swift; sourceTree = "<group>"; };
 		1C28333C245700F900C3A962 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		1C2B8CFC2427C82700883C00 /* CourseProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CourseProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C2B8CFF2427C82700883C00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				1C944F93245A34A6007CA471 /* ColorCircleViewController.swift */,
+				1C1249CE2460728000A74790 /* ColorCircleExtensions.swift */,
 			);
 			path = ColorCyrcle;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */,
 				1C9B04122456F74300104C74 /* ColorListViewController.swift in Sources */,
 				1C2B8D002427C82700883C00 /* AppDelegate.swift in Sources */,
+				1C1249CF2460728000A74790 /* ColorCircleExtensions.swift in Sources */,
 				1CEF99162457383800139BD7 /* DetailColorViewController.swift in Sources */,
 				1C28333D245700F900C3A962 /* TableViewCell.swift in Sources */,
 				1C34D4AD2432687C00020CB8 /* NetworkManager.swift in Sources */,

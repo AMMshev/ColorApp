@@ -20,9 +20,7 @@ class ColorListViewController: UIViewController {
         return text.isEmpty
     }
     private var color = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-    private var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
+    private var isFiltering: Bool { return searchController.isActive && !searchBarIsEmpty }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,49 +29,26 @@ class ColorListViewController: UIViewController {
         setupTableView()
         setupSearchController()
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "navBarColor")]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
     }
-    
-    private func setupTableView() {
-        tableView = UITableView(frame: .zero)
-        guard let tableView = tableView else { return }
-        setConstraintsOn(view: tableView, parantView: view,
-                         topConstant: 0, leadingConstant: 0, bottomConstant: 0, trailingConstant: 0)
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellID)
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-    
-    private func setupSearchController() {
-        navigationController?.navigationBar.isHidden = false
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-                let destinationVC = segue.destination as? DetailColorViewController
+            let destinationVC = segue.destination as? DetailColorViewController
             destinationVC?.color = self.color
         }
     }
 }
 
-// MARK: - UITableViewDelegate, UITableViewDataSouce
+// MARK: - UITableViewDelegate, UITableViewDataSouce + tableView setup
 
 extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isFiltering ? filteredColors.count : colors.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? TableViewCell else { fatalError() }
         let cellData = isFiltering ? filteredColors[indexPath.row] : colors[indexPath.row]
@@ -90,7 +65,6 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
                                        blue: cellData.rgb.b, alpha: 1)
         return cell
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedCellColorData = isFiltering ? filteredColors[indexPath.row] : colors[indexPath.row]
@@ -101,18 +75,32 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
         color.hex = selectedCellColorData.hex
         performSegue(withIdentifier: "showDetail", sender: nil)
     }
+    private func setupTableView() {
+        tableView = UITableView(frame: .zero)
+        guard let tableView = tableView else { return }
+        setConstraintsOn(view: tableView, parantView: view,
+                         topConstant: 0, leadingConstant: 0, bottomConstant: 0, trailingConstant: 0)
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
 }
-
-// MARK: - UISearchResultsUpdating
-
+// MARK: - UISearchResultsUpdating + searchController setup
 extension ColorListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         filterColorsForSearch(searchController.searchBar.text ?? "")
     }
-    
     private func filterColorsForSearch(_ searchText: String) {
         filteredColors = colors.filter({$0.name.lowercased().contains(searchText.lowercased())})
         tableView?.reloadData()
+    }
+    private func setupSearchController() {
+        navigationController?.navigationBar.isHidden = false
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
 }

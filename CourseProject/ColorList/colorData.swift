@@ -11,9 +11,9 @@ import Foundation
 class ColorsFromFileData {
     
     static let shared = ColorsFromFileData()
-    
     private init() {}
     
+// MARK: - make array of colors from json from file colorList.txt and sort it
     func takeColorsFromFile() -> [ColorList]? {
         var colorList: [ColorList]?
         guard let url = Bundle.main.url(forResource: "colorList", withExtension: "txt") else { return nil }
@@ -25,7 +25,7 @@ class ColorsFromFileData {
         } catch {}
         return colorList
     }
-    
+// MARK: - method that takes a color and looks for the most similar in the array
     func makeModelOfColor(_ rColor: Int, _ gColor: Int, _ bColor: Int) -> ColorModel? {
         guard let allColors = ColorsFromFileData.shared.takeColorsFromFile() else { return nil }
         var recognizedColor: [ColorModel] = []
@@ -50,6 +50,7 @@ class ColorsFromFileData {
     }
 }
 
+// MARK: - json structure of colorList.txt
 struct ColorsSource: Codable {
     let colors: [ColorList]
 }

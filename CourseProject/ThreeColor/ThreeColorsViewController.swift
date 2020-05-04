@@ -24,14 +24,51 @@ class ThreeColorsViewController: UIViewController {
     private var choosenColor: ColorModel = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
     private var gradientColors: [CGColor] = []
     private var colorNumber = 0
-    var sourceImage: UIImage?
     private let mainTapGesture = UITapGestureRecognizer()
     private let secondaryTapGesture = UITapGestureRecognizer()
     private let additionalTapGesture = UITapGestureRecognizer()
     private let gradientTapGesture = UITapGestureRecognizer()
     
+    var sourceImage: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setViews()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
+    }
+    
+    // MARK: - segue methods
+    @objc private func colorTapped(sender: UITapGestureRecognizer) {
+        guard let colorParameters = sender.view?.backgroundColor?.cgColor.components else { return }
+        let color = ColorsFromFileData.shared.makeModelOfColor(Int(colorParameters[0] * 255),
+                                                               Int(colorParameters[1] * 255),
+                                                               Int(colorParameters[2] * 255))
+            ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
+        choosenColor = color
+        self.performSegue(withIdentifier: "detailScreen", sender: nil)
+    }
+    @objc private func gradientTapped() {
+        self.performSegue(withIdentifier: "gradientCircle", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detailScreen" {
+            let destinationVC = segue.destination as? DetailColorViewController
+            destinationVC?.color = choosenColor
+        }
+        if segue.identifier == "gradientCircle" {
+            let destinationVC = segue.destination as? ColorCircleViewController
+            destinationVC?.gradientColors = gradientColors
+        }
+    }
+}
+
+// MARK: - visual methods
+extension ThreeColorsViewController {
+    private func setViews() {
         navigationController?.navigationBar.isHidden = false
         guard let sourceImage = sourceImage else { return }
         sourceImageView.image = sourceImage
@@ -80,7 +117,6 @@ class ThreeColorsViewController: UIViewController {
             })
         })
     }
-    
     private func setColor(colorView: UIView,
                           colorNameLabel: UILabel,
                           tapGesture: UITapGestureRecognizer,
@@ -110,7 +146,6 @@ class ThreeColorsViewController: UIViewController {
         colorView.addGestureRecognizer(tapGesture)
         colorView.setNeedsDisplay()
     }
-    
     private func makeGradientArray(colors: ColorsList) -> [CGColor] {
         var gradientColors: [CGColor] = []
         colors.background_colors.forEach({
@@ -125,36 +160,7 @@ class ThreeColorsViewController: UIViewController {
             let color = UIColor(red: $0.r, green: $0.g, blue: $0.b, alpha: 1)
             gradientColors.append(color.cgColor)
         })
-        print(gradientColors.count)
         return gradientColors
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
-    }
-    
-    @objc private func colorTapped(sender: UITapGestureRecognizer) {
-        guard let colorParameters = sender.view?.backgroundColor?.cgColor.components else { return }
-        let color = ColorsFromFileData.shared.makeModelOfColor(Int(colorParameters[0] * 255),
-                                                               Int(colorParameters[1] * 255),
-                                                               Int(colorParameters[2] * 255))
-            ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-        choosenColor = color
-        self.performSegue(withIdentifier: "detailScreen", sender: nil)
-    }
-    @objc private func gradientTapped() {
-        self.performSegue(withIdentifier: "gradientCircle", sender: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "detailScreen" {
-            let destinationVC = segue.destination as? DetailColorViewController
-            destinationVC?.color = choosenColor
-        }
-        if segue.identifier == "gradientCircle" {
-            let destinationVC = segue.destination as? ColorCircleViewController
-            destinationVC?.gradientColors = gradientColors
-        }
-    }
 }

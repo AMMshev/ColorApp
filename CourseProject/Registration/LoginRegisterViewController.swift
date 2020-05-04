@@ -19,15 +19,11 @@ class LoginRegisterViewController: UIViewController {
     @IBOutlet weak var registerPasswordTextField: UITextField!
     @IBOutlet weak var registerConfirmPasswordTextField: UITextField!
     @IBOutlet weak var registerStack: UIStackView!
-    
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginStack: UIStackView!
-    
     @IBOutlet weak var loginSwitcher: UISwitch!
-    
     @IBOutlet weak var registerSwitcher: UISwitch!
-    
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
     

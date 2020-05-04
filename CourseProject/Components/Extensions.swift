@@ -10,6 +10,8 @@
 import UIKit
 
 extension UIView {
+    
+    // MARK: - gets color from view's layer at point location
     func getPixelColorAt(point: CGPoint) -> UIColor {
         
         let pixel = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: 4)
@@ -38,6 +40,7 @@ extension UIView {
 }
 
 extension UIColor {
+    // MARK: - add RGB init without the need of division every parameter by 255
     convenience init(red: Int = 0, green: Int = 0, blue: Int = 0, alpha: Int = 1) {
         precondition(0...255 ~= red   &&
             0...255 ~= green &&
@@ -46,6 +49,7 @@ extension UIColor {
         self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha))
     }
     
+    // MARK: - convert RGB color into HSB
     func getHSB() -> (hue:Double, saturation:Double, brightness:Double, alpha:Double)? {
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
@@ -64,6 +68,8 @@ extension UIColor {
 }
 
 extension NSObject {
+    
+    //MARK: - convenient manual set of constraints
     func setConstraintsOn(view: UIView,
                           parantView: UIView,
                           manualConstraints: Bool = true,
@@ -105,11 +111,12 @@ extension NSObject {
         }
     }
     
+    // MARK: - convenient set of gradient layer
     func makeGradientLayerWith(width: CGFloat, height: CGFloat,
-                                       colors: [CGColor],
-                                       gradientType: CAGradientLayerType? = nil,
-                                       cornerRadius: CGFloat? = nil,
-                                       borderWidth: CGFloat? = nil, borderColor: CGColor? = nil) -> CAGradientLayer {
+                               colors: [CGColor],
+                               gradientType: CAGradientLayerType? = nil,
+                               cornerRadius: CGFloat? = nil,
+                               borderWidth: CGFloat? = nil, borderColor: CGColor? = nil) -> CAGradientLayer {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
         if let gradientType = gradientType {

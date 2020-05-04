@@ -69,7 +69,6 @@ class MainViewController: UIViewController {
     private var colorCenterConstraint = NSLayoutConstraint()
     private var imagesCenterConstraint = NSLayoutConstraint()
     private var colorCircleCenterConstraint = NSLayoutConstraint()
-    
     private var imageFromPicker: UIImage?
     
     override func viewDidLoad() {
@@ -77,7 +76,58 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         setupViews()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        colorCenterConstraint.isActive = false
+        imagesCenterConstraint.isActive = false
+        colorCircleCenterConstraint.isActive = false
+        color.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        images.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        colorCircle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            guard let self = self else {return}
+            self.view.layoutIfNeeded()
+        })
+    }
+    @objc func showColorList() {
+        self.performSegue(withIdentifier: "showColorList", sender: nil)
+    }
+    @objc func showColorCircle() {
+        self.performSegue(withIdentifier: "showColorCircle", sender: nil)
+    }
+}
+// MARK: - UIImagePickerController
+extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    @objc func openCamera() {
+        let cameraPicker = UIImagePickerController()
+        cameraPicker.delegate = self
+        cameraPicker.sourceType = .camera
+        self.present(cameraPicker, animated: true, completion: nil)
+    }
+    @objc func openPhotoLibrary() {
+        let galeryPicker = UIImagePickerController()
+        galeryPicker.delegate = self
+        galeryPicker.sourceType = .photoLibrary
+        self.present(galeryPicker, animated: true, completion: nil)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
+        imageFromPicker = imageFromCamera
+        picker.dismiss(animated: true, completion: {
+            self.performSegue(withIdentifier: "threeColors", sender: nil)
+        })
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as? ThreeColorsViewController
+        guard let imageFromPicker = imageFromPicker else { return }
+        destinationVC?.sourceImage = imageFromPicker
+    }
+}
+// MARK: - visual methods
+extension MainViewController {
     private func setupViews() {
         view.backgroundColor = MainViewController.backgroundColorArray[MainViewController.backgroundColorNumber]
         setConstraintsOn(view: appLogo, parantView: view, leadingConstant: 20, centeringyConstant: 0)
@@ -96,64 +146,5 @@ class MainViewController: UIViewController {
         colorCircleCenterConstraint.isActive = true
         colorCircle.topAnchor.constraint(equalTo: images.bottomAnchor, constant: 10).isActive = true
         camera.topAnchor.constraint(equalTo: colorCircle.bottomAnchor, constant: 20).isActive = true
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        colorCenterConstraint.isActive = false
-        imagesCenterConstraint.isActive = false
-        colorCircleCenterConstraint.isActive = false
-        color.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        images.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        colorCircle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            guard let self = self else {return}
-            self.view.layoutIfNeeded()
-        })
-    }
-    
-    @objc func showColorList() {
-        self.performSegue(withIdentifier: "showColorList", sender: nil)
-    }
-    
-    @objc func showColorCircle() {
-        self.performSegue(withIdentifier: "showColorCircle", sender: nil)
-    }
-}
-
-// MARK: - UIImagePickerController
-
-extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    @objc func openCamera() {
-        let cameraPicker = UIImagePickerController()
-        cameraPicker.delegate = self
-        cameraPicker.sourceType = .camera
-        self.present(cameraPicker, animated: true, completion: nil)
-    }
-    
-    @objc func openPhotoLibrary() {
-        let galeryPicker = UIImagePickerController()
-        galeryPicker.delegate = self
-        galeryPicker.sourceType = .photoLibrary
-        self.present(galeryPicker, animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
-        imageFromPicker = imageFromCamera
-        picker.dismiss(animated: true, completion: {
-            self.performSegue(withIdentifier: "threeColors", sender: nil)
-        })
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as? ThreeColorsViewController
-        guard let imageFromPicker = imageFromPicker else { return }
-        destinationVC?.sourceImage = imageFromPicker
     }
 }

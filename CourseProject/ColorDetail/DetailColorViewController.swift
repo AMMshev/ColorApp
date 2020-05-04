@@ -11,15 +11,15 @@ import UIKit
 class DetailColorViewController: UIViewController {
     
     var color = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-    var infoStack = UIStackView(arrangedSubviews: [])
-    var HEXRGBLabel: UILabel = {
+    private var infoStack = UIStackView(arrangedSubviews: [])
+    private var HEXRGBLabel: UILabel = {
         let hexLabel = UILabel()
         hexLabel.font = hexLabel.font.withSize(30)
         hexLabel.text = "HEX\nRGB"
         hexLabel.numberOfLines = 2
         return hexLabel
     }()
-    var HEXRGBValueLabel: UILabel = {
+    private var HEXRGBValueLabel: UILabel = {
         let RGBLabel = UILabel()
         RGBLabel.font = RGBLabel.font.withSize(30)
         RGBLabel.numberOfLines = 2
@@ -28,7 +28,12 @@ class DetailColorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setViews()
+    }
+}
+// MARK: - visual methods
+extension DetailColorViewController {
+    private func setViews() {
         navigationItem.title = color.name
         view.backgroundColor = UIColor(red: color.r, green: color.g, blue: color.b, alpha: 1)
         setConstraintsOn(view: infoStack, parantView: view,

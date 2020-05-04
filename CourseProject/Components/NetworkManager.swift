@@ -17,10 +17,9 @@ class Networking {
         let imageData = image.jpegData(compressionQuality: 0.0)
         guard let base64Image = imageData?.base64EncodedString(options: .lineLength64Characters) else { return "" }
         return base64Image
-        }
-    
+    }
+    // MARK: - upload image to imgur.com
     func uploadData(image: UIImage, completion: @escaping (String?) -> Void) {
-        
         let base64Image = getBase64Image(image: image)
         let boundary = "Boundary-\(UUID().uuidString)"
         guard let url = URL(string: "https://api.imgur.com/3/image") else {return}
@@ -55,9 +54,8 @@ class Networking {
             }
         }.resume()
     }
-    
+    // MARK: - sending a link of image on imgur.com to imagga.com and receiving colors
     func getData(imageLink: String, completion: @escaping (Data) -> Void) {
-        
         let config = URLSessionConfiguration.default
         let authorisationString = "Basic YWNjXzU5ZjJjMTA5ZWE5YmRiMjo2MTI2ZDA3ZTkzZjA4YTBkY2RmMmI4Yzc2Mjg3YzU3Yw=="
         config.httpAdditionalHeaders = ["Authorization": authorisationString]
@@ -75,29 +73,25 @@ class Networking {
         }.resume()
     }
 }
-
+// MARK: - json structure of response from imgur.com
 struct AnswerJson: Codable {
     let data: LinkToImage
 }
-
 struct LinkToImage: Codable {
     let link: String
 }
-
+// MARK: - json structure of response from imagga.com
 struct JSONAnswer: Codable {
     let result: Result
 }
-
 struct Result: Codable {
     let colors: ColorsList
 }
-
 struct ColorsList: Codable {
     let background_colors: [ColorData]
     let foreground_colors: [ColorData]
     let image_colors: [ColorData]
 }
-
 struct ColorData: Codable {
     let b: Int
     let g: Int
