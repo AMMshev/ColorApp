@@ -10,7 +10,6 @@
 import UIKit
 
 extension UIView {
-    
     // MARK: - gets color from view's layer at point location
     func getPixelColorAt(point: CGPoint) -> UIColor {
         
@@ -68,7 +67,6 @@ extension UIColor {
 }
 
 extension NSObject {
-    
     //MARK: - convenient manual set of constraints
     func setConstraintsOn(view: UIView,
                           parantView: UIView,

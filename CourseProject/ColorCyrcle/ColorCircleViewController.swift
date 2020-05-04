@@ -96,6 +96,7 @@ class ColorCircleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setViews()
+        setCombinationColorViewsGestures()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -118,6 +119,7 @@ class ColorCircleViewController: UIViewController {
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
         self.performSegue(withIdentifier: "showColorDetail", sender: nil)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showColorDetail" {
             let destinationVC = segue.destination as? DetailColorViewController
@@ -277,6 +279,16 @@ extension ColorCircleViewController {
 
 // MARK: - gestures methods
 extension ColorCircleViewController {
+    private func setCombinationColorViewsGestures() {
+        setGestureFor(view: firstColorView, gesture: firstColorTapGesture)
+        setGestureFor(view: secondColorView, gesture: secondColorTapGesture)
+        setGestureFor(view: thirdColorView, gesture: thirdColorTapGesture)
+        setGestureFor(view: fourthColorView, gesture: fourthColorTapGesture)
+    }
+    private func setGestureFor(view: UIView, gesture: UIGestureRecognizer) {
+        gesture.addTarget(self, action: #selector(combinationColorTapped(sender:)))
+        view.addGestureRecognizer(gesture)
+    }
     private func outOfColor(location: CGPoint, view: UIView, borderSize: CGFloat) -> Bool {
         return pow(location.x / (view.bounds.width - borderSize) - 0.5, 2) + pow(location.y / (view.bounds.width - borderSize) - 0.5, 2) > 0.25
     }
