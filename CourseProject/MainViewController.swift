@@ -38,6 +38,7 @@ class MainViewController: UIViewController {
         color.setTitleColor(.white, for: .normal)
         color.titleLabel?.font = color.titleLabel?.font.withSize(CGFloat(30))
         color.translatesAutoresizingMaskIntoConstraints = false
+        color.addTarget(self, action: #selector(showColorList), for: .touchUpInside)
         return color
     }()
     let images: UIButton = {
@@ -46,6 +47,7 @@ class MainViewController: UIViewController {
         images.setTitleColor(.white, for: .normal)
         images.titleLabel?.font = images.titleLabel?.font.withSize(CGFloat(30))
         images.translatesAutoresizingMaskIntoConstraints = false
+        images.addTarget(self, action: #selector(openPhotoLibrary), for: .touchUpInside)
         return images
     }()
     let colorCircle: UIButton = {
@@ -70,15 +72,8 @@ class MainViewController: UIViewController {
         camera.translatesAutoresizingMaskIntoConstraints = false
         camera.heightAnchor.constraint(equalToConstant: 30).isActive = true
         camera.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        camera.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
         return camera
-    }()
-    let search: UIButton = {
-        let search = UIButton()
-        search.setBackgroundImage(UIImage(named: "search"), for: .normal)
-        search.translatesAutoresizingMaskIntoConstraints = false
-        search.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        search.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        return search
     }()
     var colorCenterConstraint = NSLayoutConstraint()
     var imagesCenterConstraint = NSLayoutConstraint()
@@ -88,6 +83,12 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.isHidden = true
+        setupViews()
+    }
+    
+    private func setupViews() {
         view.backgroundColor = MainViewController.backgroundColorArray[MainViewController.backgroundColorNumber]
         view.addSubview(appLogo)
         view.addSubview(color)
@@ -95,7 +96,6 @@ class MainViewController: UIViewController {
         view.addSubview(colorCircle)
         view.addSubview(userProfile)
         view.addSubview(camera)
-        view.addSubview(search)
         appLogo.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         appLogo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         colorCenterConstraint = color.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -111,10 +111,6 @@ class MainViewController: UIViewController {
         userProfile.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
         camera.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         camera.topAnchor.constraint(equalTo: colorCircle.bottomAnchor, constant: 30).isActive = true
-        search.centerYAnchor.constraint(equalTo: camera.centerYAnchor).isActive = true
-        search.leadingAnchor.constraint(equalTo: camera.trailingAnchor, constant: 40).isActive = true
-        camera.addTarget(self, action: #selector(openCamera), for: .touchUpInside)
-        images.addTarget(self, action: #selector(openPhotoLibrary), for: .touchUpInside)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -129,6 +125,10 @@ class MainViewController: UIViewController {
             guard let self = self else {return}
             self.view.layoutIfNeeded()
         })
+    }
+    
+    @objc func showColorList() {
+        self.performSegue(withIdentifier: "showColorList", sender: nil)
     }
 }
 

@@ -46,6 +46,7 @@ class LoginRegisterViewController: UIViewController {
             registerStack.isHidden = true
         }
     }
+    
     @IBAction func performLogin(_ sender: Any) {
         performSegue(withIdentifier: "mainScreen", sender: nil)
     }
