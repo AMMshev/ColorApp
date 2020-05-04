@@ -42,9 +42,7 @@ class ColorListViewController: UIViewController {
         }
     }
 }
-
 // MARK: - UITableViewDelegate, UITableViewDataSouce + tableView setup
-
 extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isFiltering ? filteredColors.count : colors.count

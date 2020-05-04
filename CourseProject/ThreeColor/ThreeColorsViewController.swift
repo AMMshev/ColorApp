@@ -115,14 +115,17 @@ extension ThreeColorsViewController {
         if let rParameter = rParameter,
             let gParameter = gParameter,
             let bParameter = bParameter {
-            colorView.backgroundColor = UIColor(red: rParameter, green: gParameter, blue: bParameter, alpha: 1)
+            colorView.backgroundColor = UIColor(red: rParameter, green: gParameter, blue: bParameter,
+                                                alpha: 1)
             guard let colorModel = ColorsFromFileData.shared.makeModelOfColor(rParameter, gParameter, bParameter) else { return }
             colorNameLabel.text = colorModel.name
             tapGesture.addTarget(self, action: #selector(colorTapped(sender:)))
             colorView.layer.cornerRadius = colorView.bounds.height / 2
         } else {
             if let gradientColors = gradientColors {
-                let gradientLayer = makeGradientLayerWith(width: 80, height: 80, colors: gradientColors, gradientType: .conic, cornerRadius: 40)
+                let gradientLayer = makeGradientLayerWith(width: 80, height: 80,
+                                                          colors: gradientColors,
+                                                          gradientType: .conic, cornerRadius: 40)
                 colorView.layer.insertSublayer(gradientLayer, at: 0)
                 colorNameLabel.text = "all colors"
                 tapGesture.addTarget(self, action: #selector(gradientTapped))
@@ -135,16 +138,13 @@ extension ThreeColorsViewController {
     private func makeGradientArray(colors: ColorsList) -> [CGColor] {
         var gradientColors: [CGColor] = []
         colors.background_colors.forEach({
-            let color = UIColor(red: $0.r, green: $0.g, blue: $0.b, alpha: 1)
-            gradientColors.append(color.cgColor)
+            gradientColors.append(UIColor(red: $0.r, green: $0.g, blue: $0.b, alpha: 1).cgColor)
         })
         colors.foreground_colors.forEach({
-            let color = UIColor(red: $0.r, green: $0.g, blue: $0.b, alpha: 1)
-            gradientColors.append(color.cgColor)
+            gradientColors.append(UIColor(red: $0.r, green: $0.g, blue: $0.b, alpha: 1).cgColor)
         })
         colors.image_colors.forEach({
-            let color = UIColor(red: $0.r, green: $0.g, blue: $0.b, alpha: 1)
-            gradientColors.append(color.cgColor)
+            gradientColors.append(UIColor(red: $0.r, green: $0.g, blue: $0.b, alpha: 1).cgColor)
         })
         return gradientColors
     }

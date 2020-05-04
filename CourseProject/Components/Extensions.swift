@@ -10,7 +10,7 @@
 import UIKit
 
 extension UIView {
-    // MARK: - gets color from view's layer at point location
+    // MARK: - get color from view's layer at point location
     func getPixelColorAt(point: CGPoint) -> UIColor {
         
         let pixel = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: 4)
@@ -37,7 +37,6 @@ extension UIView {
     }
     
 }
-
 extension UIColor {
     // MARK: - add RGB init without the need of division every parameter by 255
     convenience init(red: Int = 0, green: Int = 0, blue: Int = 0, alpha: Int = 1) {
@@ -47,7 +46,6 @@ extension UIColor {
             0...1 ~= alpha, "input range is out of range")
         self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha))
     }
-    
     // MARK: - convert RGB color into HSB
     func getHSB() -> (hue:Double, saturation:Double, brightness:Double, alpha:Double)? {
         var hue: CGFloat = 0
@@ -59,15 +57,14 @@ extension UIColor {
             let iSaturation = Double(saturation)
             let iBrightness = Double(brightness)
             let iAlpha = Double(alpha)
-            return (iHue,iSaturation,iBrightness,iAlpha)
+            return (iHue, iSaturation, iBrightness, iAlpha)
         } else {
             return nil
         }
     }
 }
-
 extension NSObject {
-    //MARK: - convenient manual set of constraints
+    // MARK: - convenient manual set of constraints
     func setConstraintsOn(view: UIView,
                           parantView: UIView,
                           manualConstraints: Bool = true,
@@ -108,7 +105,6 @@ extension NSObject {
             view.trailingAnchor.constraint(equalTo: parantView.trailingAnchor, constant: trailingConstant).isActive = true
         }
     }
-    
     // MARK: - convenient set of gradient layer
     func makeGradientLayerWith(width: CGFloat, height: CGFloat,
                                colors: [CGColor],

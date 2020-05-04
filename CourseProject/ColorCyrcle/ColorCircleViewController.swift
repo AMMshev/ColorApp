@@ -49,13 +49,13 @@ class ColorCircleViewController: UIViewController {
         chosenColorView.layer.cornerRadius = 25
         return chosenColorView
     }()
-    private let colorHexNumberTextField: UITextField = {
-        let colorHexNumberTextField = UITextField()
-        colorHexNumberTextField.layer.borderWidth = 1
-        colorHexNumberTextField.layer.borderColor = UIColor.gray.cgColor
-        colorHexNumberTextField.layer.cornerRadius = 5
-        colorHexNumberTextField.textAlignment = .center
-        return colorHexNumberTextField
+    private let colorHexNumberLabel: UILabel = {
+        let colorHexNumberLabel = UILabel()
+        colorHexNumberLabel.layer.borderWidth = 1
+        colorHexNumberLabel.layer.borderColor = UIColor.gray.cgColor
+        colorHexNumberLabel.layer.cornerRadius = 5
+        colorHexNumberLabel.textAlignment = .center
+        return colorHexNumberLabel
     }()
     private let firstColorView: UIView = {
         let firstColorView = UIView()
@@ -84,8 +84,10 @@ class ColorCircleViewController: UIViewController {
     private var combinationsStack = UIStackView(arrangedSubviews: [])
     private let combinations = ["choose a combination", "complementary", "analogous", "triadic", "tetradic"]
     private var combinationPicker = UIPickerView()
-    var gradientColors: [CGColor] = [UIColor.red.cgColor, UIColor.orange.cgColor, UIColor.yellow.cgColor,
-                                     UIColor.green.cgColor, UIColor.cyan.cgColor, UIColor.blue.cgColor,
+    var gradientColors: [CGColor] = [UIColor.red.cgColor, UIColor.orange.cgColor,
+                                     UIColor.yellow.cgColor,
+                                     UIColor.green.cgColor, UIColor.cyan.cgColor,
+                                     UIColor.blue.cgColor,
                                      UIColor.purple.cgColor, UIColor.systemPink.cgColor]
     private var comboColors: [Int] = []
     
@@ -99,7 +101,7 @@ class ColorCircleViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
     }
     // MARK: - segue methods
-    @objc private func combinationColorTapped(sender: UITapGestureRecognizer) {
+    @objc private func colorTapped(sender: UITapGestureRecognizer) {
         guard let colorParamenters = sender.view?.backgroundColor?.cgColor.components else { return }
         chosenColor = ColorsFromFileData.shared.makeModelOfColor(Int(colorParamenters[0] * 255),
                                                                  Int(colorParamenters[1] * 255),
@@ -107,15 +109,6 @@ class ColorCircleViewController: UIViewController {
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
         performSegue(withIdentifier: "showColorDetail", sender: nil)
     }
-    @objc private func chosenColorTapped(sender: UITapGestureRecognizer) {
-        guard let colorParameters = sender.view?.backgroundColor?.cgColor.components else { return }
-        chosenColor = ColorsFromFileData.shared.makeModelOfColor(Int(colorParameters[0] * 255),
-                                                                 Int(colorParameters[1] * 255),
-                                                                 Int(colorParameters[2] * 255))
-            ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-        self.performSegue(withIdentifier: "showColorDetail", sender: nil)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showColorDetail" {
             let destinationVC = segue.destination as? DetailColorViewController
@@ -123,9 +116,7 @@ class ColorCircleViewController: UIViewController {
         }
     }
 }
-
 // MARK: - UIPickerViewDelegate
-
 extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
@@ -216,7 +207,7 @@ extension ColorCircleViewController {
         chosenColorView.backgroundColor = UIColor(red: chosenColor.r,
                                                   green: chosenColor.g, blue: chosenColor.b, alpha: 1)
         chosenColorView.addGestureRecognizer(tapGesture)
-        tapGesture.addTarget(self, action: #selector(chosenColorTapped(sender:)))
+        tapGesture.addTarget(self, action: #selector(colorTapped(sender:)))
         tintGradientLayer = makeGradientLayerWith(width: UIScreen.main.bounds.width * 0.8,
                                                   height: UIScreen.main.bounds.width * 0.8,
                                                   colors: [UIColor.black.cgColor,
@@ -246,10 +237,12 @@ extension ColorCircleViewController {
     }
     private func setViewsConstraints() {
         setConstraintsOn(view: backView, parantView: view,
-                         height: UIScreen.main.bounds.height * 0.9, leadingConstant: 0, bottomConstant: 0,
+                         height: UIScreen.main.bounds.height * 0.9, leadingConstant: 0,
+                         bottomConstant: 0,
                          trailingConstant: 0)
         setConstraintsOn(view: tintColorCircleView, parantView: backView,
-                         height: UIScreen.main.bounds.width * 0.8, width: UIScreen.main.bounds.width * 0.8,
+                         height: UIScreen.main.bounds.width * 0.8,
+                         width: UIScreen.main.bounds.width * 0.8,
                          topConstant: 30, centeringxConstant: 0)
         setConstraintsOn(view: colorCircleView,
                          parantView: tintColorCircleView,
@@ -258,18 +251,24 @@ extension ColorCircleViewController {
                          centeringyConstant: 0)
         setConstraintsOn(view: chosenColorView, parantView: backView,
                          height: 50, width: 50, leadingConstant: 30)
-        chosenColorView.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor, constant: 10).isActive = true
-        setConstraintsOn(view: colorHexNumberTextField, parantView: backView, height: 50, trailingConstant: -30)
-        colorHexNumberTextField.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor, constant: 10).isActive = true
-        colorHexNumberTextField.leadingAnchor.constraint(equalTo: chosenColorView.trailingAnchor,
-                                                         constant: 10).isActive = true
+        chosenColorView.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor,
+                                             constant: 10).isActive = true
+        setConstraintsOn(view: colorHexNumberLabel, parantView: backView, height: 50, trailingConstant: -30)
+        colorHexNumberLabel.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor,
+                                                 constant: 10).isActive = true
+        colorHexNumberLabel.leadingAnchor.constraint(equalTo: chosenColorView.trailingAnchor,
+                                                     constant: 10).isActive = true
         setConstraintsOn(view: loupeView, parantView: view, manualConstraints: false)
         setConstraintsOn(view: loupeColorView, parantView: loupeView,
                          height: 60, width: 60, centeringxConstant: 0, centeringyConstant: -16)
-        setConstraintsOn(view: combinationsStack, parantView: backView, height: 30, leadingConstant: 30, trailingConstant: -30)
-        combinationsStack.topAnchor.constraint(equalTo: chosenColorView.bottomAnchor, constant: 10).isActive = true
-        setConstraintsOn(view: combinationPicker, parantView: view, centeringxConstant: 0)
-        combinationPicker.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor).isActive = true
+        setConstraintsOn(view: combinationsStack, parantView: backView, height: 30,
+                         leadingConstant: 30, trailingConstant: -30)
+        combinationsStack.topAnchor.constraint(equalTo: chosenColorView.bottomAnchor,
+                                               constant: 10).isActive = true
+        setConstraintsOn(view: combinationPicker, parantView: view, leadingConstant: 30,
+                         trailingConstant: -30, centeringxConstant: 0)
+        combinationPicker.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor).isActive =
+        true
     }
 }
 
@@ -283,11 +282,12 @@ extension ColorCircleViewController {
     }
     private func setTapGestureFor(colorView: UIView) {
         let gesture = UITapGestureRecognizer(target: self,
-                                              action: #selector(combinationColorTapped(sender:)))
+                                             action: #selector(colorTapped(sender:)))
         colorView.addGestureRecognizer(gesture)
     }
     private func outOfColor(location: CGPoint, view: UIView, borderSize: CGFloat) -> Bool {
-        return pow(location.x / (view.bounds.width - borderSize) - 0.5, 2) + pow(location.y / (view.bounds.width - borderSize) - 0.5, 2) > 0.25
+        return pow(location.x / (view.bounds.width - borderSize) - 0.5, 2)
+            + pow(location.y/(view.bounds.width - borderSize) - 0.5, 2) > 0.25
     }
     private func selectColorOn(locationOnMainView: CGPoint,
                                locationOnColorCircle: CGPoint,
@@ -317,7 +317,7 @@ extension ColorCircleViewController {
         loupeColorView.backgroundColor = colorOnTap
         view.backgroundColor = colorOnTap
         chosenColorView.backgroundColor = colorOnTap
-        colorHexNumberTextField.textColor = colorOnTap
+        colorHexNumberLabel.textColor = colorOnTap
         if isOnColorCircle { tintGradientLayer.colors = [UIColor.black.cgColor,
                                                          colorOnTap.cgColor,
                                                          UIColor.white.cgColor] }
@@ -329,7 +329,7 @@ extension ColorCircleViewController {
                                                        Int(color[1] * 255),
                                                        Int(color[2] * 255))
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-        colorHexNumberTextField.text = chosenColor.hex
+        colorHexNumberLabel.text = chosenColor.hex
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
