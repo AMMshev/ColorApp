@@ -320,7 +320,7 @@
         <!--Three Colors View Controller-->
         <scene sceneID="y8Z-U4-J0s">
             <objects>
-                <viewController id="NKj-cf-d8I" customClass="ThreeColorsViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="vcc" id="NKj-cf-d8I" customClass="ThreeColorsViewController" customModule="CourseProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="X98-qP-B34">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -410,10 +410,15 @@
                                     <constraint firstAttribute="bottom" secondItem="nXu-r4-T4d" secondAttribute="bottom" constant="50" id="q4X-Nu-4k9"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="CNR-fQ-CYe">
+                                <rect key="frame" x="188.66666666666666" y="429.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="ZzD-3x-G94" firstAttribute="trailing" secondItem="xwk-rU-2pO" secondAttribute="trailing" constant="20" id="6Ni-2G-tYG"/>
+                            <constraint firstItem="CNR-fQ-CYe" firstAttribute="centerX" secondItem="X98-qP-B34" secondAttribute="centerX" id="Ch0-ZB-wyi"/>
+                            <constraint firstItem="CNR-fQ-CYe" firstAttribute="centerY" secondItem="X98-qP-B34" secondAttribute="centerY" id="OTI-Bi-Aam"/>
                             <constraint firstItem="yOv-jU-whY" firstAttribute="centerX" secondItem="ZzD-3x-G94" secondAttribute="centerX" id="UZr-JS-lRk"/>
                             <constraint firstItem="ZzD-3x-G94" firstAttribute="bottom" secondItem="yOv-jU-whY" secondAttribute="bottom" constant="10" id="Ufc-uH-IE3"/>
                             <constraint firstItem="yOv-jU-whY" firstAttribute="top" secondItem="xwk-rU-2pO" secondAttribute="bottom" constant="10" id="eMA-sN-03K"/>
@@ -432,6 +437,7 @@
                         <outlet property="colorsStack" destination="yOv-jU-whY" id="iMO-kl-9Cp"/>
                         <outlet property="gradientColorsLabel" destination="Wo5-hk-W5n" id="6iv-Z7-P9G"/>
                         <outlet property="gradientColorsView" destination="cNg-1M-AqS" id="vok-il-xfQ"/>
+                        <outlet property="loadingIndicator" destination="CNR-fQ-CYe" id="YrG-eg-iJi"/>
                         <outlet property="mainColor" destination="vPt-dH-JCh" id="EPr-Gs-2qK"/>
                         <outlet property="mainColorNameLabel" destination="vuL-d5-8Df" id="Ohd-fr-eUE"/>
                         <outlet property="secondaryColor" destination="lDG-Q2-3rE" id="yL0-HC-fJu"/>

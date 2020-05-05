@@ -20,6 +20,7 @@ class ThreeColorsViewController: UIViewController {
     @IBOutlet weak var secondaryColorNameLabel: UILabel!
     @IBOutlet weak var additionalColorNameLabel: UILabel!
     @IBOutlet weak var gradientColorsLabel: UILabel!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var colorsStack: UIStackView!
     
     private var choosenColor: ColorModel = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
@@ -98,7 +99,9 @@ extension ThreeColorsViewController {
                                           bParameter: RGBColors[2].b) }
                         self.setColor(colorView: self.gradientColorsView,
                                       colorNameLabel: self.gradientColorsLabel,
-                                      gradientColors: self.gradientColors) }
+                                      gradientColors: self.gradientColors)
+                        self.loadingIndicator.stopAnimating()
+                    }
                 } catch { print("JSON error") }
             })
         })
