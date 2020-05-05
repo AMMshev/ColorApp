@@ -14,20 +14,25 @@ class ColorsFromFileData {
     private init() {}
     
 // MARK: - make array of colors from json from file colorList.txt and sort it
-    func takeColorsFromFile() -> [ColorList]? {
+    func makeURLToFile(name: String, fileExtension: String) -> URL? {
+        guard  let URL = Bundle.main.url(forResource: name, withExtension: fileExtension) else { return nil }
+        return URL
+    }
+    func takeColorsFromFile(urlToFile: URL?) -> [ColorList]? {
         var colorList: [ColorList]?
-        guard let url = Bundle.main.url(forResource: "colorList", withExtension: "txt") else { return nil }
+        guard let urlToFile = urlToFile else { return nil }
         do {
-            let txtFile = try String(contentsOf: url)
+            let txtFile = try String(contentsOf: urlToFile)
             guard let data = txtFile.data(using: .utf8) else { return nil }
             colorList = try JSONDecoder().decode(ColorsSource.self, from: data).colors
-            colorList?.sort(by: {$0.hex < $1.hex})
+//            colorList?.sort(by: {$0.hex < $1.hex})
         } catch {}
         return colorList
     }
 // MARK: - method that takes a color and looks for the most similar in the array
     func makeModelOfColor(_ rColor: Int, _ gColor: Int, _ bColor: Int) -> ColorModel? {
-        guard let allColors = ColorsFromFileData.shared.takeColorsFromFile() else { return nil }
+        guard let allColors = ColorsFromFileData.shared.takeColorsFromFile(urlToFile:
+            makeURLToFile(name: "colorList", fileExtension: "txt")) else { return nil }
         var recognizedColor: [ColorModel] = []
         var colorFromList: [ColorList] = []
         var error: Int = 0

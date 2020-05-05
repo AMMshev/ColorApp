@@ -102,7 +102,6 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         let cameraPicker = UIImagePickerController()
         cameraPicker.delegate = self
         cameraPicker.sourceType = .camera
-        navigationController?.pushViewController(cameraPicker, animated: true)
         self.present(cameraPicker, animated: true, completion: nil)
     }
     @objc func openPhotoLibrary() {

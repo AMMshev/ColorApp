@@ -84,10 +84,8 @@ class ColorCircleViewController: UIViewController {
     private var combinationsStack = UIStackView(arrangedSubviews: [])
     private let combinations = ["choose a combination", "complementary", "analogous", "triadic", "tetradic"]
     private var combinationPicker = UIPickerView()
-    var gradientColors: [CGColor] = [UIColor.red.cgColor, UIColor.orange.cgColor,
-                                     UIColor.yellow.cgColor,
-                                     UIColor.green.cgColor, UIColor.cyan.cgColor,
-                                     UIColor.blue.cgColor,
+    var gradientColors: [CGColor] = [UIColor.red.cgColor, UIColor.orange.cgColor, UIColor.yellow.cgColor,
+                                     UIColor.green.cgColor, UIColor.cyan.cgColor, UIColor.blue.cgColor,
                                      UIColor.purple.cgColor, UIColor.systemPink.cgColor]
     private var comboColors: [Int] = []
     

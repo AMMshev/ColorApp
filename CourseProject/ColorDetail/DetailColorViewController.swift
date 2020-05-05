@@ -37,9 +37,8 @@ extension DetailColorViewController {
         navigationItem.title = color.name
         view.backgroundColor = UIColor(red: color.r, green: color.g, blue: color.b, alpha: 1)
         setConstraintsOn(view: infoStack, parantView: view, centeringxConstant: 0, centeringyConstant: 0)
-        if  color.r < 125 &&
-            color.r < 125 &&
-            color.r < 125 {
+        guard let hsbColor = UIColor(red: color.r, green: color.g, blue: color.b, alpha: 1).getHSB() else { return }
+        if hsbColor.brightness < 0.5 {
             HEXRGBLabel.textColor = .white
             HEXRGBHSBValueLabel.textColor = .white
             navigationController?.navigationBar.tintColor = .white
@@ -52,10 +51,9 @@ extension DetailColorViewController {
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
             navigationController?.navigationBar.largeTitleTextAttributes = attributes
         }
-        guard let hsbColor = UIColor(red: color.r, green: color.g, blue: color.b, alpha: 1).getHSB() else { return }
         HEXRGBHSBValueLabel.text = "\(color.hex)" +
         "\n\(color.r), \(color.g), \(color.b)" +
-        "\n\(String(format: "%.2f", hsbColor.hue))," +
+        "\n\(String(format: "%.2f", hsbColor.hue)), " +
         "\(String(format: "%.2f", hsbColor.saturation)), \(String(format: "%.2f", hsbColor.brightness))"
         infoStack.addArrangedSubview(HEXRGBLabel)
         infoStack.addArrangedSubview(HEXRGBHSBValueLabel)

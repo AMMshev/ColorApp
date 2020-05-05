@@ -23,7 +23,8 @@ class ColorListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let colorsFromFile = ColorsFromFileData.shared.takeColorsFromFile() else { return }
+        guard let colorsFromFile = ColorsFromFileData.shared.takeColorsFromFile(urlToFile:
+            ColorsFromFileData.shared.makeURLToFile(name: "colorList", fileExtension: ".txt")) else { return }
         colors = colorsFromFile
         setupTableView()
         setupSearchController()
@@ -52,16 +53,9 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
                                                        for: indexPath) as? TableViewCell else { fatalError() }
         let cellData = isFiltering ? filteredColors[indexPath.row] : colors[indexPath.row]
         cell.colorName.text = cellData.name
-        if  cellData.rgb.r < 125 &&
-            cellData.rgb.r < 125 &&
-            cellData.rgb.r < 125 {
-            cell.colorName.textColor = .white
-        } else {
-            cell.colorName.textColor = .black
-        }
-        cell.backgroundColor = UIColor(red: cellData.rgb.r,
-                                       green: cellData.rgb.g,
-                                       blue: cellData.rgb.b, alpha: 1)
+        let color = UIColor(red: cellData.rgb.r, green: cellData.rgb.g, blue: cellData.rgb.b, alpha: 1)
+        cell.backgroundColor = color
+        cell.colorName.textColor = color.getHSB()?.brightness ?? 0 < 0.5 ? .white : .black
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

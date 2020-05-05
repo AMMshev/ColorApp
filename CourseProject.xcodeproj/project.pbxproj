@@ -19,7 +19,7 @@
 		1C7C0786245B49010040B914 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C0785245B49010040B914 /* Extensions.swift */; };
 		1C944F94245A34A6007CA471 /* ColorCircleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C944F93245A34A6007CA471 /* ColorCircleViewController.swift */; };
 		1C9B04122456F74300104C74 /* ColorListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B04112456F74300104C74 /* ColorListViewController.swift */; };
-		1C9B04142456F77300104C74 /* colorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B04132456F77300104C74 /* colorData.swift */; };
+		1C9B04142456F77300104C74 /* ColorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B04132456F77300104C74 /* ColorData.swift */; };
 		1C9E1F7D24573D8100A133C5 /* DetailColorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E1F7C24573D8100A133C5 /* DetailColorModel.swift */; };
 		1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FB146242D0A2F00A42CBD /* ViewController.swift */; };
 		1C9FB14B242D0A8300A42CBD /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */; };
@@ -44,7 +44,7 @@
 		1C7C0785245B49010040B914 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1C944F93245A34A6007CA471 /* ColorCircleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleViewController.swift; sourceTree = "<group>"; };
 		1C9B04112456F74300104C74 /* ColorListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorListViewController.swift; sourceTree = "<group>"; };
-		1C9B04132456F77300104C74 /* colorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colorData.swift; sourceTree = "<group>"; };
+		1C9B04132456F77300104C74 /* ColorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorData.swift; sourceTree = "<group>"; };
 		1C9E1F7C24573D8100A133C5 /* DetailColorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailColorModel.swift; sourceTree = "<group>"; };
 		1C9FB146242D0A2F00A42CBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
@@ -136,7 +136,9 @@
 				1C7C0785245B49010040B914 /* Extensions.swift */,
 				1CC675D6245C84B100E19401 /* ColorCombinations.swift */,
 				1C34D4AC2432687C00020CB8 /* NetworkManager.swift */,
+				1C9B04132456F77300104C74 /* ColorData.swift */,
 				1CD6EAA02461812800C981CA /* Enums.swift */,
+				1CEF99132457208500139BD7 /* colorList.txt */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -171,8 +173,6 @@
 			children = (
 				1C9B04112456F74300104C74 /* ColorListViewController.swift */,
 				1C28333C245700F900C3A962 /* TableViewCell.swift */,
-				1C9B04132456F77300104C74 /* colorData.swift */,
-				1CEF99132457208500139BD7 /* colorList.txt */,
 			);
 			path = ColorList;
 			sourceTree = "<group>";
@@ -296,7 +296,7 @@
 				1CC675D7245C84B100E19401 /* ColorCombinations.swift in Sources */,
 				1C9FB14B242D0A8300A42CBD /* LoginRegisterViewController.swift in Sources */,
 				1C944F94245A34A6007CA471 /* ColorCircleViewController.swift in Sources */,
-				1C9B04142456F77300104C74 /* colorData.swift in Sources */,
+				1C9B04142456F77300104C74 /* ColorData.swift in Sources */,
 				1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */,
 				1CD6EAA12461812800C981CA /* Enums.swift in Sources */,
 				1C9B04122456F74300104C74 /* ColorListViewController.swift in Sources */,
