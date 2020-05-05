@@ -10,7 +10,6 @@ import UIKit
 
 class ColorListViewController: UIViewController {
     
-    private var cellID = "colorCell"
     private var colors: [ColorList] = []
     private var filteredColors: [ColorList] = []
     private var tableView: UITableView?
@@ -31,12 +30,13 @@ class ColorListViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "navBarColor")]
+        navigationController?.navigationBar.tintColor = UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue)
+        let attributes = [NSAttributedString.Key.foregroundColor:
+            UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue)]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
+        if segue.identifier == SegueIdentificators.colorDetail.rawValue {
             let destinationVC = segue.destination as? DetailColorViewController
             destinationVC?.color = self.color
         }
@@ -48,7 +48,8 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
         isFiltering ? filteredColors.count : colors.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? TableViewCell else { fatalError() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Keys.colorTableViewCellID.rawValue,
+                                                       for: indexPath) as? TableViewCell else { fatalError() }
         let cellData = isFiltering ? filteredColors[indexPath.row] : colors[indexPath.row]
         cell.colorName.text = cellData.name
         if  cellData.rgb.r < 125 &&
@@ -71,14 +72,14 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
         color.g = selectedCellColorData.rgb.g
         color.b = selectedCellColorData.rgb.b
         color.hex = selectedCellColorData.hex
-        performSegue(withIdentifier: "showDetail", sender: nil)
+        performSegue(withIdentifier: SegueIdentificators.colorDetail.rawValue, sender: nil)
     }
     private func setupTableView() {
         tableView = UITableView(frame: .zero)
         guard let tableView = tableView else { return }
         setConstraintsOn(view: tableView, parantView: view,
                          topConstant: 0, leadingConstant: 0, bottomConstant: 0, trailingConstant: 0)
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: Keys.colorTableViewCellID.rawValue)
         tableView.delegate = self
         tableView.dataSource = self
     }

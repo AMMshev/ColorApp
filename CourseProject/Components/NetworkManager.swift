@@ -11,7 +11,7 @@ import UIKit
 
 class Networking {
     static let shared = Networking()
-    let ClientID = "97fb096aa24f64d"
+//    let ClientID = "97fb096aa24f64d"
     
     func getBase64Image(image: UIImage) -> String {
         let imageData = image.jpegData(compressionQuality: 0.0)
@@ -22,9 +22,9 @@ class Networking {
     func uploadData(image: UIImage, completion: @escaping (String?) -> Void) {
         let base64Image = getBase64Image(image: image)
         let boundary = "Boundary-\(UUID().uuidString)"
-        guard let url = URL(string: "https://api.imgur.com/3/image") else {return}
+        guard let url = URL(string: NetworkParameters.uploadURL.rawValue) else {return}
         var request = URLRequest(url: url)
-        request.addValue("Client-ID \(self.ClientID)", forHTTPHeaderField: "Authorization")
+        request.addValue("Client-ID \(NetworkParameters.clientID.rawValue)", forHTTPHeaderField: "Authorization")
         request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         
@@ -57,10 +57,9 @@ class Networking {
     // MARK: - sending a link of image on imgur.com to imagga.com and receiving colors
     func getData(imageLink: String, completion: @escaping (Data) -> Void) {
         let config = URLSessionConfiguration.default
-        let authorisationString = "Basic YWNjXzU5ZjJjMTA5ZWE5YmRiMjo2MTI2ZDA3ZTkzZjA4YTBkY2RmMmI4Yzc2Mjg3YzU3Yw=="
-        config.httpAdditionalHeaders = ["Authorization": authorisationString]
+        config.httpAdditionalHeaders = ["Authorization": NetworkParameters.downloadAuthorisation.rawValue]
         let session = URLSession(configuration: config)
-        guard let url = URL(string: "https://api.imagga.com/v2/colors?image_url=\(imageLink)") else {return}
+        guard let url = URL(string: NetworkParameters.downloadURL.rawValue + imageLink) else {return}
         session.dataTask(with: url) { (data, response, error) in
             guard error == nil else { return }
             guard let data = data else { return }

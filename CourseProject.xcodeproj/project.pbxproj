@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C1249CF2460728000A74790 /* ColorCircleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1249CE2460728000A74790 /* ColorCircleExtensions.swift */; };
 		1C28333D245700F900C3A962 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C28333C245700F900C3A962 /* TableViewCell.swift */; };
 		1C2B8D002427C82700883C00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B8CFF2427C82700883C00 /* AppDelegate.swift */; };
 		1C2B8D022427C82700883C00 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B8D012427C82700883C00 /* SceneDelegate.swift */; };
@@ -25,12 +24,12 @@
 		1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FB146242D0A2F00A42CBD /* ViewController.swift */; };
 		1C9FB14B242D0A8300A42CBD /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */; };
 		1CC675D7245C84B100E19401 /* ColorCombinations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC675D6245C84B100E19401 /* ColorCombinations.swift */; };
+		1CD6EAA12461812800C981CA /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD6EAA02461812800C981CA /* Enums.swift */; };
 		1CEF99142457208500139BD7 /* colorList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1CEF99132457208500139BD7 /* colorList.txt */; };
 		1CEF99162457383800139BD7 /* DetailColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF99152457383800139BD7 /* DetailColorViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1C1249CE2460728000A74790 /* ColorCircleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleExtensions.swift; sourceTree = "<group>"; };
 		1C28333C245700F900C3A962 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		1C2B8CFC2427C82700883C00 /* CourseProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CourseProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C2B8CFF2427C82700883C00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +49,7 @@
 		1C9FB146242D0A2F00A42CBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
 		1CC675D6245C84B100E19401 /* ColorCombinations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCombinations.swift; sourceTree = "<group>"; };
+		1CD6EAA02461812800C981CA /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		1CEF99132457208500139BD7 /* colorList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = colorList.txt; sourceTree = "<group>"; };
 		1CEF99152457383800139BD7 /* DetailColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailColorViewController.swift; sourceTree = "<group>"; };
 		5CF8140E339687715EF45525 /* Pods-CourseProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CourseProject.release.xcconfig"; path = "Target Support Files/Pods-CourseProject/Pods-CourseProject.release.xcconfig"; sourceTree = "<group>"; };
@@ -136,6 +136,7 @@
 				1C7C0785245B49010040B914 /* Extensions.swift */,
 				1CC675D6245C84B100E19401 /* ColorCombinations.swift */,
 				1C34D4AC2432687C00020CB8 /* NetworkManager.swift */,
+				1CD6EAA02461812800C981CA /* Enums.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -144,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				1C944F93245A34A6007CA471 /* ColorCircleViewController.swift */,
-				1C1249CE2460728000A74790 /* ColorCircleExtensions.swift */,
 			);
 			path = ColorCyrcle;
 			sourceTree = "<group>";
@@ -298,9 +298,9 @@
 				1C944F94245A34A6007CA471 /* ColorCircleViewController.swift in Sources */,
 				1C9B04142456F77300104C74 /* colorData.swift in Sources */,
 				1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */,
+				1CD6EAA12461812800C981CA /* Enums.swift in Sources */,
 				1C9B04122456F74300104C74 /* ColorListViewController.swift in Sources */,
 				1C2B8D002427C82700883C00 /* AppDelegate.swift in Sources */,
-				1C1249CF2460728000A74790 /* ColorCircleExtensions.swift in Sources */,
 				1CEF99162457383800139BD7 /* DetailColorViewController.swift in Sources */,
 				1C28333D245700F900C3A962 /* TableViewCell.swift in Sources */,
 				1C34D4AD2432687C00020CB8 /* NetworkManager.swift in Sources */,

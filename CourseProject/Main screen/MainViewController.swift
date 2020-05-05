@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
     private let color: UIButton = {
         let color = UIButton()
         color.setTitle("Colors", for: .normal)
-        color.setTitleColor(UIColor(named: "Color"), for: .normal)
+        color.setTitleColor(UIColor(named: DarkModeColors.blackWhiteBackColor.rawValue), for: .normal)
         color.titleLabel?.font = color.titleLabel?.font.withSize(CGFloat(30))
         color.addTarget(self, action: #selector(showColorList), for: .touchUpInside)
         return color
@@ -40,7 +40,7 @@ class MainViewController: UIViewController {
     private let images: UIButton = {
         let images = UIButton()
         images.setTitle("Images", for: .normal)
-        images.setTitleColor(UIColor(named: "Color"), for: .normal)
+        images.setTitleColor(UIColor(named: DarkModeColors.blackWhiteBackColor.rawValue), for: .normal)
         images.titleLabel?.font = images.titleLabel?.font.withSize(CGFloat(30))
         images.addTarget(self, action: #selector(openPhotoLibrary), for: .touchUpInside)
         return images
@@ -48,7 +48,7 @@ class MainViewController: UIViewController {
     private let colorCircle: UIButton = {
         let colorCircle = UIButton()
         colorCircle.setTitle("Color circle", for: .normal)
-        colorCircle.setTitleColor(UIColor(named: "Color"), for: .normal)
+        colorCircle.setTitleColor(UIColor(named: DarkModeColors.blackWhiteBackColor.rawValue), for: .normal)
         colorCircle.titleLabel?.font = colorCircle.titleLabel?.font.withSize(CGFloat(30))
         colorCircle.addTarget(self, action: #selector(showColorCircle), for: .touchUpInside)
         return colorCircle
@@ -90,10 +90,10 @@ class MainViewController: UIViewController {
         })
     }
     @objc func showColorList() {
-        self.performSegue(withIdentifier: "showColorList", sender: nil)
+        self.performSegue(withIdentifier: SegueIdentificators.colorList.rawValue, sender: nil)
     }
     @objc func showColorCircle() {
-        self.performSegue(withIdentifier: "showColorCircle", sender: nil)
+        self.performSegue(withIdentifier: SegueIdentificators.colorCircle.rawValue, sender: nil)
     }
 }
 // MARK: - UIImagePickerController
@@ -102,6 +102,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         let cameraPicker = UIImagePickerController()
         cameraPicker.delegate = self
         cameraPicker.sourceType = .camera
+        navigationController?.pushViewController(cameraPicker, animated: true)
         self.present(cameraPicker, animated: true, completion: nil)
     }
     @objc func openPhotoLibrary() {
@@ -117,7 +118,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
         imageFromPicker = imageFromCamera
         picker.dismiss(animated: true, completion: {
-            self.performSegue(withIdentifier: "threeColors", sender: nil)
+            self.performSegue(withIdentifier: SegueIdentificators.threeColors.rawValue, sender: nil)
         })
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

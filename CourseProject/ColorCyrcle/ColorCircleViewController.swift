@@ -41,7 +41,7 @@ class ColorCircleViewController: UIViewController {
         backView.layer.shadowOpacity = 1
         backView.layer.shadowRadius = 10
         backView.layer.shadowOffset = CGSize(width: 0, height: 5)
-        backView.backgroundColor = UIColor(named: "Color")
+        backView.backgroundColor = UIColor(named: DarkModeColors.blackWhiteBackColor.rawValue)
         return backView
     }()
     private let chosenColorView: UIView = {
@@ -98,7 +98,7 @@ class ColorCircleViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
+        navigationController?.navigationBar.tintColor = UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue)
     }
     // MARK: - segue methods
     @objc private func colorTapped(sender: UITapGestureRecognizer) {
@@ -107,10 +107,10 @@ class ColorCircleViewController: UIViewController {
                                                                  Int(colorParamenters[1] * 255),
                                                                  Int(colorParamenters[2] * 255))
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-        performSegue(withIdentifier: "showColorDetail", sender: nil)
+        performSegue(withIdentifier: SegueIdentificators.colorDetail.rawValue, sender: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showColorDetail" {
+        if segue.identifier == SegueIdentificators.colorDetail.rawValue {
             let destinationVC = segue.destination as? DetailColorViewController
             destinationVC?.color = chosenColor
         }

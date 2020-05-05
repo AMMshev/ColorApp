@@ -15,14 +15,14 @@ class DetailColorViewController: UIViewController {
     private var HEXRGBLabel: UILabel = {
         let hexLabel = UILabel()
         hexLabel.font = hexLabel.font.withSize(30)
-        hexLabel.text = "HEX\nRGB"
-        hexLabel.numberOfLines = 2
+        hexLabel.text = "HEX\nRGB\nHSB"
+        hexLabel.numberOfLines = 3
         return hexLabel
     }()
-    private var HEXRGBValueLabel: UILabel = {
+    private var HEXRGBHSBValueLabel: UILabel = {
         let RGBLabel = UILabel()
         RGBLabel.font = RGBLabel.font.withSize(30)
-        RGBLabel.numberOfLines = 2
+        RGBLabel.numberOfLines = 3
         return RGBLabel
     }()
     
@@ -36,26 +36,31 @@ extension DetailColorViewController {
     private func setViews() {
         navigationItem.title = color.name
         view.backgroundColor = UIColor(red: color.r, green: color.g, blue: color.b, alpha: 1)
-        setConstraintsOn(view: infoStack, parantView: view,
-                         leadingConstant: 20, trailingConstant: 0, centeringyConstant: 0)
+        setConstraintsOn(view: infoStack, parantView: view, centeringxConstant: 0, centeringyConstant: 0)
         if  color.r < 125 &&
             color.r < 125 &&
             color.r < 125 {
             HEXRGBLabel.textColor = .white
-            HEXRGBValueLabel.textColor = .white
+            HEXRGBHSBValueLabel.textColor = .white
             navigationController?.navigationBar.tintColor = .white
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
             navigationController?.navigationBar.largeTitleTextAttributes = attributes
         } else {
             HEXRGBLabel.textColor = .black
-            HEXRGBValueLabel.textColor = .black
+            HEXRGBHSBValueLabel.textColor = .black
             navigationController?.navigationBar.tintColor = .black
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
             navigationController?.navigationBar.largeTitleTextAttributes = attributes
         }
-        HEXRGBValueLabel.text = "\(color.hex)\n\(color.r), \(color.g), \(color.b)"
+        guard let hsbColor = UIColor(red: color.r, green: color.g, blue: color.b, alpha: 1).getHSB() else { return }
+        HEXRGBHSBValueLabel.text = "\(color.hex)" +
+        "\n\(color.r), \(color.g), \(color.b)" +
+        "\n\(String(format: "%.2f", hsbColor.hue))," +
+        "\(String(format: "%.2f", hsbColor.saturation)), \(String(format: "%.2f", hsbColor.brightness))"
         infoStack.addArrangedSubview(HEXRGBLabel)
-        infoStack.addArrangedSubview(HEXRGBValueLabel)
+        infoStack.addArrangedSubview(HEXRGBHSBValueLabel)
         infoStack.axis = .horizontal
+        infoStack.alignment = .fill
+        infoStack.distribution = .fill
     }
 }

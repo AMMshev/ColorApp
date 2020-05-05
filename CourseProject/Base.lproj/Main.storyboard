@@ -81,7 +81,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="DvT-6D-aJt"/>
                     </navigationItem>
                     <connections>
-                        <segue destination="hbA-Az-zUD" kind="show" identifier="showDetail" id="pVa-S7-GB9"/>
+                        <segue destination="hbA-Az-zUD" kind="show" identifier="showColorDetail" id="pVa-S7-GB9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sMM-NZ-dkg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -287,7 +287,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="p8H-j9-WBv"/>
                     </navigationItem>
                     <connections>
-                        <segue destination="NKj-cf-d8I" kind="show" identifier="threeColors" id="GTh-Ye-l5I"/>
+                        <segue destination="NKj-cf-d8I" kind="show" identifier="showThreeColors" id="GTh-Ye-l5I"/>
                         <segue destination="CX5-iO-rZ0" kind="show" identifier="showColorList" id="w92-n9-oxz"/>
                         <segue destination="eHp-sG-OUL" kind="show" identifier="showColorCircle" id="w7b-r9-pIB"/>
                     </connections>
@@ -444,8 +444,8 @@
                         <outlet property="secondaryColorNameLabel" destination="ynB-HU-gcA" id="Yop-fM-q8D"/>
                         <outlet property="sourceImageBackView" destination="xwk-rU-2pO" id="vLs-5x-K5F"/>
                         <outlet property="sourceImageView" destination="nXu-r4-T4d" id="Kki-i6-pJX"/>
-                        <segue destination="hbA-Az-zUD" kind="show" identifier="detailScreen" id="aCh-2T-D9O"/>
-                        <segue destination="eHp-sG-OUL" kind="show" identifier="gradientCircle" id="g80-B2-HMj"/>
+                        <segue destination="hbA-Az-zUD" kind="show" identifier="showColorDetail" id="aCh-2T-D9O"/>
+                        <segue destination="eHp-sG-OUL" kind="show" identifier="showColorCircle" id="g80-B2-HMj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vwx-EU-EBZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -497,6 +497,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="g80-B2-HMj"/>
-        <segue reference="aCh-2T-D9O"/>
+        <segue reference="pVa-S7-GB9"/>
     </inferredMetricsTieBreakers>
 </document>

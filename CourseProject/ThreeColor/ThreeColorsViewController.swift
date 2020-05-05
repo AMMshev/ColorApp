@@ -33,7 +33,7 @@ class ThreeColorsViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.tintColor = UIColor(named: "navBarColor")
+        navigationController?.navigationBar.tintColor = UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue)
     }
     // MARK: - segue methods
     @objc private func colorTapped(sender: UITapGestureRecognizer) {
@@ -43,18 +43,18 @@ class ThreeColorsViewController: UIViewController {
                                                                Int(colorParameters[2] * 255))
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
         choosenColor = color
-        self.performSegue(withIdentifier: "detailScreen", sender: nil)
+        self.performSegue(withIdentifier: SegueIdentificators.colorDetail.rawValue, sender: nil)
     }
     @objc private func gradientTapped() {
-        self.performSegue(withIdentifier: "gradientCircle", sender: nil)
+        self.performSegue(withIdentifier: SegueIdentificators.colorCircle.rawValue, sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "detailScreen" {
+        if segue.identifier == SegueIdentificators.colorDetail.rawValue {
             let destinationVC = segue.destination as? DetailColorViewController
             destinationVC?.color = choosenColor
         }
-        if segue.identifier == "gradientCircle" {
+        if segue.identifier == SegueIdentificators.colorCircle.rawValue {
             let destinationVC = segue.destination as? ColorCircleViewController
             destinationVC?.gradientColors = gradientColors
         }
@@ -64,8 +64,8 @@ class ThreeColorsViewController: UIViewController {
 extension ThreeColorsViewController {
     private func setViews() {
         navigationController?.navigationBar.isHidden = false
-        sourceImageBackView.backgroundColor = UIColor(named: "Color")
-        sourceImageBackView.layer.shadowColor = UIColor(named: "navBarColor")?.cgColor
+        sourceImageBackView.backgroundColor = UIColor(named: DarkModeColors.blackWhiteBackColor.rawValue)
+        sourceImageBackView.layer.shadowColor = UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue)?.cgColor
         sourceImageBackView.layer.shadowOffset = CGSize(width: 0.3, height: 0.5)
         sourceImageBackView.layer.shadowOpacity = 0.5
         guard let sourceImage = sourceImage else { return }
@@ -136,7 +136,6 @@ extension ThreeColorsViewController {
         }
         colorView.isUserInteractionEnabled = true
         colorView.addGestureRecognizer(tapGesture)
-        colorView.setNeedsDisplay()
     }
     private func makeGradientArray(colors: ColorsList) -> [CGColor] {
         var gradientColors: [CGColor] = []
