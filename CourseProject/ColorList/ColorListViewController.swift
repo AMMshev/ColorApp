@@ -26,26 +26,17 @@ class ColorListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        takeColorsFromFile()
+        guard let colorsFromFile = ColorsFromFileData.shared.takeColorsFromFile() else { return }
+        colors = colorsFromFile
         setupTableView()
         setupSearchController()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.tintColor = UIColor(named: "Color")
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "Color")]
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
-    }
-    
-    private func takeColorsFromFile() {
-        guard let url = Bundle.main.url(forResource: "colorList", withExtension: "txt") else { return }
-        do {
-            let txtFile = try String(contentsOf: url)
-            guard let data = txtFile.data(using: .utf8) else { return }
-            colors = try JSONDecoder().decode(ColorsSource.self, from: data).colors
-            colors.sort(by: {$0.hex < $1.hex})
-        } catch {}
     }
     
     private func setupTableView() {
@@ -79,7 +70,7 @@ class ColorListViewController: UIViewController {
     }
 }
 
-// MARK: UITableViewDelegate, UITableViewDataSouce
+// MARK: -UITableViewDelegate, UITableViewDataSouce
 
 extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -91,9 +82,9 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? TableViewCell else { fatalError() }
         let cellData = isFiltering ? filteredColors[indexPath.row] : colors[indexPath.row]
         cell.colorName.text = cellData.name
-        if  cellData.rgb.r < 128 &&
-            cellData.rgb.r < 128 &&
-            cellData.rgb.r < 128 {
+        if  cellData.rgb.r < 125 &&
+            cellData.rgb.r < 125 &&
+            cellData.rgb.r < 125 {
             cell.colorName.textColor = .white
         } else {
             cell.colorName.textColor = .black
@@ -116,7 +107,7 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: UISearchResultsUpdating
+// MARK: -UISearchResultsUpdating
 
 extension ColorListViewController: UISearchResultsUpdating {
     
