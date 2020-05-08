@@ -17,7 +17,7 @@
 		1C6D60EE242D3BF200D46923 /* ThreeColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */; };
 		1C7A64722428FD5100D8E749 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A64712428FD5100D8E749 /* MainViewController.swift */; };
 		1C9B04122456F74300104C74 /* ColorListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B04112456F74300104C74 /* ColorListViewController.swift */; };
-		1C9B04142456F77300104C74 /* Jsonmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B04132456F77300104C74 /* Jsonmodel.swift */; };
+		1C9B04142456F77300104C74 /* colorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B04132456F77300104C74 /* colorData.swift */; };
 		1C9E1F7D24573D8100A133C5 /* DetailColorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E1F7C24573D8100A133C5 /* DetailColorModel.swift */; };
 		1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FB146242D0A2F00A42CBD /* ViewController.swift */; };
 		1C9FB14B242D0A8300A42CBD /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */; };
@@ -38,7 +38,7 @@
 		1C6D60ED242D3BF200D46923 /* ThreeColorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeColorsViewController.swift; sourceTree = "<group>"; };
 		1C7A64712428FD5100D8E749 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1C9B04112456F74300104C74 /* ColorListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorListViewController.swift; sourceTree = "<group>"; };
-		1C9B04132456F77300104C74 /* Jsonmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jsonmodel.swift; sourceTree = "<group>"; };
+		1C9B04132456F77300104C74 /* colorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colorData.swift; sourceTree = "<group>"; };
 		1C9E1F7C24573D8100A133C5 /* DetailColorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailColorModel.swift; sourceTree = "<group>"; };
 		1C9FB146242D0A2F00A42CBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1C9FB14A242D0A8300A42CBD /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 			children = (
 				1C9B04112456F74300104C74 /* ColorListViewController.swift */,
 				1C28333C245700F900C3A962 /* TableViewCell.swift */,
-				1C9B04132456F77300104C74 /* Jsonmodel.swift */,
+				1C9B04132456F77300104C74 /* colorData.swift */,
 				1CEF99132457208500139BD7 /* colorList.txt */,
 			);
 			path = ColorList;
@@ -242,7 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C9FB14B242D0A8300A42CBD /* LoginRegisterViewController.swift in Sources */,
-				1C9B04142456F77300104C74 /* Jsonmodel.swift in Sources */,
+				1C9B04142456F77300104C74 /* colorData.swift in Sources */,
 				1C9FB147242D0A2F00A42CBD /* ViewController.swift in Sources */,
 				1C9B04122456F74300104C74 /* ColorListViewController.swift in Sources */,
 				1C2B8D002427C82700883C00 /* AppDelegate.swift in Sources */,
