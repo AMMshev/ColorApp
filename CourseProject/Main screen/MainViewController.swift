@@ -114,8 +114,10 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         picker.dismiss(animated: true, completion: nil)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
-        imageFromPicker = imageFromCamera
+        DispatchQueue.global(qos: .utility).async {        
+            guard let imageFromCamera = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
+            self.imageFromPicker = imageFromCamera
+        }
         picker.dismiss(animated: true, completion: {
             self.performSegue(withIdentifier: SegueIdentificators.threeColors.rawValue, sender: nil)
         })

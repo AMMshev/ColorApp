@@ -62,6 +62,13 @@ extension UIColor {
             return nil
         }
     }
+    // MARK: - convert RGB color into HEX
+    func getHEX() -> String? {
+        guard let red = self.cgColor.components?[0] else { return nil }
+        guard let green = self.cgColor.components?[1] else { return nil }
+        guard let blue = self.cgColor.components?[2] else { return nil }
+        return "#" + String(format:"%02X%02X%02X", Int(red * 255), Int(green * 255), Int(blue * 255))
+    }
 }
 extension NSObject {
     // MARK: - convenient manual set of constraints

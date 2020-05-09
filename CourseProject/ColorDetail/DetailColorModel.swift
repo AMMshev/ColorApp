@@ -10,8 +10,6 @@ import Foundation
 
 struct ColorModel {
     var name: String
-    var r: Int
-    var g: Int
-    var b: Int
+    var r, g, b: Int
     var hex: String
 }

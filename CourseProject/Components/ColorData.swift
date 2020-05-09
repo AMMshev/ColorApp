@@ -7,12 +7,12 @@
 //
 //swiftlint:disable all
 import Foundation
+import UIKit
 
 class ColorsFromFileData {
     
     static let shared = ColorsFromFileData()
     private init() {}
-    
 // MARK: - make array of colors from json from file colorList.txt and sort it
     func makeURLToFile(name: String, fileExtension: String) -> URL? {
         guard  let URL = Bundle.main.url(forResource: name, withExtension: fileExtension) else { return nil }
@@ -25,8 +25,8 @@ class ColorsFromFileData {
             let txtFile = try String(contentsOf: urlToFile)
             guard let data = txtFile.data(using: .utf8) else { return nil }
             colorList = try JSONDecoder().decode(ColorsSource.self, from: data).colors
-//            colorList?.sort(by: {$0.hex < $1.hex})
-        } catch {}
+            colorList?.sort(by: {$0.hex < $1.hex})
+        } catch { print("Parse colors from file error") }
         return colorList
     }
 // MARK: - method that takes a color and looks for the most similar in the array
@@ -36,21 +36,21 @@ class ColorsFromFileData {
         var recognizedColor: [ColorModel] = []
         var colorFromList: [ColorList] = []
         var error: Int = 0
-        while colorFromList.isEmpty {
-            colorFromList = allColors.filter({(
-                (rColor - error)...(rColor + error)).contains($0.rgb.r) &&
-                ((gColor - error)...(gColor + error)).contains($0.rgb.g) &&
-                ((bColor - error)...(bColor + error)).contains($0.rgb.b)})
-            error += 1
-        }
-        if colorFromList.first != nil {
-            let model = ColorModel(name: colorFromList.first!.name,
-                                   r: colorFromList.first!.rgb.r,
-                                   g: colorFromList.first!.rgb.g,
-                                   b: colorFromList.first!.rgb.b,
-                                   hex: colorFromList.first!.hex)
-            recognizedColor.append(model)
-        }
+            while colorFromList.isEmpty {
+                colorFromList = allColors.filter({(
+                    (rColor - error)...(rColor + error)).contains($0.rgb.r) &&
+                    ((gColor - error)...(gColor + error)).contains($0.rgb.g) &&
+                    ((bColor - error)...(bColor + error)).contains($0.rgb.b)})
+                error += 1
+            }
+            if colorFromList.first != nil {
+                let model = ColorModel(name: colorFromList.first!.name,
+                                       r: colorFromList.first!.rgb.r,
+                                       g: colorFromList.first!.rgb.g,
+                                       b: colorFromList.first!.rgb.b,
+                                       hex: colorFromList.first!.hex)
+                recognizedColor.append(model)
+            }
         return recognizedColor.first
     }
 }
@@ -61,13 +61,10 @@ struct ColorsSource: Codable {
 }
 
 struct ColorList: Codable {
-    let hex: String
-    let name: String
+    let hex , name: String
     let rgb: Rgb
 }
 
 struct Rgb: Codable {
-    let r: Int
-    let g: Int
-    let b: Int
+    let r, g, b: Int
 }

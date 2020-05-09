@@ -28,6 +28,10 @@ class DetailColorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setViews()
     }
 }
@@ -55,6 +59,7 @@ extension DetailColorViewController {
         "\n\(color.r), \(color.g), \(color.b)" +
         "\n\(String(format: "%.2f", hsbColor.hue)), " +
         "\(String(format: "%.2f", hsbColor.saturation)), \(String(format: "%.2f", hsbColor.brightness))"
+        HEXRGBHSBValueLabel.text = HEXRGBHSBValueLabel.text?.uppercased()
         infoStack.addArrangedSubview(HEXRGBLabel)
         infoStack.addArrangedSubview(HEXRGBHSBValueLabel)
         infoStack.axis = .horizontal

@@ -77,7 +77,7 @@ extension ThreeColorsViewController {
                 do {
                     let json = try JSONDecoder().decode(JSONAnswer.self, from: data )
                     let RGBColors = json.result.colors.image_colors
-                    self.gradientColors = self.makeGradientArray(colors: json.result.colors)
+                    self.gradientColors = self.makeColorsForGradientArray(colors: json.result.colors)
                     DispatchQueue.main.async {
                         if RGBColors.count >= 1 {
                             self.setColor(colorView: self.mainColor,
@@ -137,7 +137,7 @@ extension ThreeColorsViewController {
         colorView.isUserInteractionEnabled = true
         colorView.addGestureRecognizer(tapGesture)
     }
-    private func makeGradientArray(colors: ColorsList) -> [CGColor] {
+    private func makeColorsForGradientArray(colors: ColorsList) -> [CGColor] {
         var gradientColors: [CGColor] = []
         colors.background_colors.forEach({
             gradientColors.append(UIColor(red: $0.r, green: $0.g, blue: $0.b, alpha: 1).cgColor)

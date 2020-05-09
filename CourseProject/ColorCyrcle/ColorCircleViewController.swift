@@ -91,20 +91,25 @@ class ColorCircleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setViews()
         setCombinationColorViewsGestures()
+        setViews()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.tintColor = UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue)
     }
-    // MARK: - segue methods
+}
+// MARK: - segue methods
+extension ColorCircleViewController {
     @objc private func colorTapped(sender: UITapGestureRecognizer) {
         guard let colorParamenters = sender.view?.backgroundColor?.cgColor.components else { return }
         chosenColor = ColorsFromFileData.shared.makeModelOfColor(Int(colorParamenters[0] * 255),
                                                                  Int(colorParamenters[1] * 255),
                                                                  Int(colorParamenters[2] * 255))
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
+        if sender.view == chosenColorView || sender.view == firstColorView {
+            chosenColor.hex = colorHexNumberLabel.text ?? ""
+        }
         performSegue(withIdentifier: SegueIdentificators.colorDetail.rawValue, sender: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -269,7 +274,6 @@ extension ColorCircleViewController {
         true
     }
 }
-
 // MARK: - gestures methods
 extension ColorCircleViewController {
     private func setCombinationColorViewsGestures() {
@@ -283,52 +287,6 @@ extension ColorCircleViewController {
                                              action: #selector(colorTapped(sender:)))
         colorView.addGestureRecognizer(gesture)
     }
-    private func outOfColor(location: CGPoint, view: UIView, borderSize: CGFloat) -> Bool {
-        return pow(location.x / (view.bounds.width - borderSize) - 0.5, 2)
-            + pow(location.y/(view.bounds.width - borderSize) - 0.5, 2) > 0.25
-    }
-    private func selectColorOn(locationOnMainView: CGPoint,
-                               locationOnColorCircle: CGPoint,
-                               locationOnTintLine: CGPoint) {
-        loupeView.isHidden = false
-        if !outOfColor(location: locationOnColorCircle, view: colorCircleView, borderSize: 10) {
-            setloupe(mainLocation: locationOnMainView,
-                     secondaryLocation: locationOnColorCircle,
-                     isOnColorCircle: true)
-            
-        }
-        if !outOfColor(location: locationOnTintLine, view: tintColorCircleView, borderSize: 0) {
-            setloupe(mainLocation: locationOnMainView,
-                     secondaryLocation: locationOnTintLine,
-                     isOnColorCircle: false)
-        } else {
-            loupeView.isHidden = true
-        }
-    }
-    private func setloupe(mainLocation: CGPoint,
-                          secondaryLocation: CGPoint,
-                          isOnColorCircle: Bool) {
-        loupeView.frame = CGRect(x: mainLocation.x - 39,
-                                 y: mainLocation.y - 110,
-                                 width: 78, height: 110)
-        colorOnTap = tintColorCircleView.getPixelColorAt(point: secondaryLocation)
-        loupeColorView.backgroundColor = colorOnTap
-        view.backgroundColor = colorOnTap
-        chosenColorView.backgroundColor = colorOnTap
-        colorHexNumberLabel.textColor = colorOnTap
-        if isOnColorCircle { tintGradientLayer.colors = [UIColor.black.cgColor,
-                                                         colorOnTap.cgColor,
-                                                         UIColor.white.cgColor] }
-    }
-    private func setFinal(fromView: UIView, location: CGPoint) {
-        guard let color = fromView.getPixelColorAt(point: location).cgColor.components else { return }
-        chosenColor =
-            ColorsFromFileData.shared.makeModelOfColor(Int(color[0] * 255),
-                                                       Int(color[1] * 255),
-                                                       Int(color[2] * 255))
-            ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-        colorHexNumberLabel.text = chosenColor.hex
-    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard let firstLocation = touches.first?.location(in: self.view),
@@ -338,6 +296,44 @@ extension ColorCircleViewController {
                       locationOnColorCircle: colorCircleLocation,
                       locationOnTintLine: tintColorCircleLocation)
         changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
+    }
+    private func selectColorOn(locationOnMainView: CGPoint,
+                               locationOnColorCircle: CGPoint,
+                               locationOnTintLine: CGPoint) {
+        loupeView.isHidden = false
+        if !outOfColor(location: locationOnColorCircle, view: colorCircleView, borderSize: 10) {
+            
+            setViewsColor(mainLocation: locationOnMainView,
+                     secondaryLocation: locationOnColorCircle,
+                     isOnColorCircle: true)
+            colorHexNumberLabel.text = setHexLabelValue(from: colorCircleView, at: locationOnColorCircle)
+        }
+        if !outOfColor(location: locationOnTintLine, view: tintColorCircleView, borderSize: 0) {
+            setViewsColor(mainLocation: locationOnMainView,
+                     secondaryLocation: locationOnTintLine,
+                     isOnColorCircle: false)
+            colorHexNumberLabel.text = setHexLabelValue(from: tintColorCircleView, at: locationOnTintLine)
+        } else {
+            loupeView.isHidden = true
+        }
+    }
+    private func outOfColor(location: CGPoint, view: UIView, borderSize: CGFloat) -> Bool {
+        pow((location.x / (view.bounds.width - (2 * borderSize))) - 0.5, 2) + pow((location.y / (view.bounds.width - (borderSize))) - 0.5, 2) >= 0.25
+    }
+    private func setViewsColor(mainLocation: CGPoint,
+                               secondaryLocation: CGPoint,
+                               isOnColorCircle: Bool) {
+        loupeView.frame = CGRect(x: mainLocation.x - 39,
+                                 y: mainLocation.y - 110,
+                                 width: 78, height: 110)
+        self.colorOnTap = self.tintColorCircleView.getPixelColorAt(point: secondaryLocation)
+        loupeColorView.backgroundColor = colorOnTap
+        view.backgroundColor = colorOnTap
+        chosenColorView.backgroundColor = colorOnTap
+        colorHexNumberLabel.textColor = colorOnTap
+        if isOnColorCircle { tintGradientLayer.colors = [UIColor.black.cgColor,
+                                                         colorOnTap.cgColor,
+                                                         UIColor.white.cgColor] }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
@@ -349,16 +345,20 @@ extension ColorCircleViewController {
                       locationOnTintLine: tintColorCircleLocation)
         changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
     }
+    
+    private func setHexLabelValue(from view: UIView, at point: CGPoint) -> String? {
+            view.getPixelColorAt(point: point).getHEX()
+    }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         self.loupeView.isHidden = true
         guard let lastColorCircleLocation = touches.first?.location(in: colorCircleView),
             let lastColorTintLocation = touches.first?.location(in: tintColorCircleView) else { return }
         if !outOfColor(location: lastColorCircleLocation, view: colorCircleView, borderSize: 10) {
-            setFinal(fromView: colorCircleView, location: lastColorCircleLocation)
+            colorHexNumberLabel.text = setHexLabelValue(from: colorCircleView, at: lastColorCircleLocation)
         } else {
             if !outOfColor(location: lastColorTintLocation, view: tintColorCircleView, borderSize: 0) {
-                setFinal(fromView: tintColorCircleView, location: lastColorTintLocation)
+                colorHexNumberLabel.text = setHexLabelValue(from: tintColorCircleView, at: lastColorTintLocation)
             }
         }
     }
