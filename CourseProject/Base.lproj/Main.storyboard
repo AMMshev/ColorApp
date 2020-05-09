@@ -98,7 +98,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="OZb-4U-hb1"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Hg9-Tj-cCp"/>
+                    <navigationItem key="navigationItem" id="Hg9-Tj-cCp">
+                        <barButtonItem key="rightBarButtonItem" image="star" catalog="system" id="djH-Nr-noY">
+                            <connections>
+                                <action selector="addToFavourites:" destination="hbA-Az-zUD" id="vd4-XS-m7U"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BaK-Cs-DOO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -499,4 +505,7 @@
         <segue reference="w7b-r9-pIB"/>
         <segue reference="pVa-S7-GB9"/>
     </inferredMetricsTieBreakers>
+    <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
+    </resources>
 </document>

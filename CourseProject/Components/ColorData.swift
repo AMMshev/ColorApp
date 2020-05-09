@@ -13,6 +13,8 @@ class ColorsFromFileData {
     
     static let shared = ColorsFromFileData()
     private init() {}
+    var favouritesColors: [ColorModel] = []
+    
 // MARK: - make array of colors from json from file colorList.txt and sort it
     func makeURLToFile(name: String, fileExtension: String) -> URL? {
         guard  let URL = Bundle.main.url(forResource: name, withExtension: fileExtension) else { return nil }
@@ -59,12 +61,10 @@ class ColorsFromFileData {
 struct ColorsSource: Codable {
     let colors: [ColorList]
 }
-
 struct ColorList: Codable {
     let hex , name: String
     let rgb: Rgb
 }
-
 struct Rgb: Codable {
     let r, g, b: Int
 }
