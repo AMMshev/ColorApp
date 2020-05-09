@@ -81,12 +81,12 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="DvT-6D-aJt"/>
                     </navigationItem>
                     <connections>
-                        <segue destination="hbA-Az-zUD" kind="show" identifier="showColorDetail" id="pVa-S7-GB9"/>
+                        <segue destination="eHp-sG-OUL" kind="show" identifier="showColorCircle" id="GKr-7z-75u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sMM-NZ-dkg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4619" y="832"/>
+            <point key="canvasLocation" x="4374" y="-945"/>
         </scene>
         <!--Detail Color View Controller-->
         <scene sceneID="lSG-EQ-k3T">
@@ -98,7 +98,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="OZb-4U-hb1"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Hg9-Tj-cCp">
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="Hg9-Tj-cCp">
                         <barButtonItem key="rightBarButtonItem" image="star.fill" catalog="system" id="djH-Nr-noY">
                             <connections>
                                 <action selector="addToFavourites:" destination="hbA-Az-zUD" id="vd4-XS-m7U"/>
@@ -108,7 +108,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BaK-Cs-DOO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6170" y="353"/>
+            <point key="canvasLocation" x="7020" y="-946"/>
         </scene>
         <!--Login Register View Controller-->
         <scene sceneID="qxj-78-GX8">
@@ -312,11 +312,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="hit-eM-A4x"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Jx3-YA-eY7">
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="Jx3-YA-eY7">
                         <barButtonItem key="backBarButtonItem" title=" " id="J0m-MS-nnw"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="hurricane" catalog="system" id="vai-Db-ctJ">
                             <connections>
-                                <action selector="test:" destination="eHp-sG-OUL" id="0px-En-mQz"/>
+                                <action selector="showcombinationPicker:" destination="eHp-sG-OUL" id="0px-En-mQz"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -326,7 +326,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WvN-0Z-QfB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4618.840579710145" y="-796.20535714285711"/>
+            <point key="canvasLocation" x="5742" y="-946"/>
         </scene>
         <!--Three Colors View Controller-->
         <scene sceneID="y8Z-U4-J0s">
@@ -455,13 +455,12 @@
                         <outlet property="secondaryColorNameLabel" destination="ynB-HU-gcA" id="Yop-fM-q8D"/>
                         <outlet property="sourceImageBackView" destination="xwk-rU-2pO" id="vLs-5x-K5F"/>
                         <outlet property="sourceImageView" destination="nXu-r4-T4d" id="Kki-i6-pJX"/>
-                        <segue destination="hbA-Az-zUD" kind="show" identifier="showColorDetail" id="aCh-2T-D9O"/>
                         <segue destination="eHp-sG-OUL" kind="show" identifier="showColorCircle" id="g80-B2-HMj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vwx-EU-EBZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4619" y="11"/>
+            <point key="canvasLocation" x="4975" y="11"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XRu-Oe-p7B">
@@ -507,8 +506,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="w7b-r9-pIB"/>
-        <segue reference="HCA-Yw-MgY"/>
+        <segue reference="g80-B2-HMj"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="hurricane" catalog="system" width="91" height="128"/>

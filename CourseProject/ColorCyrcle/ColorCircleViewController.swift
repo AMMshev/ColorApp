@@ -13,7 +13,7 @@ class ColorCircleViewController: UIViewController {
     private let tapGesture = UITapGestureRecognizer()
     private var tintGradientLayer = CAGradientLayer()
     private var colorCircleGradientLayer = CAGradientLayer()
-    private var chosenColor: ColorModel = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
+    var chosenColor: ColorModel = ColorModel(name: "green", r: 0, g: 255, b: 0, hex: "#00FF00")
     private var colorOnTap = UIColor()
     private let tintColorCircleView = UIView()
     private var combinationMethod: CombinationMethods = .complementary
@@ -46,11 +46,6 @@ class ColorCircleViewController: UIViewController {
     }()
     private var backViewHeightAnchor = NSLayoutConstraint()
     private var backViewbottomAnchor = NSLayoutConstraint()
-    private let chosenColorView: UIView = {
-        let chosenColorView = UIView()
-        chosenColorView.layer.cornerRadius = 25
-        return chosenColorView
-    }()
     private let colorHexNumberLabel: UILabel = {
         let colorHexNumberLabel = UILabel()
         colorHexNumberLabel.layer.borderWidth = 1
@@ -62,13 +57,11 @@ class ColorCircleViewController: UIViewController {
     private let firstColorView: UIView = {
         let firstColorView = UIView()
         firstColorView.translatesAutoresizingMaskIntoConstraints = false
-//        firstColorView.isHidden = true
         return firstColorView
     }()
     private let secondColorView: UIView = {
         let secondColorView = UIView()
         secondColorView.translatesAutoresizingMaskIntoConstraints = false
-//        secondColorView.isHidden = true
         return secondColorView
     }()
     private let thirdColorView: UIView = {
@@ -92,11 +85,10 @@ class ColorCircleViewController: UIViewController {
         return pickerView
     }()
     private var pickerViewHeightAnchor = NSLayoutConstraint()
-    private var isPickerCalled = false
+    private var isPickerCalled = true
     var gradientColors: [CGColor] = [UIColor.red.cgColor, UIColor.orange.cgColor, UIColor.yellow.cgColor,
                                      UIColor.green.cgColor, UIColor.cyan.cgColor, UIColor.blue.cgColor,
                                      UIColor.purple.cgColor, UIColor.systemPink.cgColor]
-    private var comboColors: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +97,21 @@ class ColorCircleViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.tintColor = UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue)
+        navigationController?.navigationBar.tintColor = UIColor(named:
+            DarkModeColors.blackWhiteElementColor.rawValue)
+    }
+    @IBAction func showcombinationPicker(_ sender: Any) {
+        if isPickerCalled == true {
+            self.backViewbottomAnchor.constant = -200
+            self.pickerViewHeightAnchor.constant = 250
+        } else {
+            self.backViewbottomAnchor.constant = 0
+            self.pickerViewHeightAnchor.constant = 50
+        }
+        isPickerCalled = !isPickerCalled
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
     }
 }
 // MARK: - segue methods
@@ -116,28 +122,14 @@ extension ColorCircleViewController {
                                                                  Int(colorParamenters[1] * 255),
                                                                  Int(colorParamenters[2] * 255))
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
-        if sender.view == chosenColorView || sender.view == firstColorView {
-            chosenColor.hex = colorHexNumberLabel.text ?? ""
-        }
+        if sender.view == firstColorView {
+            chosenColor.hex = colorHexNumberLabel.text ?? "" }
         performSegue(withIdentifier: SegueIdentificators.colorDetail.rawValue, sender: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SegueIdentificators.colorDetail.rawValue {
             let destinationVC = segue.destination as? DetailColorViewController
             destinationVC?.color = chosenColor
-        }
-    }
-    @IBAction func test(_ sender: Any) {
-        if isPickerCalled == false {
-            self.backViewbottomAnchor.constant = -200
-            self.pickerViewHeightAnchor.constant = 250
-        } else {
-            self.backViewbottomAnchor.constant = 0
-            self.pickerViewHeightAnchor.constant = 50
-        }
-        isPickerCalled = !isPickerCalled
-        UIView.animate(withDuration: 0.5) {
-            self.view.layoutIfNeeded()
         }
     }
 }
@@ -229,9 +221,11 @@ extension ColorCircleViewController {
     private func setViews() {
         setViewsLayouts()
         navigationController?.navigationBar.isHidden = false
-        chosenColorView.backgroundColor = UIColor(red: chosenColor.r,
-                                                  green: chosenColor.g, blue: chosenColor.b, alpha: 1)
-        chosenColorView.addGestureRecognizer(tapGesture)
+        colorOnTap = UIColor(red: chosenColor.r, green: chosenColor.g, blue: chosenColor.b, alpha: 1)
+        colorHexNumberLabel.text = chosenColor.hex
+        colorHexNumberLabel.textColor = colorOnTap
+        view.backgroundColor = colorOnTap
+        changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
         tapGesture.addTarget(self, action: #selector(colorTapped(sender:)))
         tintGradientLayer = makeGradientLayerWith(width: UIScreen.main.bounds.width * 0.8,
                                                   height: UIScreen.main.bounds.width * 0.8,
@@ -265,7 +259,7 @@ extension ColorCircleViewController {
         pickerViewHeightAnchor = pickerView.heightAnchor.constraint(equalToConstant: 50)
         pickerViewHeightAnchor.isActive = true
         setConstraintsOn(view: backView, parantView: view,
-                         height: UIScreen.main.bounds.height * 0.9, leadingConstant: 0,
+                         height: UIScreen.main.bounds.height * 0.85, leadingConstant: 0,
                          bottomConstant: 0,
                          trailingConstant: 0)
         backViewbottomAnchor = backView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
@@ -279,26 +273,18 @@ extension ColorCircleViewController {
                          height: UIScreen.main.bounds.width * 0.8 - 30,
                          width: UIScreen.main.bounds.width * 0.8 - 30, centeringxConstant: 0,
                          centeringyConstant: 0)
-        setConstraintsOn(view: chosenColorView, parantView: backView,
-                         height: 50, width: 50, leadingConstant: 30)
-        chosenColorView.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor,
-                                             constant: 10).isActive = true
-        setConstraintsOn(view: colorHexNumberLabel, parantView: backView, height: 50, trailingConstant: -30)
+        setConstraintsOn(view: colorHexNumberLabel, parantView: backView, height: 50, leadingConstant: 30, trailingConstant: -30)
         colorHexNumberLabel.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor,
                                                  constant: 10).isActive = true
-        colorHexNumberLabel.leadingAnchor.constraint(equalTo: chosenColorView.trailingAnchor,
-                                                     constant: 10).isActive = true
         setConstraintsOn(view: loupeView, parantView: view, manualConstraints: false)
         setConstraintsOn(view: loupeColorView, parantView: loupeView,
                          height: 60, width: 60, centeringxConstant: 0, centeringyConstant: -16)
         setConstraintsOn(view: combinationsStack, parantView: backView, height: 30,
                          leadingConstant: 30, trailingConstant: -30)
-        combinationsStack.topAnchor.constraint(equalTo: chosenColorView.bottomAnchor,
+        combinationsStack.topAnchor.constraint(equalTo: colorHexNumberLabel.bottomAnchor,
                                                constant: 10).isActive = true
         setConstraintsOn(view: combinationPicker, parantView: pickerView, leadingConstant: 30,
                          trailingConstant: -30, centeringxConstant: 0)
-//        combinationPicker.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor).isActive =
-//        true
     }
 }
 // MARK: - gestures methods
@@ -342,13 +328,13 @@ extension ColorCircleViewController {
             setViewsColor(mainLocation: locationOnMainView,
                           secondaryLocation: locationOnColorCircle,
                           isOnColorCircle: true)
-            colorHexNumberLabel.text = setHexLabelValue(from: colorCircleView, at: locationOnColorCircle)
+            colorHexNumberLabel.text = setHexLabelValue(from: colorCircleView, at: locationOnColorCircle)?.uppercased()
         }
         if !outOfColor(location: locationOnTintLine, view: tintColorCircleView, borderSize: 0) {
             setViewsColor(mainLocation: locationOnMainView,
                           secondaryLocation: locationOnTintLine,
                           isOnColorCircle: false)
-            colorHexNumberLabel.text = setHexLabelValue(from: tintColorCircleView, at: locationOnTintLine)
+            colorHexNumberLabel.text = setHexLabelValue(from: tintColorCircleView, at: locationOnTintLine)?.uppercased()
         } else {
             loupeView.isHidden = true
         }
@@ -365,7 +351,6 @@ extension ColorCircleViewController {
         self.colorOnTap = self.tintColorCircleView.getPixelColorAt(point: secondaryLocation)
         loupeColorView.backgroundColor = colorOnTap
         view.backgroundColor = colorOnTap
-        chosenColorView.backgroundColor = colorOnTap
         colorHexNumberLabel.textColor = colorOnTap
         if isOnColorCircle { tintGradientLayer.colors = [UIColor.black.cgColor,
                                                          colorOnTap.cgColor,
@@ -380,10 +365,10 @@ extension ColorCircleViewController {
         guard let lastColorCircleLocation = touches.first?.location(in: colorCircleView),
             let lastColorTintLocation = touches.first?.location(in: tintColorCircleView) else { return }
         if !outOfColor(location: lastColorCircleLocation, view: colorCircleView, borderSize: 10) {
-            colorHexNumberLabel.text = setHexLabelValue(from: colorCircleView, at: lastColorCircleLocation)
+            colorHexNumberLabel.text = setHexLabelValue(from: colorCircleView, at: lastColorCircleLocation)?.uppercased()
         } else {
             if !outOfColor(location: lastColorTintLocation, view: tintColorCircleView, borderSize: 0) {
-                colorHexNumberLabel.text = setHexLabelValue(from: tintColorCircleView, at: lastColorTintLocation)
+                colorHexNumberLabel.text = setHexLabelValue(from: tintColorCircleView, at: lastColorTintLocation)?.uppercased()
             }
         }
     }

@@ -43,19 +43,19 @@ class ThreeColorsViewController: UIViewController {
                                                                Int(colorParameters[2] * 255))
             ?? ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
         choosenColor = color
-        self.performSegue(withIdentifier: SegueIdentificators.colorDetail.rawValue, sender: nil)
+        self.performSegue(withIdentifier: SegueIdentificators.colorCircle.rawValue, sender: nil)
     }
     @objc private func gradientTapped() {
         self.performSegue(withIdentifier: SegueIdentificators.colorCircle.rawValue, sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SegueIdentificators.colorDetail.rawValue {
-            let destinationVC = segue.destination as? DetailColorViewController
-            destinationVC?.color = choosenColor
-        }
+//        if segue.identifier == SegueIdentificators.colorDetail.rawValue {
+//            let destinationVC = segue.destination as? DetailColorViewController
+//        }
         if segue.identifier == SegueIdentificators.colorCircle.rawValue {
             let destinationVC = segue.destination as? ColorCircleViewController
+            destinationVC?.chosenColor = choosenColor
             destinationVC?.gradientColors = gradientColors
         }
     }

@@ -37,9 +37,9 @@ class ColorListViewController: UIViewController {
         navigationController?.navigationBar.largeTitleTextAttributes = attributes
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SegueIdentificators.colorDetail.rawValue {
-            let destinationVC = segue.destination as? DetailColorViewController
-            destinationVC?.color = self.color
+        if segue.identifier == SegueIdentificators.colorCircle.rawValue {
+            let destinationVC = segue.destination as? ColorCircleViewController
+            destinationVC?.chosenColor = self.color
         }
     }
 }
@@ -66,7 +66,7 @@ extension ColorListViewController: UITableViewDelegate, UITableViewDataSource {
         color.g = selectedCellColorData.rgb.g
         color.b = selectedCellColorData.rgb.b
         color.hex = selectedCellColorData.hex
-        performSegue(withIdentifier: SegueIdentificators.colorDetail.rawValue, sender: nil)
+        performSegue(withIdentifier: SegueIdentificators.colorCircle.rawValue, sender: nil)
     }
     private func setupTableView() {
         tableView = UITableView(frame: .zero)

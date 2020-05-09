@@ -19,6 +19,10 @@ class DetailColorViewController: UIViewController {
         copiedView.layer.cornerRadius = 20
         copiedView.backgroundColor = .white
         copiedView.isUserInteractionEnabled = false
+        copiedView.layer.shadowColor = UIColor.black.cgColor
+        copiedView.layer.shadowOffset = CGSize(width: 3, height: 4)
+        copiedView.layer.shadowRadius = 20
+        copiedView.layer.shadowOpacity = 1
         copiedView.alpha = 0
         return copiedView
     }()
@@ -98,8 +102,7 @@ extension DetailColorViewController {
             RGBButton.setTitleColor(.white, for: .normal)
             HSBButton.setTitleColor(.white, for: .normal)
             HEXButton.setTitleColor(.white, for: .normal)
-            copiedView.backgroundColor = .white
-            copiedLabel.textColor = .black
+            copiedView.layer.shadowColor = UIColor.white.cgColor
             navigationController?.navigationBar.tintColor = .white
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
             navigationController?.navigationBar.largeTitleTextAttributes = attributes
@@ -110,8 +113,7 @@ extension DetailColorViewController {
             RGBButton.setTitleColor(.black, for: .normal)
             HSBButton.setTitleColor(.black, for: .normal)
             HEXButton.setTitleColor(.black, for: .normal)
-            copiedView.backgroundColor = .black
-            copiedLabel.textColor = .white
+            copiedView.layer.shadowColor = UIColor.black.cgColor
             navigationController?.navigationBar.tintColor = .black
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
             navigationController?.navigationBar.largeTitleTextAttributes = attributes
