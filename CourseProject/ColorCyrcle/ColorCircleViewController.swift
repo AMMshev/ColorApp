@@ -16,7 +16,7 @@ class ColorCircleViewController: UIViewController {
     private var chosenColor: ColorModel = ColorModel(name: "", r: 0, g: 0, b: 0, hex: "")
     private var colorOnTap = UIColor()
     private let tintColorCircleView = UIView()
-    private var combinationMethod: CombinationMethods?
+    private var combinationMethod: CombinationMethods = .complementary
     private let colorCircleView: UIView = {
         let colorCircleView = UIView()
         return colorCircleView
@@ -44,6 +44,8 @@ class ColorCircleViewController: UIViewController {
         backView.backgroundColor = UIColor(named: DarkModeColors.blackWhiteBackColor.rawValue)
         return backView
     }()
+    private var backViewHeightAnchor = NSLayoutConstraint()
+    private var backViewbottomAnchor = NSLayoutConstraint()
     private let chosenColorView: UIView = {
         let chosenColorView = UIView()
         chosenColorView.layer.cornerRadius = 25
@@ -60,13 +62,13 @@ class ColorCircleViewController: UIViewController {
     private let firstColorView: UIView = {
         let firstColorView = UIView()
         firstColorView.translatesAutoresizingMaskIntoConstraints = false
-        firstColorView.isHidden = true
+//        firstColorView.isHidden = true
         return firstColorView
     }()
     private let secondColorView: UIView = {
         let secondColorView = UIView()
         secondColorView.translatesAutoresizingMaskIntoConstraints = false
-        secondColorView.isHidden = true
+//        secondColorView.isHidden = true
         return secondColorView
     }()
     private let thirdColorView: UIView = {
@@ -82,8 +84,15 @@ class ColorCircleViewController: UIViewController {
         return fourthColorView
     }()
     private var combinationsStack = UIStackView(arrangedSubviews: [])
-    private let combinations = ["choose a combination", "complementary", "analogous", "triadic", "tetradic"]
+    private let combinations = ["complementary", "analogous", "triadic", "tetradic"]
     private var combinationPicker = UIPickerView()
+    private var pickerView: UIView = {
+        let pickerView = UIView()
+        pickerView.backgroundColor = UIColor(named: DarkModeColors.blackWhiteBackColor.rawValue)
+        return pickerView
+    }()
+    private var pickerViewHeightAnchor = NSLayoutConstraint()
+    private var isPickerCalled = false
     var gradientColors: [CGColor] = [UIColor.red.cgColor, UIColor.orange.cgColor, UIColor.yellow.cgColor,
                                      UIColor.green.cgColor, UIColor.cyan.cgColor, UIColor.blue.cgColor,
                                      UIColor.purple.cgColor, UIColor.systemPink.cgColor]
@@ -118,6 +127,19 @@ extension ColorCircleViewController {
             destinationVC?.color = chosenColor
         }
     }
+    @IBAction func test(_ sender: Any) {
+        if isPickerCalled == false {
+            self.backViewbottomAnchor.constant = -200
+            self.pickerViewHeightAnchor.constant = 250
+        } else {
+            self.backViewbottomAnchor.constant = 0
+            self.pickerViewHeightAnchor.constant = 50
+        }
+        isPickerCalled = !isPickerCalled
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
+    }
 }
 // MARK: - UIPickerViewDelegate
 extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -132,16 +154,16 @@ extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch row {
-        case 1:
+        case 0:
             combinationMethod = .complementary
-        case 2:
+        case 1:
             combinationMethod = .analogous
-        case 3:
+        case 2:
             combinationMethod = .triadic
-        case 4:
+        case 3:
             combinationMethod = .tetradic
         default:
-            combinationMethod = nil
+            combinationMethod = .analogous
         }
         changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
     }
@@ -205,7 +227,7 @@ extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 // MARK: - visual methods
 extension ColorCircleViewController {
     private func setViews() {
-        setViewsConstraints()
+        setViewsLayouts()
         navigationController?.navigationBar.isHidden = false
         chosenColorView.backgroundColor = UIColor(red: chosenColor.r,
                                                   green: chosenColor.g, blue: chosenColor.b, alpha: 1)
@@ -238,11 +260,16 @@ extension ColorCircleViewController {
         combinationPicker.delegate = self
         combinationPicker.dataSource = self
     }
-    private func setViewsConstraints() {
+    private func setViewsLayouts() {
+        setConstraintsOn(view: pickerView, parantView: view, leadingConstant: 0, bottomConstant: 0, trailingConstant: 0)
+        pickerViewHeightAnchor = pickerView.heightAnchor.constraint(equalToConstant: 50)
+        pickerViewHeightAnchor.isActive = true
         setConstraintsOn(view: backView, parantView: view,
                          height: UIScreen.main.bounds.height * 0.9, leadingConstant: 0,
                          bottomConstant: 0,
                          trailingConstant: 0)
+        backViewbottomAnchor = backView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        backViewbottomAnchor.isActive = true
         setConstraintsOn(view: tintColorCircleView, parantView: backView,
                          height: UIScreen.main.bounds.width * 0.8,
                          width: UIScreen.main.bounds.width * 0.8,
@@ -268,10 +295,10 @@ extension ColorCircleViewController {
                          leadingConstant: 30, trailingConstant: -30)
         combinationsStack.topAnchor.constraint(equalTo: chosenColorView.bottomAnchor,
                                                constant: 10).isActive = true
-        setConstraintsOn(view: combinationPicker, parantView: view, leadingConstant: 30,
+        setConstraintsOn(view: combinationPicker, parantView: pickerView, leadingConstant: 30,
                          trailingConstant: -30, centeringxConstant: 0)
-        combinationPicker.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor).isActive =
-        true
+//        combinationPicker.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor).isActive =
+//        true
     }
 }
 // MARK: - gestures methods
@@ -297,21 +324,30 @@ extension ColorCircleViewController {
                       locationOnTintLine: tintColorCircleLocation)
         changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
     }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        guard let destinationLocation = touches.first?.location(in: self.view),
+            let colorLocation = touches.first?.location(in: colorCircleView),
+            let tintColorCircleLocation = touches.first?.location(in: tintColorCircleView) else { return }
+        selectColorOn(locationOnMainView: destinationLocation,
+                      locationOnColorCircle: colorLocation,
+                      locationOnTintLine: tintColorCircleLocation)
+        changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
+    }
     private func selectColorOn(locationOnMainView: CGPoint,
                                locationOnColorCircle: CGPoint,
                                locationOnTintLine: CGPoint) {
         loupeView.isHidden = false
         if !outOfColor(location: locationOnColorCircle, view: colorCircleView, borderSize: 10) {
-            
             setViewsColor(mainLocation: locationOnMainView,
-                     secondaryLocation: locationOnColorCircle,
-                     isOnColorCircle: true)
+                          secondaryLocation: locationOnColorCircle,
+                          isOnColorCircle: true)
             colorHexNumberLabel.text = setHexLabelValue(from: colorCircleView, at: locationOnColorCircle)
         }
         if !outOfColor(location: locationOnTintLine, view: tintColorCircleView, borderSize: 0) {
             setViewsColor(mainLocation: locationOnMainView,
-                     secondaryLocation: locationOnTintLine,
-                     isOnColorCircle: false)
+                          secondaryLocation: locationOnTintLine,
+                          isOnColorCircle: false)
             colorHexNumberLabel.text = setHexLabelValue(from: tintColorCircleView, at: locationOnTintLine)
         } else {
             loupeView.isHidden = true
@@ -335,19 +371,8 @@ extension ColorCircleViewController {
                                                          colorOnTap.cgColor,
                                                          UIColor.white.cgColor] }
     }
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
-        guard let destinationLocation = touches.first?.location(in: self.view),
-            let colorLocation = touches.first?.location(in: colorCircleView),
-            let tintColorCircleLocation = touches.first?.location(in: tintColorCircleView) else { return }
-        selectColorOn(locationOnMainView: destinationLocation,
-                      locationOnColorCircle: colorLocation,
-                      locationOnTintLine: tintColorCircleLocation)
-        changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
-    }
-    
     private func setHexLabelValue(from view: UIView, at point: CGPoint) -> String? {
-            view.getPixelColorAt(point: point).getHEX()
+        view.getPixelColorAt(point: point).getHEX()
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)

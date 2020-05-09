@@ -99,7 +99,7 @@
                         <viewLayoutGuide key="safeArea" id="OZb-4U-hb1"/>
                     </view>
                     <navigationItem key="navigationItem" id="Hg9-Tj-cCp">
-                        <barButtonItem key="rightBarButtonItem" image="star" catalog="system" id="djH-Nr-noY">
+                        <barButtonItem key="rightBarButtonItem" image="star.fill" catalog="system" id="djH-Nr-noY">
                             <connections>
                                 <action selector="addToFavourites:" destination="hbA-Az-zUD" id="vd4-XS-m7U"/>
                             </connections>
@@ -314,6 +314,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="Jx3-YA-eY7">
                         <barButtonItem key="backBarButtonItem" title=" " id="J0m-MS-nnw"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="hurricane" catalog="system" id="vai-Db-ctJ">
+                            <connections>
+                                <action selector="test:" destination="eHp-sG-OUL" id="0px-En-mQz"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="hbA-Az-zUD" kind="show" identifier="showColorDetail" id="HCA-Yw-MgY"/>
@@ -503,9 +508,10 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="w7b-r9-pIB"/>
-        <segue reference="pVa-S7-GB9"/>
+        <segue reference="HCA-Yw-MgY"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="hurricane" catalog="system" width="91" height="128"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
     </resources>
 </document>
