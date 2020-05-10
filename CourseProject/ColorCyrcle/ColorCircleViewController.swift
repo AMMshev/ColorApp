@@ -123,6 +123,7 @@ class ColorCircleViewController: UIViewController {
             }
         }
     }
+// MARK: - show view with picker, sender - chooseCombinationButton
     @objc func showcombinationPicker(_ sender: UIButton) {
         if isPickerCalled == true {
             self.backViewbottomAnchor.constant = -200
@@ -141,7 +142,7 @@ class ColorCircleViewController: UIViewController {
         }
     }
 }
-// MARK: - segue methods
+// MARK: - segue methods - by clicking the color view the color detail screen will be shown
 extension ColorCircleViewController {
     @objc private func colorTapped(sender: UITapGestureRecognizer) {
         guard let colorParamenters = sender.view?.backgroundColor?.cgColor.components else { return }
@@ -153,6 +154,7 @@ extension ColorCircleViewController {
             chosenColor.hex = colorHexNumberLabel.text ?? "" }
         performSegue(withIdentifier: SegueIdentificators.colorDetail.rawValue, sender: nil)
     }
+// MARK: - the segue will send color information to the detail color screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SegueIdentificators.colorDetail.rawValue {
             let destinationVC = segue.destination as? DetailColorViewController
@@ -160,7 +162,7 @@ extension ColorCircleViewController {
         }
     }
 }
-// MARK: - UIPickerViewDelegate
+// MARK: - UIPickerViewDelegate, UIPickerViewDataSource
 extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { combinations.count }
@@ -221,9 +223,8 @@ extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSourc
         }
     }
     func changeCombinationsColor(combinationMethod: CombinationMethods?, color: UIColor) {
-        guard let combinationMethod = combinationMethod,
-            let hsb = color.getHSB() else {
-                combinationsStack.arrangedSubviews.forEach({$0.isHidden = true}); return }
+        guard let combinationMethod = combinationMethod, let hsb = color.getHSB() else
+        { combinationsStack.arrangedSubviews.forEach({$0.isHidden = true}); return }
         combinationsStack.arrangedSubviews.forEach({$0.isHidden = false})
         let colorCombinations = Combinations(originalColorHue: hsb.hue,
                                              originalColorSaturation: hsb.saturation,
@@ -242,7 +243,7 @@ extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSourc
         }
     }
 }
-// MARK: - visual methods
+// MARK: - visual methods(set up a navigation bar, background colors, layouts and colors stack)
 extension ColorCircleViewController {
     private func setViews() {
         setViewsLayouts()
@@ -360,9 +361,11 @@ extension ColorCircleViewController {
             loupeView.isHidden = true
         }
     }
+// MARK: - this method checks if the user taps out of the color circle
     private func outOfColor(location: CGPoint, view: UIView, borderSize: CGFloat) -> Bool {
         pow((location.x / (view.bounds.width - (2 * borderSize))) - 0.5, 2) + pow((location.y / (view.bounds.width - (borderSize))) - 0.5, 2) >= 0.25
     }
+// MARK: - this method sets up the loupe view location at the point of users tap and sets up colors on the views
     private func setViewsColor(mainLocation: CGPoint,
                                secondaryLocation: CGPoint,
                                isOnColorCircle: Bool) {

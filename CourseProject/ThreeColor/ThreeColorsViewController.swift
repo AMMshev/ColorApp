@@ -50,9 +50,6 @@ class ThreeColorsViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == SegueIdentificators.colorDetail.rawValue {
-//            let destinationVC = segue.destination as? DetailColorViewController
-//        }
         if segue.identifier == SegueIdentificators.colorCircle.rawValue {
             let destinationVC = segue.destination as? ColorCircleViewController
             destinationVC?.chosenColor = choosenColor

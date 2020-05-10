@@ -142,6 +142,7 @@ extension DetailColorViewController {
         infoStack.alignment = .fill
         infoStack.distribution = .fill
     }
+// MARK: - this method copies a value of the color parameter by clicking on the button which shows it
     @objc func copy(sender: UIButton) {
         UIPasteboard.general.string = sender.titleLabel?.text
         UIView.animate(withDuration: 0.1, animations: { [weak self] in

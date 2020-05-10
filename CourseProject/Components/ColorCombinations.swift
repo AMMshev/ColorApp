@@ -18,7 +18,7 @@ class Combinations {
         self.originalColorSaturation = originalColorSaturation
         self.originslColorBrightness = originslColorBrightness
     }
-    
+// MARK: - this method contains color settings for every combination method
     func combination(type: CombinationMethods) -> [CombinationColor] {
         var secondColor: CombinationColor?
         var thirdColor: CombinationColor?

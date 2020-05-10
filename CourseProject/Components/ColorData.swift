@@ -14,11 +14,12 @@ class ColorsFromFileData {
     static let shared = ColorsFromFileData()
     private init() {}
     var favouriteColors: [ColorModel] = []
-// MARK: - make array of colors from json from file colorList.txt and sort it
+    
     func makeURLToFile(name: String, fileExtension: String) -> URL? {
         guard  let URL = Bundle.main.url(forResource: name, withExtension: fileExtension) else { return nil }
         return URL
     }
+// MARK: - make array of colors from json from file and sort it
     func takeColorsFromFile(urlToFile: URL?) -> [ColorList]? {
         var colorList: [ColorList]?
         guard let urlToFile = urlToFile else { return nil }
