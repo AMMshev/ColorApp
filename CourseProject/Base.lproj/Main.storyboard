@@ -314,13 +314,14 @@
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="Jx3-YA-eY7">
                         <barButtonItem key="backBarButtonItem" title=" " id="J0m-MS-nnw"/>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="hurricane" catalog="system" id="vai-Db-ctJ">
+                        <barButtonItem key="rightBarButtonItem" image="star.fill" catalog="system" id="baN-ap-EAI">
                             <connections>
-                                <action selector="showcombinationPicker:" destination="eHp-sG-OUL" id="0px-En-mQz"/>
+                                <action selector="rightNavBarItemTapped:" destination="eHp-sG-OUL" id="B7n-Dt-afo"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="rightNavBarItem" destination="baN-ap-EAI" id="nIA-iY-SPh"/>
                         <segue destination="hbA-Az-zUD" kind="show" identifier="showColorDetail" id="HCA-Yw-MgY"/>
                     </connections>
                 </viewController>
@@ -509,7 +510,6 @@
         <segue reference="g80-B2-HMj"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="hurricane" catalog="system" width="91" height="128"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
     </resources>
 </document>

@@ -102,12 +102,14 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         let cameraPicker = UIImagePickerController()
         cameraPicker.delegate = self
         cameraPicker.sourceType = .camera
+        cameraPicker.modalPresentationStyle = .fullScreen
         self.present(cameraPicker, animated: true, completion: nil)
     }
     @objc func openPhotoLibrary() {
         let galeryPicker = UIImagePickerController()
         galeryPicker.delegate = self
         galeryPicker.sourceType = .photoLibrary
+        galeryPicker.modalPresentationStyle = .fullScreen
         self.present(galeryPicker, animated: true, completion: nil)
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

@@ -9,10 +9,11 @@
 import Foundation
 
 enum CombinationMethods: String {
-    case complementary
     case analogous
-    case triadic
+    case complementary
     case tetradic
+    case triadic
+    case monochromatic
 }
 
 enum SegueIdentificators: String {

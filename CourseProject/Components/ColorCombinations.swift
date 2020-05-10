@@ -52,6 +52,13 @@ class Combinations {
             thirdColor = CombinationColor(colorHue: originalColorHue + 2 / 3,
                                           colorSaturation: originalColorSaturation,
                                           colorBrightness: originslColorBrightness)
+        case .monochromatic:
+            secondColor = CombinationColor(colorHue: originalColorHue,
+                                   colorSaturation: originalColorSaturation - 1 / 3,
+                                   colorBrightness: originslColorBrightness)
+            thirdColor = CombinationColor(colorHue: originalColorHue,
+                                          colorSaturation: originalColorSaturation - 2 / 3,
+                                          colorBrightness: originslColorBrightness)
         }
         var combinationValues: [CombinationColor] = []
         if let secondColor = secondColor {

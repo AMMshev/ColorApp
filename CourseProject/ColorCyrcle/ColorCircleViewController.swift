@@ -5,11 +5,11 @@
 //  Created by Artem Manyshev on 30.04.2020.
 //  Copyright © 2020 Артем Манышев. All rights reserved.
 //
-
 import UIKit
 
 class ColorCircleViewController: UIViewController {
     
+    @IBOutlet weak var rightNavBarItem: UIBarButtonItem!
     private let tapGesture = UITapGestureRecognizer()
     private var tintGradientLayer = CAGradientLayer()
     private var colorCircleGradientLayer = CAGradientLayer()
@@ -76,8 +76,19 @@ class ColorCircleViewController: UIViewController {
         fourthColorView.isHidden = true
         return fourthColorView
     }()
+    private let chooseCombinationButton: UIButton = {
+        let chooseCombinationButton = UIButton()
+        chooseCombinationButton.setTitle("Choose combination method...", for: .normal)
+        chooseCombinationButton.setTitleColor(UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue), for: .normal)
+        chooseCombinationButton.layer.borderWidth = 1
+        chooseCombinationButton.layer.borderColor = UIColor.gray.cgColor
+        chooseCombinationButton.layer.cornerRadius = 5
+        chooseCombinationButton.titleLabel?.textAlignment = .center
+        chooseCombinationButton.addTarget(self, action: #selector(showcombinationPicker(_:)), for: .touchUpInside)
+        return chooseCombinationButton
+    }()
     private var combinationsStack = UIStackView(arrangedSubviews: [])
-    private let combinations = ["complementary", "analogous", "triadic", "tetradic"]
+    private let combinations = ["analogous", "complementary", "monochromatic", "tetradic", "triadic"]
     private var combinationPicker = UIPickerView()
     private var pickerView: UIView = {
         let pickerView = UIView()
@@ -100,13 +111,29 @@ class ColorCircleViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor(named:
             DarkModeColors.blackWhiteElementColor.rawValue)
     }
-    @IBAction func showcombinationPicker(_ sender: Any) {
+    @IBAction func rightNavBarItemTapped(_ sender: UIBarButtonItem) {
+        if isPickerCalled == false {
+            sender.title = nil
+            sender.image = UIImage(systemName: "star.fill")
+            self.backViewbottomAnchor.constant = 0
+            self.pickerViewHeightAnchor.constant = 50
+            isPickerCalled = !isPickerCalled
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    @objc func showcombinationPicker(_ sender: UIButton) {
         if isPickerCalled == true {
             self.backViewbottomAnchor.constant = -200
             self.pickerViewHeightAnchor.constant = 250
+            rightNavBarItem.image = nil
+            rightNavBarItem.title = "Done"
         } else {
             self.backViewbottomAnchor.constant = 0
             self.pickerViewHeightAnchor.constant = 50
+            rightNavBarItem.title = nil
+            rightNavBarItem.image = UIImage(systemName: "star.fill")
         }
         isPickerCalled = !isPickerCalled
         UIView.animate(withDuration: 0.5) {
@@ -135,28 +162,25 @@ extension ColorCircleViewController {
 }
 // MARK: - UIPickerViewDelegate
 extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        1
-    }
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        combinations.count
-    }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        combinations[row]
-    }
+    func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { combinations.count }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? { combinations[row] }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch row {
         case 0:
-            combinationMethod = .complementary
-        case 1:
             combinationMethod = .analogous
+        case 1:
+            combinationMethod = .complementary
         case 2:
-            combinationMethod = .triadic
+            combinationMethod = .monochromatic
         case 3:
             combinationMethod = .tetradic
+        case 4:
+            combinationMethod = .triadic
         default:
             combinationMethod = .analogous
         }
+        chooseCombinationButton.setTitle(combinationMethod.rawValue, for: .normal)
         changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
     }
     func changeCombination(colors: [CombinationColor]) {
@@ -205,14 +229,16 @@ extension ColorCircleViewController: UIPickerViewDelegate, UIPickerViewDataSourc
                                              originalColorSaturation: hsb.saturation,
                                              originslColorBrightness: hsb.brightness)
         switch combinationMethod {
-        case .complementary:
-            changeCombination(colors: colorCombinations.combination(type: .complementary))
-        case .triadic:
-            changeCombination(colors: colorCombinations.combination(type: .triadic))
-        case .tetradic:
-            changeCombination(colors: colorCombinations.combination(type: .tetradic))
         case .analogous:
             changeCombination(colors: colorCombinations.combination(type: .analogous))
+        case .complementary:
+            changeCombination(colors: colorCombinations.combination(type: .complementary))
+        case .tetradic:
+            changeCombination(colors: colorCombinations.combination(type: .tetradic))
+        case .triadic:
+            changeCombination(colors: colorCombinations.combination(type: .triadic))
+        case .monochromatic:
+            changeCombination(colors: colorCombinations.combination(type: .monochromatic))
         }
     }
 }
@@ -222,24 +248,23 @@ extension ColorCircleViewController {
         setViewsLayouts()
         navigationController?.navigationBar.isHidden = false
         colorOnTap = UIColor(red: chosenColor.r, green: chosenColor.g, blue: chosenColor.b, alpha: 1)
-        colorHexNumberLabel.text = chosenColor.hex
+        colorHexNumberLabel.text = chosenColor.hex.uppercased()
         colorHexNumberLabel.textColor = colorOnTap
+        chooseCombinationButton.setTitleColor(colorOnTap, for: .normal)
         view.backgroundColor = colorOnTap
         changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
         tapGesture.addTarget(self, action: #selector(colorTapped(sender:)))
         tintGradientLayer = makeGradientLayerWith(width: UIScreen.main.bounds.width * 0.8,
                                                   height: UIScreen.main.bounds.width * 0.8,
                                                   colors: [UIColor.black.cgColor,
-                                                           UIColor(red: chosenColor.r,
-                                                                   green: chosenColor.g,
+                                                           UIColor(red: chosenColor.r, green: chosenColor.g,
                                                                    blue: chosenColor.b,
                                                                    alpha: 1).cgColor, UIColor.white.cgColor],
                                                   cornerRadius: UIScreen.main.bounds.width * 0.4)
         tintColorCircleView.layer.insertSublayer(tintGradientLayer, at: 0)
         colorCircleGradientLayer = makeGradientLayerWith(width: UIScreen.main.bounds.width * 0.8 - 30,
                                                          height: UIScreen.main.bounds.width * 0.8 - 30,
-                                                         colors: gradientColors,
-                                                         gradientType: .conic,
+                                                         colors: gradientColors, gradientType: .conic,
                                                          cornerRadius: (UIScreen.main.bounds.width * 0.4 - 15),
                                                          borderWidth: 10, borderColor: UIColor.white.cgColor)
         colorCircleView.layer.insertSublayer(colorCircleGradientLayer, at: 0)
@@ -259,30 +284,26 @@ extension ColorCircleViewController {
         pickerViewHeightAnchor = pickerView.heightAnchor.constraint(equalToConstant: 50)
         pickerViewHeightAnchor.isActive = true
         setConstraintsOn(view: backView, parantView: view,
-                         height: UIScreen.main.bounds.height * 0.85, leadingConstant: 0,
-                         bottomConstant: 0,
+                         height: UIScreen.main.bounds.height * 0.85, leadingConstant: 0, bottomConstant: 0,
                          trailingConstant: 0)
         backViewbottomAnchor = backView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         backViewbottomAnchor.isActive = true
-        setConstraintsOn(view: tintColorCircleView, parantView: backView,
-                         height: UIScreen.main.bounds.width * 0.8,
-                         width: UIScreen.main.bounds.width * 0.8,
-                         topConstant: 30, centeringxConstant: 0)
-        setConstraintsOn(view: colorCircleView,
-                         parantView: tintColorCircleView,
+        setConstraintsOn(view: tintColorCircleView, parantView: backView, height: UIScreen.main.bounds.width * 0.8,
+                         width: UIScreen.main.bounds.width * 0.8, topConstant: 30, centeringxConstant: 0)
+        setConstraintsOn(view: colorCircleView, parantView: tintColorCircleView,
                          height: UIScreen.main.bounds.width * 0.8 - 30,
-                         width: UIScreen.main.bounds.width * 0.8 - 30, centeringxConstant: 0,
-                         centeringyConstant: 0)
-        setConstraintsOn(view: colorHexNumberLabel, parantView: backView, height: 50, leadingConstant: 30, trailingConstant: -30)
-        colorHexNumberLabel.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor,
-                                                 constant: 10).isActive = true
+                         width: UIScreen.main.bounds.width * 0.8 - 30, centeringxConstant: 0, centeringyConstant: 0)
         setConstraintsOn(view: loupeView, parantView: view, manualConstraints: false)
         setConstraintsOn(view: loupeColorView, parantView: loupeView,
                          height: 60, width: 60, centeringxConstant: 0, centeringyConstant: -16)
         setConstraintsOn(view: combinationsStack, parantView: backView, height: 30,
                          leadingConstant: 30, trailingConstant: -30)
-        combinationsStack.topAnchor.constraint(equalTo: colorHexNumberLabel.bottomAnchor,
-                                               constant: 10).isActive = true
+        combinationsStack.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor, constant: 10).isActive = true
+        setConstraintsOn(view: colorHexNumberLabel, parantView: backView, height: 50, leadingConstant: 30, trailingConstant: -30)
+        colorHexNumberLabel.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor,
+                                                 constant: 10).isActive = true
+        setConstraintsOn(view: chooseCombinationButton, parantView: view, height: 50, leadingConstant: 30, trailingConstant: -30)
+        chooseCombinationButton.topAnchor.constraint(equalTo: colorHexNumberLabel.bottomAnchor, constant: 10).isActive = true
         setConstraintsOn(view: combinationPicker, parantView: pickerView, leadingConstant: 30,
                          trailingConstant: -30, centeringxConstant: 0)
     }
@@ -352,6 +373,7 @@ extension ColorCircleViewController {
         loupeColorView.backgroundColor = colorOnTap
         view.backgroundColor = colorOnTap
         colorHexNumberLabel.textColor = colorOnTap
+        chooseCombinationButton.setTitleColor(colorOnTap, for: .normal)
         if isOnColorCircle { tintGradientLayer.colors = [UIColor.black.cgColor,
                                                          colorOnTap.cgColor,
                                                          UIColor.white.cgColor] }
