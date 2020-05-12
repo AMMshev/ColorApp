@@ -20,9 +20,9 @@ class DetailColorViewController: UIViewController {
         copiedView.backgroundColor = .white
         copiedView.isUserInteractionEnabled = false
         copiedView.layer.shadowColor = UIColor.black.cgColor
-        copiedView.layer.shadowOffset = CGSize(width: 3, height: 4)
+        copiedView.layer.shadowOffset = CGSize(width: 0.5, height: 1)
         copiedView.layer.shadowRadius = 20
-        copiedView.layer.shadowOpacity = 1
+        copiedView.layer.shadowOpacity = 0.3
         copiedView.alpha = 0
         return copiedView
     }()
@@ -147,7 +147,8 @@ extension DetailColorViewController {
         UIPasteboard.general.string = sender.titleLabel?.text
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             guard let self = self else { return }
-            self.copiedView.alpha = 0.8
+            self.copiedView.alpha = 0.9
+            
         }) { _ in
             UIView.animate(withDuration: 1) { [weak self] in
                 guard let self = self else { return }

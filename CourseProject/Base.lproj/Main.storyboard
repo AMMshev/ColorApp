@@ -290,7 +290,7 @@
                         <viewLayoutGuide key="safeArea" id="adO-Yu-mXc"/>
                     </view>
                     <navigationItem key="navigationItem" id="9VM-4V-Nhg">
-                        <barButtonItem key="backBarButtonItem" title=" " id="p8H-j9-WBv"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="Rmj-dU-R7O"/>
                     </navigationItem>
                     <connections>
                         <segue destination="NKj-cf-d8I" kind="show" identifier="showThreeColors" id="GTh-Ye-l5I"/>
@@ -507,7 +507,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="g80-B2-HMj"/>
+        <segue reference="w7b-r9-pIB"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="star.fill" catalog="system" width="128" height="116"/>

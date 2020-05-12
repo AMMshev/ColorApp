@@ -46,12 +46,20 @@ class ColorCircleViewController: UIViewController {
     }()
     private var backViewHeightAnchor = NSLayoutConstraint()
     private var backViewbottomAnchor = NSLayoutConstraint()
+    private let colorHexNumberView: UIView = {
+        let colorHexNumberView = UIView()
+        colorHexNumberView.layer.shadowColor = UIColor(named:
+            DarkModeColors.blackWhiteElementColor.rawValue)?.cgColor
+        colorHexNumberView.layer.shadowOffset = CGSize(width: 0.5, height: 1)
+        colorHexNumberView.layer.shadowRadius = 5.0
+        colorHexNumberView.layer.shadowOpacity = 0.3
+        colorHexNumberView.layer.cornerRadius = 10.0
+        colorHexNumberView.backgroundColor = UIColor(named: DarkModeColors.blackWhiteBackColor.rawValue)
+        return colorHexNumberView
+    }()
     private let colorHexNumberLabel: UILabel = {
         let colorHexNumberLabel = UILabel()
-        colorHexNumberLabel.layer.borderWidth = 1
-        colorHexNumberLabel.layer.borderColor = UIColor.gray.cgColor
-        colorHexNumberLabel.layer.cornerRadius = 5
-        colorHexNumberLabel.textAlignment = .center
+        colorHexNumberLabel.textColor = UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue)
         return colorHexNumberLabel
     }()
     private let firstColorView: UIView = {
@@ -78,12 +86,16 @@ class ColorCircleViewController: UIViewController {
     }()
     private let chooseCombinationButton: UIButton = {
         let chooseCombinationButton = UIButton()
-        chooseCombinationButton.setTitle("Choose combination method...", for: .normal)
+        chooseCombinationButton.setTitle("Choose combination method", for: .normal)
         chooseCombinationButton.setTitleColor(UIColor(named: DarkModeColors.blackWhiteElementColor.rawValue), for: .normal)
-        chooseCombinationButton.layer.borderWidth = 1
-        chooseCombinationButton.layer.borderColor = UIColor.gray.cgColor
-        chooseCombinationButton.layer.cornerRadius = 5
+        chooseCombinationButton.layer.shadowColor = UIColor(named:
+            DarkModeColors.blackWhiteElementColor.rawValue)?.cgColor
+        chooseCombinationButton.layer.shadowOffset = CGSize(width: 0.5, height: 1)
+        chooseCombinationButton.layer.shadowRadius = 5.0
+        chooseCombinationButton.layer.shadowOpacity = 0.3
+        chooseCombinationButton.layer.cornerRadius = 10.0
         chooseCombinationButton.titleLabel?.textAlignment = .center
+        chooseCombinationButton.backgroundColor = UIColor(named: DarkModeColors.blackWhiteBackColor.rawValue)
         chooseCombinationButton.addTarget(self, action: #selector(showcombinationPicker(_:)), for: .touchUpInside)
         return chooseCombinationButton
     }()
@@ -123,7 +135,7 @@ class ColorCircleViewController: UIViewController {
             }
         }
     }
-// MARK: - show view with picker, sender - chooseCombinationButton
+    // MARK: - show view with picker, sender - chooseCombinationButton
     @objc func showcombinationPicker(_ sender: UIButton) {
         if isPickerCalled == true {
             self.backViewbottomAnchor.constant = -200
@@ -154,7 +166,7 @@ extension ColorCircleViewController {
             chosenColor.hex = colorHexNumberLabel.text ?? "" }
         performSegue(withIdentifier: SegueIdentificators.colorDetail.rawValue, sender: nil)
     }
-// MARK: - the segue will send color information to the detail color screen
+    // MARK: - the segue will send color information to the detail color screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SegueIdentificators.colorDetail.rawValue {
             let destinationVC = segue.destination as? DetailColorViewController
@@ -250,8 +262,6 @@ extension ColorCircleViewController {
         navigationController?.navigationBar.isHidden = false
         colorOnTap = UIColor(red: chosenColor.r, green: chosenColor.g, blue: chosenColor.b, alpha: 1)
         colorHexNumberLabel.text = chosenColor.hex.uppercased()
-        colorHexNumberLabel.textColor = colorOnTap
-        chooseCombinationButton.setTitleColor(colorOnTap, for: .normal)
         view.backgroundColor = colorOnTap
         changeCombinationsColor(combinationMethod: combinationMethod, color: colorOnTap)
         tapGesture.addTarget(self, action: #selector(colorTapped(sender:)))
@@ -299,12 +309,13 @@ extension ColorCircleViewController {
                          height: 60, width: 60, centeringxConstant: 0, centeringyConstant: -16)
         setConstraintsOn(view: combinationsStack, parantView: backView, height: 30,
                          leadingConstant: 30, trailingConstant: -30)
-        combinationsStack.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor, constant: 10).isActive = true
-        setConstraintsOn(view: colorHexNumberLabel, parantView: backView, height: 50, leadingConstant: 30, trailingConstant: -30)
-        colorHexNumberLabel.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor,
-                                                 constant: 10).isActive = true
+        combinationsStack.topAnchor.constraint(equalTo: tintColorCircleView.bottomAnchor, constant: 20).isActive = true
+        setConstraintsOn(view: colorHexNumberView, parantView: backView, height: 50, leadingConstant: 30, trailingConstant: -30)
+        colorHexNumberView.topAnchor.constraint(equalTo: combinationsStack.bottomAnchor,
+                                                constant: 20).isActive = true
+        setConstraintsOn(view: colorHexNumberLabel, parantView: colorHexNumberView, centeringxConstant: 0, centeringyConstant: 0)
         setConstraintsOn(view: chooseCombinationButton, parantView: view, height: 50, leadingConstant: 30, trailingConstant: -30)
-        chooseCombinationButton.topAnchor.constraint(equalTo: colorHexNumberLabel.bottomAnchor, constant: 10).isActive = true
+        chooseCombinationButton.topAnchor.constraint(equalTo: colorHexNumberView.bottomAnchor, constant: 20).isActive = true
         setConstraintsOn(view: combinationPicker, parantView: pickerView, leadingConstant: 30,
                          trailingConstant: -30, centeringxConstant: 0)
     }
@@ -361,11 +372,11 @@ extension ColorCircleViewController {
             loupeView.isHidden = true
         }
     }
-// MARK: - this method checks if the user taps out of the color circle
+    // MARK: - this method checks if the user taps out of the color circle
     private func outOfColor(location: CGPoint, view: UIView, borderSize: CGFloat) -> Bool {
         pow((location.x / (view.bounds.width - (2 * borderSize))) - 0.5, 2) + pow((location.y / (view.bounds.width - (borderSize))) - 0.5, 2) >= 0.25
     }
-// MARK: - this method sets up the loupe view location at the point of users tap and sets up colors on the views
+    // MARK: - this method sets up the loupe view location at the point of users tap and sets up colors on the views
     private func setViewsColor(mainLocation: CGPoint,
                                secondaryLocation: CGPoint,
                                isOnColorCircle: Bool) {
@@ -375,8 +386,6 @@ extension ColorCircleViewController {
         self.colorOnTap = self.tintColorCircleView.getPixelColorAt(point: secondaryLocation)
         loupeColorView.backgroundColor = colorOnTap
         view.backgroundColor = colorOnTap
-        colorHexNumberLabel.textColor = colorOnTap
-        chooseCombinationButton.setTitleColor(colorOnTap, for: .normal)
         if isOnColorCircle { tintGradientLayer.colors = [UIColor.black.cgColor,
                                                          colorOnTap.cgColor,
                                                          UIColor.white.cgColor] }
