@@ -17,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
         if UserDefaults.standard.object(forKey: LoginRegisterViewController.defaultsKey) as? Bool == false {
             initialViewController = storyboard.instantiateViewController(withIdentifier: "loginScreen")
         } else {

@@ -14,7 +14,6 @@ class TableViewCell: UITableViewCell {
         let colorName = UILabel()
         colorName.textColor = .black
         colorName.font = colorName.font.withSize(15)
-        colorName.translatesAutoresizingMaskIntoConstraints = false
         return colorName
     }()
 
@@ -24,8 +23,6 @@ class TableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        addSubview(colorName)
-        colorName.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        colorName.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        setConstraintsOn(view: colorName, parantView: self, centeringxConstant: 0, centeringyConstant: 0)
     }
 }
