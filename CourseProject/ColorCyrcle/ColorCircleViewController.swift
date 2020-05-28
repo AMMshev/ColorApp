@@ -126,7 +126,6 @@ class ColorCircleViewController: UIViewController {
     @IBAction func rightNavBarItemTapped(_ sender: UIBarButtonItem) {
         if isPickerCalled == false {
             sender.title = nil
-            sender.image = UIImage(systemName: "star.fill")
             self.backViewbottomAnchor.constant = 0
             self.pickerViewHeightAnchor.constant = 50
             isPickerCalled = !isPickerCalled
@@ -140,13 +139,11 @@ class ColorCircleViewController: UIViewController {
         if isPickerCalled == true {
             self.backViewbottomAnchor.constant = -200
             self.pickerViewHeightAnchor.constant = 250
-            rightNavBarItem.image = nil
             rightNavBarItem.title = "Done"
         } else {
             self.backViewbottomAnchor.constant = 0
             self.pickerViewHeightAnchor.constant = 50
             rightNavBarItem.title = nil
-            rightNavBarItem.image = UIImage(systemName: "star.fill")
         }
         isPickerCalled = !isPickerCalled
         UIView.animate(withDuration: 0.5) {

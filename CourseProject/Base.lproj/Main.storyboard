@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -77,9 +77,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="ZeU-uf-A3c"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Colors" id="zZL-IO-XKh">
-                        <barButtonItem key="backBarButtonItem" title=" " id="DvT-6D-aJt"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Title" id="PTX-uN-RKV"/>
                     <connections>
                         <segue destination="eHp-sG-OUL" kind="show" identifier="showColorCircle" id="GKr-7z-75u"/>
                     </connections>
@@ -98,13 +96,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="OZb-4U-hb1"/>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="Hg9-Tj-cCp">
-                        <barButtonItem key="rightBarButtonItem" image="star.fill" catalog="system" id="djH-Nr-noY">
-                            <connections>
-                                <action selector="addToFavourites:" destination="hbA-Az-zUD" id="vd4-XS-m7U"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="Hg9-Tj-cCp"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BaK-Cs-DOO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -314,14 +306,14 @@
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="Jx3-YA-eY7">
                         <barButtonItem key="backBarButtonItem" title=" " id="J0m-MS-nnw"/>
-                        <barButtonItem key="rightBarButtonItem" image="star.fill" catalog="system" id="baN-ap-EAI">
+                        <barButtonItem key="rightBarButtonItem" id="b5x-7x-I7L">
                             <connections>
-                                <action selector="rightNavBarItemTapped:" destination="eHp-sG-OUL" id="B7n-Dt-afo"/>
+                                <action selector="rightNavBarItemTapped:" destination="eHp-sG-OUL" id="FIi-B2-rMZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="rightNavBarItem" destination="baN-ap-EAI" id="nIA-iY-SPh"/>
+                        <outlet property="rightNavBarItem" destination="b5x-7x-I7L" id="qwx-8p-oXv"/>
                         <segue destination="hbA-Az-zUD" kind="show" identifier="showColorDetail" id="HCA-Yw-MgY"/>
                     </connections>
                 </viewController>
@@ -507,9 +499,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="w7b-r9-pIB"/>
+        <segue reference="GKr-7z-75u"/>
     </inferredMetricsTieBreakers>
-    <resources>
-        <image name="star.fill" catalog="system" width="128" height="116"/>
-    </resources>
 </document>

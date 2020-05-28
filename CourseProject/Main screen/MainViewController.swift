@@ -53,13 +53,6 @@ class MainViewController: UIViewController {
         colorCircle.addTarget(self, action: #selector(showColorCircle), for: .touchUpInside)
         return colorCircle
     }()
-    private let userProfile: UIButton = {
-        let userProfile = UIButton()
-        userProfile.setBackgroundImage(UIImage(named: "userProfile"), for: .normal)
-        userProfile.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        userProfile.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        return userProfile
-    }()
     private let camera: UIButton = {
         let camera = UIButton()
         camera.setBackgroundImage(UIImage(named: "camera"), for: .normal)
@@ -138,7 +131,6 @@ extension MainViewController {
         setConstraintsOn(view: color, parantView: view)
         setConstraintsOn(view: images, parantView: view)
         setConstraintsOn(view: colorCircle, parantView: view)
-        setConstraintsOn(view: userProfile, parantView: view, topConstant: 80, trailingConstant: -50)
         setConstraintsOn(view: camera, parantView: view, leadingConstant: 20)
         colorCenterConstraint = color.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         colorCenterConstraint.isActive = true
