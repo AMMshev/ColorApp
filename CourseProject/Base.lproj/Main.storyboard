@@ -77,7 +77,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="ZeU-uf-A3c"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="PTX-uN-RKV"/>
+                    <navigationItem key="navigationItem" title="Colors" id="PTX-uN-RKV">
+                        <barButtonItem key="backBarButtonItem" title=" " id="BFP-bi-qnp"/>
+                    </navigationItem>
                     <connections>
                         <segue destination="eHp-sG-OUL" kind="show" identifier="showColorCircle" id="GKr-7z-75u"/>
                     </connections>
